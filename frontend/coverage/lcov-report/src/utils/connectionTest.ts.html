@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/27</span>
+                <span class='fraction'>0/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/27</span>
+                <span class='fraction'>0/28</span>
             </div>
         
             
@@ -126,7 +126,14 @@
 <a name='L61'></a><a href='#L61'>61</a>
 <a name='L62'></a><a href='#L62'>62</a>
 <a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -141,19 +148,23 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -167,6 +178,9 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -195,31 +209,35 @@ export const testDirectConnection = <span class="cstat-no" title="statement not 
 <span class="cstat-no" title="statement not covered" >  console.log('=== Direct Connection Test ===');</span>
   
 <span class="cstat-no" title="statement not covered" >  try {</span>
-    // Test direct connection to local blockchain
-    const provider = <span class="cstat-no" title="statement not covered" >new ethers.JsonRpcProvider('http://127.0.0.1:8545');</span>
-<span class="cstat-no" title="statement not covered" >    console.log('Provider created successfully');</span>
+    // Test connection via CORS-enabled proxy
+    const provider = <span class="cstat-no" title="statement not covered" >new ethers.JsonRpcProvider('http://127.0.0.1:8546/rpc');</span>
+<span class="cstat-no" title="statement not covered" >    console.log('Provider created successfully (via proxy)');</span>
     
-    // Test basic RPC call
-    const chainId = <span class="cstat-no" title="statement not covered" >await provider.send('eth_chainId', []);</span>
-<span class="cstat-no" title="statement not covered" >    console.log('Chain ID:', chainId);</span>
-    
+    // Test basic connection first
     const blockNumber = <span class="cstat-no" title="statement not covered" >await provider.getBlockNumber();</span>
 <span class="cstat-no" title="statement not covered" >    console.log('Block Number:', blockNumber);</span>
     
-    const network = <span class="cstat-no" title="statement not covered" >await provider.getNetwork();</span>
-<span class="cstat-no" title="statement not covered" >    console.log('Network:', network);</span>
-    
 <span class="cstat-no" title="statement not covered" >    return {</span>
       success: true,
-      chainId,
       blockNumber,
-      network: network.name || 'localhost'
+      network: 'localhost'
     };
   } catch (error) {
 <span class="cstat-no" title="statement not covered" >    console.error('Direct connection failed:', error);</span>
+    
+    // Try to determine if it's a CORS issue or connection issue
+    const errorMessage = <span class="cstat-no" title="statement not covered" >error instanceof Error ? error.message : 'Unknown error';</span>
+    
+<span class="cstat-no" title="statement not covered" >    if (errorMessage.includes('fetch') || errorMessage.includes('CORS')) {</span>
+<span class="cstat-no" title="statement not covered" >      return {</span>
+        success: false,
+        error: 'CORS or network access issue - blockchain may not be accessible from browser'
+      };
+    }
+    
 <span class="cstat-no" title="statement not covered" >    return {</span>
       success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: errorMessage
     };
   }
 };
@@ -228,7 +246,7 @@ export const testContractConnection = <span class="cstat-no" title="statement no
 <span class="cstat-no" title="statement not covered" >  console.log('=== Contract Connection Test ===');</span>
   
 <span class="cstat-no" title="statement not covered" >  try {</span>
-    const provider = <span class="cstat-no" title="statement not covered" >new ethers.JsonRpcProvider('http://127.0.0.1:8545');</span>
+    const provider = <span class="cstat-no" title="statement not covered" >new ethers.JsonRpcProvider('http://127.0.0.1:8546/rpc');</span>
     
     // Test contract exists
     const escrowFactoryAddress = <span class="cstat-no" title="statement not covered" >'0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';</span>
@@ -237,13 +255,16 @@ export const testContractConnection = <span class="cstat-no" title="statement no
     const escrowFactoryCode = <span class="cstat-no" title="statement not covered" >await provider.getCode(escrowFactoryAddress);</span>
     const mockTokenCode = <span class="cstat-no" title="statement not covered" >await provider.getCode(mockTokenAddress);</span>
     
-<span class="cstat-no" title="statement not covered" >    console.log('EscrowFactory deployed:', escrowFactoryCode !== '0x');</span>
-<span class="cstat-no" title="statement not covered" >    console.log('MockToken deployed:', mockTokenCode !== '0x');</span>
+    const escrowFactoryDeployed = <span class="cstat-no" title="statement not covered" >escrowFactoryCode !== '0x';</span>
+    const mockTokenDeployed = <span class="cstat-no" title="statement not covered" >mockTokenCode !== '0x';</span>
+    
+<span class="cstat-no" title="statement not covered" >    console.log('EscrowFactory deployed:', escrowFactoryDeployed);</span>
+<span class="cstat-no" title="statement not covered" >    console.log('MockToken deployed:', mockTokenDeployed);</span>
     
 <span class="cstat-no" title="statement not covered" >    return {</span>
       success: true,
-      escrowFactoryDeployed: escrowFactoryCode !== '0x',
-      mockTokenDeployed: mockTokenCode !== '0x'
+      escrowFactoryDeployed,
+      mockTokenDeployed
     };
   } catch (error) {
 <span class="cstat-no" title="statement not covered" >    console.error('Contract connection failed:', error);</span>
@@ -259,7 +280,7 @@ export const testContractConnection = <span class="cstat-no" title="statement no
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-06T19:58:10.410Z
+                at 2025-06-06T20:04:52.062Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
