@@ -8,9 +8,9 @@ export const getProvider = async () => {
     return cachedProvider;
   }
 
-  // First try local network since it's most reliable for development
+  // First try local network via CORS-enabled proxy
   try {
-    const localProvider = new ethers.JsonRpcProvider('http://127.0.0.1:8545');
+    const localProvider = new ethers.JsonRpcProvider('http://127.0.0.1:8546/rpc');
     // Test the connection before caching
     await localProvider.getBlockNumber();
     cachedProvider = localProvider;
@@ -44,7 +44,7 @@ export const getProvider = async () => {
 
 export const connectToLocalNetwork = async () => {
   try {
-    const provider = new ethers.JsonRpcProvider('http://127.0.0.1:8545');
+    const provider = new ethers.JsonRpcProvider('http://127.0.0.1:8546/rpc');
     await provider.getBlockNumber(); // Test connection
     cachedProvider = provider;
     connectionMode = 'local';
