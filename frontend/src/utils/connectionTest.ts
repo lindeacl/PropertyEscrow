@@ -4,35 +4,13 @@ export const testDirectConnection = async () => {
   console.log('=== Blockchain Connection Test ===');
   
   try {
-    // Use proxied API endpoint to avoid CORS issues
-    const endpoints = [
-      `/api/status`,
-      `http://localhost:5000/api/status`,
-      `http://127.0.0.1:5000/api/status`
-    ];
-    
-    let statusData = null;
-    
-    for (const endpoint of endpoints) {
-      try {
-        console.log(`Testing status endpoint: ${endpoint}`);
-        const response = await fetch(endpoint);
-        console.log(`Status check response for ${endpoint}:`, response.status);
-        
-        if (response.ok) {
-          statusData = await response.json();
-          console.log('Status data received:', statusData);
-          break;
-        }
-      } catch (error) {
-        console.log(`Status check failed for ${endpoint}:`, error);
-        continue;
-      }
+    // Use global blockchain API bridge
+    if (typeof (window as any).blockchainAPI === 'undefined') {
+      throw new Error('Blockchain API bridge not available');
     }
     
-    if (!statusData) {
-      throw new Error('Unable to connect to blockchain status API');
-    }
+    const statusData = await (window as any).blockchainAPI.getStatus();
+    console.log('Status data received:', statusData);
     
     if (statusData.blockchain?.success) {
       return {
@@ -60,30 +38,12 @@ export const testContractConnection = async () => {
   console.log('=== Contract Connection Test ===');
   
   try {
-    // Use proxied API endpoint to check contract deployment
-    const endpoints = [
-      `/api/status`,
-      `http://localhost:5000/api/status`,
-      `http://127.0.0.1:5000/api/status`
-    ];
-    
-    let statusData = null;
-    
-    for (const endpoint of endpoints) {
-      try {
-        console.log(`Checking contracts via: ${endpoint}`);
-        const response = await fetch(endpoint);
-        
-        if (response.ok) {
-          statusData = await response.json();
-          console.log('Contract status received:', statusData.contracts);
-          break;
-        }
-      } catch (error) {
-        console.log(`Contract check failed for ${endpoint}:`, error);
-        continue;
-      }
+    // Use global blockchain API bridge
+    if (typeof (window as any).blockchainAPI === 'undefined') {
+      throw new Error('Blockchain API bridge not available');
     }
+    
+    const statusData = await (window as any).blockchainAPI.getStatus();
     
     if (!statusData?.contracts) {
       throw new Error('Unable to check contract deployment status');
