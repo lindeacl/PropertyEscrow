@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   Shield, 
   Zap, 
@@ -9,10 +9,62 @@ import {
   FileText,
   TrendingUp
 } from 'lucide-react';
+import { testDirectConnection, testContractConnection } from '../utils/connectionTest';
+
+interface ConnectionTestResult {
+  blockchain: any;
+  contracts: any;
+}
 
 const StaticLanding: React.FC = () => {
+  const [connectionTest, setConnectionTest] = useState<ConnectionTestResult | null>(null);
+  const [testing, setTesting] = useState(true);
+
+  useEffect(() => {
+    const runConnectionTests = async () => {
+      try {
+        console.log('Starting connection tests...');
+        const blockchainTest = await testDirectConnection();
+        const contractTest = await testContractConnection();
+        
+        setConnectionTest({
+          blockchain: blockchainTest,
+          contracts: contractTest
+        });
+      } catch (error) {
+        console.error('Connection test failed:', error);
+        setConnectionTest({
+          blockchain: { success: false, error: 'Test failed' },
+          contracts: { success: false, error: 'Test failed' }
+        });
+      } finally {
+        setTesting(false);
+      }
+    };
+
+    runConnectionTests();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      {/* Connection Status Bar */}
+      {testing && (
+        <div className="bg-yellow-50 border-b border-yellow-200 text-center py-2">
+          <span className="text-yellow-800 text-sm">Testing blockchain connection...</span>
+        </div>
+      )}
+      
+      {connectionTest && (
+        <div className={`border-b text-center py-2 text-sm ${
+          connectionTest.blockchain.success && connectionTest.contracts.success 
+            ? 'bg-green-50 border-green-200 text-green-800'
+            : 'bg-red-50 border-red-200 text-red-800'
+        }`}>
+          Blockchain: {connectionTest.blockchain.success ? '✓ Connected' : '✗ ' + connectionTest.blockchain.error} | 
+          Contracts: {connectionTest.contracts.success ? '✓ Deployed' : '✗ ' + connectionTest.contracts.error}
+        </div>
+      )}
+
       {/* Navigation */}
       <nav className="bg-white/90 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
