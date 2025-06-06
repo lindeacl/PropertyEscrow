@@ -1,14 +1,14 @@
-import { ethers } from 'ethers';
+// Connection testing utilities
 
 export const testDirectConnection = async () => {
   console.log('=== Blockchain Connection Test ===');
   
   try {
-    // Use server-side API to avoid CORS issues
+    // Use proxied API endpoint to avoid CORS issues
     const endpoints = [
-      `http://localhost:8546/api/status`,
-      `http://127.0.0.1:8546/api/status`,
-      `http://${window.location.hostname}:8546/api/status`
+      `/api/status`,
+      `http://localhost:5000/api/status`,
+      `http://127.0.0.1:5000/api/status`
     ];
     
     let statusData = null;
@@ -60,11 +60,11 @@ export const testContractConnection = async () => {
   console.log('=== Contract Connection Test ===');
   
   try {
-    // Use server-side API to check contract deployment
+    // Use proxied API endpoint to check contract deployment
     const endpoints = [
-      `http://localhost:8546/api/status`,
-      `http://127.0.0.1:8546/api/status`,
-      `http://${window.location.hostname}:8546/api/status`
+      `/api/status`,
+      `http://localhost:5000/api/status`,
+      `http://127.0.0.1:5000/api/status`
     ];
     
     let statusData = null;
