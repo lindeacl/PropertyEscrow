@@ -18,7 +18,11 @@ const proxyOptions = {
     '^/rpc': '', // remove /rpc prefix when forwarding to target
   },
   onProxyReq: (proxyReq, req, res) => {
-    console.log('Proxying request:', req.method, req.url);
+    console.log('=== PROXY REQUEST ===');
+    console.log('Method:', req.method);
+    console.log('URL:', req.url);
+    console.log('Headers:', req.headers);
+    console.log('Body:', req.body);
   },
   onError: (err, req, res) => {
     console.error('Proxy error:', err);
@@ -35,8 +39,9 @@ app.get('/health', (req, res) => {
 });
 
 const PORT = 8546;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Blockchain proxy server running on port ${PORT}`);
   console.log(`Proxying requests to: http://127.0.0.1:8545`);
   console.log(`Frontend should connect to: http://127.0.0.1:${PORT}/rpc`);
+  console.log(`Server accessible at: http://0.0.0.0:${PORT}/rpc`);
 });
