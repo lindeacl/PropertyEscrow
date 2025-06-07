@@ -5,6 +5,8 @@ const fs = require('fs');
 
 class PropertyEscrowTestSuite {
   constructor() {
+    // Note: This test file uses local blockchain for testing only
+    // Production uses Alchemy via environment configuration
     this.provider = new ethers.JsonRpcProvider('http://localhost:8545');
     this.accounts = [
       new ethers.Wallet('0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80', this.provider),

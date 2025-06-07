@@ -6,11 +6,11 @@ This guide covers deploying the Enterprise Property Escrow Platform to various e
 
 ## Deployment Environments
 
-### 1. Local Development
+### 1. Development Environment
 - **Purpose**: Development and testing
-- **Network**: Hardhat local blockchain
-- **Requirements**: Node.js, MetaMask
-- **Cost**: Free
+- **Network**: Polygon via Alchemy
+- **Requirements**: Node.js, MetaMask, Alchemy API key
+- **Cost**: Free (Alchemy free tier)
 
 ### 2. Polygon Mumbai Testnet
 - **Purpose**: Pre-production testing
@@ -40,11 +40,12 @@ Create environment files:
 
 **.env.development**
 ```bash
-# Local development
-HARDHAT_NETWORK=localhost
-RPC_URL=http://localhost:8545
-PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
-ETHERSCAN_API_KEY=your_polygonscan_api_key
+# Development environment
+REACT_APP_ALCHEMY_RPC_URL=https://polygon-mainnet.g.alchemy.com/v2/YOUR_API_KEY
+REACT_APP_CHAIN_ID=137
+REACT_APP_NETWORK_NAME=polygon
+PRIVATE_KEY=your_wallet_private_key
+POLYGONSCAN_API_KEY=your_polygonscan_api_key
 ```
 
 **.env.testnet**

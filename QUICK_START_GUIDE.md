@@ -38,15 +38,19 @@ npx hardhat compile
 # Compiled 24 Solidity files successfully
 ```
 
-### 3. Start Local Development Environment
+### 3. Configure Alchemy Integration
 
-Open three terminal windows:
-
-**Terminal 1 - Local Blockchain:**
+**Setup Environment:**
 ```bash
-npx hardhat node
+# Navigate to frontend directory
+cd frontend
+
+# Copy environment template
+cp .env.example .env
+
+# Edit .env file and add your Alchemy API key
+# REACT_APP_ALCHEMY_RPC_URL=https://polygon-mainnet.g.alchemy.com/v2/YOUR_API_KEY
 ```
-Keep this running. You'll see 20 test accounts with 10,000 ETH each.
 
 **Terminal 2 - Deploy Contracts:**
 ```bash

@@ -9,6 +9,7 @@ A blockchain-powered property escrow platform that simplifies complex real estat
 - Node.js 18+ and npm
 - Git
 - MetaMask browser extension (for Web3 functionality)
+- Alchemy account with Polygon API key
 
 ### Installation
 
@@ -24,35 +25,37 @@ npm install
 cd frontend && npm install
 ```
 
-3. **Start local blockchain**
+3. **Configure Alchemy**
+Create a `.env` file in the frontend directory:
 ```bash
-npx hardhat node
+cd frontend
+cp .env .env.local
 ```
 
-4. **Deploy contracts** (in new terminal)
-```bash
-npx hardhat run scripts/deploy.js --network localhost
+Edit `.env.local` and set your Alchemy RPC URL:
+```
+REACT_APP_ALCHEMY_RPC_URL=https://polygon-mainnet.g.alchemy.com/v2/YOUR_API_KEY_HERE
 ```
 
-5. **Start frontend development server**
+4. **Start frontend development server**
 ```bash
 cd frontend && npm start
 ```
 
-6. **Access the application**
+5. **Access the application**
 - Web Interface: http://localhost:5000
-- CLI Demo: `node cli-demo.js`
 
 ### MetaMask Setup
 
 1. Install MetaMask browser extension
-2. Add localhost network:
-   - Network Name: `Hardhat Local`
-   - RPC URL: `http://127.0.0.1:8545`
-   - Chain ID: `31337`
-   - Currency Symbol: `ETH`
+2. Add Polygon network:
+   - Network Name: `Polygon Mainnet`
+   - RPC URL: `https://polygon-rpc.com`
+   - Chain ID: `137`
+   - Currency Symbol: `MATIC`
+   - Block Explorer: `https://polygonscan.com`
 
-3. Import test account using private key from Hardhat node output
+3. Connect your wallet to interact with the escrow platform
 
 ## 🏗 Architecture
 
@@ -187,14 +190,20 @@ npx hardhat coverage --solcoverjs .solcover.js
 
 ### Common Issues
 
+**Alchemy Connection Errors**
+- Verify REACT_APP_ALCHEMY_RPC_URL is set correctly in .env
+- Check Alchemy API key is valid and has sufficient credits
+- Ensure network is set to Polygon Mainnet (Chain ID: 137)
+
 **MetaMask Connection Errors**
 - Ensure MetaMask is installed and unlocked
-- Verify network configuration (Chain ID: 31337)
-- Reset MetaMask account if transaction nonce issues occur
+- Verify Polygon network is added to MetaMask
+- Switch to Polygon Mainnet in MetaMask
 
-**Port Conflicts**
-- Frontend (5000): Change PORT in frontend/.env
-- Hardhat (8545): Modify hardhat.config.js networks settings
+**Frontend Issues**
+- Clear browser cache and reload
+- Check browser console for detailed error messages
+- Verify all environment variables are configured
 - Check for other applications using these ports
 
 **Contract Deployment Failures**

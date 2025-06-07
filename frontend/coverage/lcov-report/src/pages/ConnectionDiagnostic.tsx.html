@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/62</span>
+                <span class='fraction'>0/57</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/34</span>
+                <span class='fraction'>0/38</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/60</span>
+                <span class='fraction'>0/55</span>
             </div>
         
             
@@ -232,22 +232,7 @@
 <a name='L167'></a><a href='#L167'>167</a>
 <a name='L168'></a><a href='#L168'>168</a>
 <a name='L169'></a><a href='#L169'>169</a>
-<a name='L170'></a><a href='#L170'>170</a>
-<a name='L171'></a><a href='#L171'>171</a>
-<a name='L172'></a><a href='#L172'>172</a>
-<a name='L173'></a><a href='#L173'>173</a>
-<a name='L174'></a><a href='#L174'>174</a>
-<a name='L175'></a><a href='#L175'>175</a>
-<a name='L176'></a><a href='#L176'>176</a>
-<a name='L177'></a><a href='#L177'>177</a>
-<a name='L178'></a><a href='#L178'>178</a>
-<a name='L179'></a><a href='#L179'>179</a>
-<a name='L180'></a><a href='#L180'>180</a>
-<a name='L181'></a><a href='#L181'>181</a>
-<a name='L182'></a><a href='#L182'>182</a>
-<a name='L183'></a><a href='#L183'>183</a>
-<a name='L184'></a><a href='#L184'>184</a>
-<a name='L185'></a><a href='#L185'>185</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L170'></a><a href='#L170'>170</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -287,30 +272,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -324,15 +292,17 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -438,7 +408,7 @@ import { AlertCircle, CheckCircle, Loader, RefreshCw } from 'lucide-react';
 &nbsp;
 const ConnectionDiagnostic: React.FC = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
   const [tests, setTests] = <span class="cstat-no" title="statement not covered" >useState&lt;Record&lt;string, 'pending' | 'success' | 'error'&gt;&gt;({</span>
-    proxy: 'pending',
+    alchemy: 'pending',
     jsonRpc: 'pending',
     blockchain: 'pending',
     provider: 'pending'
@@ -460,7 +430,7 @@ const ConnectionDiagnostic: React.FC = <span class="cstat-no" title="statement n
     
     // Reset all tests
     const initialTests: Record&lt;string, 'pending' | 'success' | 'error'&gt; = <span class="cstat-no" title="statement not covered" >{ </span>
-      proxy: 'pending', 
+      alchemy: 'pending', 
       jsonRpc: 'pending', 
       blockchain: 'pending', 
       provider: 'pending' 
@@ -468,49 +438,33 @@ const ConnectionDiagnostic: React.FC = <span class="cstat-no" title="statement n
 <span class="cstat-no" title="statement not covered" >    setTests(initialTests);</span>
 <span class="cstat-no" title="statement not covered" >    setResults({});</span>
 &nbsp;
-    // Test 1: Proxy server connectivity
-<span class="cstat-no" title="statement not covered" >    try {</span>
-      const proxyResponse = <span class="cstat-no" title="statement not covered" >await fetch('http://127.0.0.1:8546/api/status', {</span>
-        method: 'GET',
-        headers: { 'Accept': 'application/json' }
-      });
-&nbsp;
-<span class="cstat-no" title="statement not covered" >      if (proxyResponse.ok) {</span>
-        const responseText = <span class="cstat-no" title="statement not covered" >await proxyResponse.text();</span>
-<span class="cstat-no" title="statement not covered" >        if (responseText.trim()) {</span>
-<span class="cstat-no" title="statement not covered" >          try {</span>
-            const data = <span class="cstat-no" title="statement not covered" >JSON.parse(responseText);</span>
-<span class="cstat-no" title="statement not covered" >            updateTest('proxy', 'success', `Proxy server operational. Response: ${JSON.stringify(data).substring(0, 100)}...`);</span>
-          } catch {
-<span class="cstat-no" title="statement not covered" >            updateTest('proxy', 'error', 'Proxy returned invalid JSON');</span>
-          }
-        } else {
-<span class="cstat-no" title="statement not covered" >          updateTest('proxy', 'error', 'Proxy returned empty response');</span>
-        }
-      } else {
-<span class="cstat-no" title="statement not covered" >        updateTest('proxy', 'error', `Proxy server error: ${proxyResponse.status} ${proxyResponse.statusText}`);</span>
-      }
-    } catch (error) {
-<span class="cstat-no" title="statement not covered" >      updateTest('proxy', 'error', `Proxy connection failed: ${error instanceof Error ? error.message : 'Unknown error'}`);</span>
+    // Test 1: Alchemy configuration check
+    const alchemyUrl = <span class="cstat-no" title="statement not covered" >process.env.REACT_APP_ALCHEMY_RPC_URL;</span>
+<span class="cstat-no" title="statement not covered" >    if (!alchemyUrl || alchemyUrl === 'https://polygon-mainnet.g.alchemy.com/v2/YOUR_API_KEY_HERE') {</span>
+<span class="cstat-no" title="statement not covered" >      updateTest('alchemy', 'error', 'Alchemy RPC URL not configured. Please set REACT_APP_ALCHEMY_RPC_URL in your environment.');</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      updateTest('alchemy', 'success', `Alchemy RPC URL configured: ${alchemyUrl.substring(0, 50)}...`);</span>
     }
 &nbsp;
-    // Test 2: JSON-RPC communication
+    // Test 2: JSON-RPC communication with Alchemy
 <span class="cstat-no" title="statement not covered" >    try {</span>
+      const rpcUrl = <span class="cstat-no" title="statement not covered" >alchemyUrl || 'https://polygon-rpc.com/';</span>
       const rpcResponse = <span class="cstat-no" title="statement not covered" >await JsonRpcValidator.safeJsonRpcCall(</span>
-        'http://127.0.0.1:8546/rpc',
+        rpcUrl,
         'eth_chainId',
         [],
-        5000
+        10000
       );
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      if (rpcResponse) {</span>
 <span class="cstat-no" title="statement not covered" >        if (rpcResponse.error) {</span>
 <span class="cstat-no" title="statement not covered" >          updateTest('jsonRpc', 'error', `RPC Error: ${JsonRpcValidator.handleJsonRpcError(rpcResponse)}`);</span>
         } else {
-<span class="cstat-no" title="statement not covered" >          updateTest('jsonRpc', 'success', `Chain ID retrieved: ${rpcResponse.result}`);</span>
+          const chainId = <span class="cstat-no" title="statement not covered" >parseInt(rpcResponse.result, 16);</span>
+<span class="cstat-no" title="statement not covered" >          updateTest('jsonRpc', 'success', `Chain ID retrieved: ${chainId} (${chainId === 137 ? 'Polygon Mainnet' : 'Unknown Network'})`);</span>
         }
       } else {
-<span class="cstat-no" title="statement not covered" >        updateTest('jsonRpc', 'error', 'JSON-RPC call returned null - possible parsing issue');</span>
+<span class="cstat-no" title="statement not covered" >        updateTest('jsonRpc', 'error', 'JSON-RPC call returned null - possible network issue');</span>
       }
     } catch (error) {
 <span class="cstat-no" title="statement not covered" >      updateTest('jsonRpc', 'error', `JSON-RPC failed: ${error instanceof Error ? error.message : 'Unknown error'}`);</span>
@@ -518,16 +472,17 @@ const ConnectionDiagnostic: React.FC = <span class="cstat-no" title="statement n
 &nbsp;
     // Test 3: Blockchain data retrieval
 <span class="cstat-no" title="statement not covered" >    try {</span>
+      const rpcUrl = <span class="cstat-no" title="statement not covered" >alchemyUrl || 'https://polygon-rpc.com/';</span>
       const blockResponse = <span class="cstat-no" title="statement not covered" >await JsonRpcValidator.safeJsonRpcCall(</span>
-        'http://127.0.0.1:8546/rpc',
+        rpcUrl,
         'eth_blockNumber',
         [],
-        5000
+        10000
       );
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      if (blockResponse &amp;&amp; blockResponse.result) {</span>
         const blockNumber = <span class="cstat-no" title="statement not covered" >parseInt(blockResponse.result, 16);</span>
-<span class="cstat-no" title="statement not covered" >        updateTest('blockchain', 'success', `Current block: ${blockNumber}`);</span>
+<span class="cstat-no" title="statement not covered" >        updateTest('blockchain', 'success', `Current block: ${blockNumber.toLocaleString()}`);</span>
       } else {
 <span class="cstat-no" title="statement not covered" >        updateTest('blockchain', 'error', 'Failed to retrieve block number');</span>
       }
@@ -622,7 +577,7 @@ export default ConnectionDiagnostic;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-07T14:43:39.730Z
+                at 2025-06-07T14:46:24.996Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
