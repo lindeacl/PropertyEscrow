@@ -63,6 +63,10 @@ args = "Minimal Logging React"
 task = "workflow.run"
 args = "PropertyEscrow Server"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Clean React Server"
+
 [[workflows.workflow]]
 name = "UI Test Suite"
 author = "agent"
@@ -177,6 +181,15 @@ author = "agent"
 task = "shell.exec"
 args = "python3 -m http.server 5000 --bind 0.0.0.0"
 waitForPort = 5000
+
+[[workflows.workflow]]
+name = "Clean React Server"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd frontend && npm start"
+waitForPort = 3000
 
 [deployment]
 run = ["sh", "-c", "npm install && npm run test && npm run deploy:localhost"]
