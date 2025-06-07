@@ -14,7 +14,6 @@ import Dashboard from './pages/Dashboard';
 import CreateEscrow from './pages/CreateEscrow';
 import EscrowDetails from './pages/EscrowDetails';
 import Settings from './pages/Settings';
-import ConnectionTest from './components/ConnectionTest';
 import ConnectionDiagnostic from './pages/ConnectionDiagnostic';
 
 function App() {

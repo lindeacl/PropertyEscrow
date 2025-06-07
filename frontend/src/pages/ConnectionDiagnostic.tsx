@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { JsonRpcValidator } from '../utils/jsonRpcValidator';
 import { initializeBlockchainConnection } from '../utils/blockchainConnection';
 import { AlertCircle, CheckCircle, Loader, RefreshCw } from 'lucide-react';
@@ -13,16 +13,12 @@ const ConnectionDiagnostic: React.FC = () => {
   const [results, setResults] = useState<Record<string, string>>({});
   const [isRunning, setIsRunning] = useState(false);
 
-  useEffect(() => {
-    runDiagnostic();
-  }, []);
-
   const updateTest = (test: string, status: 'pending' | 'success' | 'error', message: string) => {
     setTests(prev => ({ ...prev, [test]: status }));
     setResults(prev => ({ ...prev, [test]: message }));
   };
 
-  const runDiagnostic = async () => {
+  const runDiagnostic = useCallback(async () => {
     setIsRunning(true);
     
     // Reset all tests
@@ -100,7 +96,11 @@ const ConnectionDiagnostic: React.FC = () => {
     }
 
     setIsRunning(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    runDiagnostic();
+  }, [runDiagnostic]);
 
   const getStatusIcon = (status: 'pending' | 'success' | 'error') => {
     switch (status) {

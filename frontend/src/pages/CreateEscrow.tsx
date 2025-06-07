@@ -3,19 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useWallet } from '../contexts/WalletContext';
 import { 
   ArrowLeft, 
-  Upload, 
   AlertCircle, 
   CheckCircle,
   Calendar,
   DollarSign,
   Users,
-  FileText,
-  ChevronLeft,
-  ChevronRight,
-  Wallet as WalletIcon
+  FileText
 } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { Card, Button, Input, Grid } from '../components/ui';
 
 const CreateEscrow: React.FC = () => {
   const navigate = useNavigate();

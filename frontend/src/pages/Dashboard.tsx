@@ -9,7 +9,6 @@ import {
   AlertCircle,
   DollarSign,
   Wallet,
-  ArrowUpRight,
   ArrowDownLeft,
   Shield,
   Activity
@@ -21,7 +20,7 @@ const Dashboard: React.FC = () => {
   
   // Show dashboard immediately for demonstration - bypass wallet requirement
   const showDashboard = true;
-  const [stats, setStats] = useState({
+  const [stats] = useState({
     totalEscrows: 12,
     activeEscrows: 4,
     completedEscrows: 7,
@@ -29,7 +28,7 @@ const Dashboard: React.FC = () => {
     pendingApprovals: 2,
     disputes: 1
   });
-  const [recentActivity, setRecentActivity] = useState([
+  const [recentActivity] = useState([
     {
       id: '1',
       type: 'escrow_created',
