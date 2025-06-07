@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/12</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/12</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
@@ -139,7 +139,28 @@
 <a name='L74'></a><a href='#L74'>74</a>
 <a name='L75'></a><a href='#L75'>75</a>
 <a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -164,18 +185,39 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -216,7 +258,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { Component, ReactNode } from 'react';
-import { AlertTriangle, RefreshCw } from 'lucide-react';
+import logger from '../utils/logger';
 &nbsp;
 interface Props {
   children: ReactNode;
@@ -226,7 +268,7 @@ interface Props {
 interface State {
   hasError: boolean;
   error?: Error;
-  errorInfo?: React.ErrorInfo;
+  errorInfo?: any;
 }
 &nbsp;
 class ErrorBoundary extends Component&lt;Props, State&gt; {
@@ -239,50 +281,71 @@ class ErrorBoundary extends Component&lt;Props, State&gt; {
 <span class="cstat-no" title="statement not covered" >    return { hasError: true, error };</span>
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  co</span>mponentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-<span class="cstat-no" title="statement not covered" >    console.error('Error boundary caught an error:', error, errorInfo);</span>
-<span class="cstat-no" title="statement not covered" >    this.setState({ error, errorInfo });</span>
-  }
+<span class="fstat-no" title="function not covered" >  co</span>mponentDidCatch(error: Error, errorInfo: any) {
+    // Log the error with full stack trace and component info
+<span class="cstat-no" title="statement not covered" >    logger.uiError(error, 'ErrorBoundary', 'Component rendering');</span>
+    
+<span class="cstat-no" title="statement not covered" >    console.error('Error Boundary caught an error:', {</span>
+      error: error.message,
+      stack: error.stack,
+      componentStack: errorInfo.componentStack,
+      timestamp: new Date().toISOString()
+    });
 &nbsp;
-  handleRetry = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    this.setState({ hasError: false, error: undefined, errorInfo: undefined });</span>
-  };
+<span class="cstat-no" title="statement not covered" >    this.setState({ </span>
+      hasError: true, 
+      error, 
+      errorInfo 
+    });
+  }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  re</span>nder() {
 <span class="cstat-no" title="statement not covered" >    if (this.state.hasError) {</span>
-<span class="cstat-no" title="statement not covered" >      if (this.props.fallback) {</span>
-<span class="cstat-no" title="statement not covered" >        return this.props.fallback;</span>
-      }
-&nbsp;
-<span class="cstat-no" title="statement not covered" >      return (</span>
-        &lt;div className="min-h-screen flex items-center justify-center bg-gray-50"&gt;
-          &lt;div className="max-w-md w-full bg-white rounded-lg shadow-lg p-6 text-center"&gt;
-            &lt;AlertTriangle className="mx-auto h-12 w-12 text-red-500 mb-4" /&gt;
-            &lt;h2 className="text-xl font-semibold text-gray-900 mb-2"&gt;
-              Connection Error
-            &lt;/h2&gt;
-            &lt;p className="text-gray-600 mb-4"&gt;
-              Unable to establish blockchain connection. This may be due to network issues or configuration problems.
-            &lt;/p&gt;
-            &lt;button
-              onClick={this.handleRetry}
-              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-            &gt;
-              &lt;RefreshCw className="w-4 h-4 mr-2" /&gt;
-              Retry Connection
-            &lt;/button&gt;
-            {process.env.NODE_ENV === 'development' &amp;&amp; this.state.error &amp;&amp; (
-              &lt;details className="mt-4 text-left"&gt;
-                &lt;summary className="cursor-pointer text-sm text-gray-500"&gt;
-                  Technical Details
-                &lt;/summary&gt;
-                &lt;pre className="mt-2 text-xs bg-gray-100 p-2 rounded overflow-auto"&gt;
-                  {this.state.error.toString()}
-                  {this.state.errorInfo?.componentStack}
-                &lt;/pre&gt;
-              &lt;/details&gt;
-            )}
-          &lt;/div&gt;
+<span class="cstat-no" title="statement not covered" >      return this.props.fallback || (</span>
+        &lt;div style={{
+          padding: '40px',
+          textAlign: 'center',
+          backgroundColor: '#fef2f2',
+          border: '1px solid #fecaca',
+          borderRadius: '8px',
+          margin: '20px'
+        }}&gt;
+          &lt;h2 style={{ color: '#dc2626', marginBottom: '16px' }}&gt;
+            Something went wrong
+          &lt;/h2&gt;
+          &lt;p style={{ color: '#7f1d1d', marginBottom: '16px' }}&gt;
+            An unexpected error occurred. Please refresh the page and try again.
+          &lt;/p&gt;
+          &lt;button
+            onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >window.location.reload()}</span>
+            style={{
+              backgroundColor: '#dc2626',
+              color: 'white',
+              padding: '8px 16px',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          &gt;
+            Refresh Page
+          &lt;/button&gt;
+          {process.env.NODE_ENV === 'development' &amp;&amp; this.state.error &amp;&amp; (
+            &lt;details style={{ marginTop: '20px', textAlign: 'left' }}&gt;
+              &lt;summary style={{ cursor: 'pointer', fontWeight: 'bold' }}&gt;
+                Error Details (Development Only)
+              &lt;/summary&gt;
+              &lt;pre style={{
+                backgroundColor: '#f3f4f6',
+                padding: '10px',
+                borderRadius: '4px',
+                fontSize: '12px',
+                overflow: 'auto',
+                marginTop: '10px'
+              }}&gt;
+                {this.state.error.stack}
+              &lt;/pre&gt;
+            &lt;/details&gt;
+          )}
         &lt;/div&gt;
       );
     }
@@ -298,7 +361,7 @@ export default ErrorBoundary;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-07T16:22:58.095Z
+                at 2025-06-07T16:39:50.216Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
