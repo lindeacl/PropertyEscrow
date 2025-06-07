@@ -50,9 +50,9 @@ contract EscrowFactory is IEscrowFactory, Ownable, ReentrancyGuard {
      * @return escrowContract The address of the created escrow contract
      * @return escrowId The ID of the created escrow
      */
-    function createEscrow(
-        EscrowStructs.CreateEscrowParams calldata params
-    ) external override nonReentrant returns (address escrowContract, uint256 escrowId) {
+    function _createEscrowWithStruct(
+        EscrowStructs.CreateEscrowParams memory params
+    ) internal returns (address escrowContract, uint256 escrowId) {
         // Validate token is whitelisted
         require(whitelistedTokens[params.tokenAddress], "Token not whitelisted");
 
@@ -144,6 +144,18 @@ contract EscrowFactory is IEscrowFactory, Ownable, ReentrancyGuard {
     function getEscrowContract(uint256 escrowId) external view override returns (address) {
         require(escrowId < escrowCounter, "Invalid escrow ID");
         return escrowContracts[escrowId];
+    }
+
+    /**
+     * @dev Creates a new escrow contract using struct parameters (public interface)
+     * @param params The escrow creation parameters
+     * @return escrowContract The address of the created escrow contract
+     * @return escrowId The ID of the created escrow
+     */
+    function createEscrow(
+        EscrowStructs.CreateEscrowParams calldata params
+    ) external override nonReentrant returns (address escrowContract, uint256 escrowId) {
+        return _createEscrowWithStruct(params);
     }
 
     /**
