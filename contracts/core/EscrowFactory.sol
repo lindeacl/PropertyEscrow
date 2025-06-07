@@ -147,6 +147,55 @@ contract EscrowFactory is IEscrowFactory, Ownable, ReentrancyGuard {
     }
 
     /**
+     * @dev Legacy method for backward compatibility with individual parameters
+     * @param propertyId The property identifier
+     * @param buyer The buyer's address
+     * @param seller The seller's address
+     * @param agent The agent's address
+     * @param arbiter The arbiter's address
+     * @param tokenAddress The token contract address
+     * @param amount The escrow amount
+     * @param deadline The deposit deadline
+     * @param description The property description
+     * @return escrowContract The address of the created escrow contract
+     * @return escrowId The ID of the created escrow
+     */
+    function createEscrowLegacy(
+        string memory propertyId,
+        address buyer,
+        address seller,
+        address agent,
+        address arbiter,
+        address tokenAddress,
+        uint256 amount,
+        uint256 deadline,
+        string memory description
+    ) external nonReentrant returns (address escrowContract, uint256 escrowId) {
+        // Convert to struct format and call main function
+        EscrowStructs.CreateEscrowParams memory params = EscrowStructs.CreateEscrowParams({
+            buyer: buyer,
+            seller: seller,
+            agent: agent,
+            arbiter: arbiter,
+            tokenAddress: tokenAddress,
+            depositAmount: amount,
+            agentFee: (amount * 100) / 10000, // 1% agent fee
+            platformFee: platformFee,
+            property: EscrowStructs.Property({
+                propertyId: propertyId,
+                description: description,
+                salePrice: amount,
+                documentHash: "",
+                verified: false
+            }),
+            depositDeadline: deadline,
+            verificationDeadline: deadline + 7 days
+        });
+        
+        return _createEscrowWithStruct(params);
+    }
+
+    /**
      * @dev Checks if a token is whitelisted
      * @param token The token address to check
      * @return Whether the token is whitelisted
