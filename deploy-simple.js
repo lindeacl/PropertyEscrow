@@ -4,7 +4,8 @@ const fs = require("fs");
 async function main() {
   console.log("🚀 Deploying Property Escrow Platform...");
 
-  // Connect to local network
+  // NOTE: This script uses local blockchain for testing only
+  // Production deployments use Polygon network via Alchemy
   const provider = new ethers.JsonRpcProvider("http://localhost:8545");
   const deployer = new ethers.Wallet("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80", provider);
   const agent = new ethers.Wallet("0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d", provider);

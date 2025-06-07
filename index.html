@@ -125,8 +125,8 @@
         <div class="network-info">
             <div class="metric">
                 <div class="metric-value">🌐</div>
-                <div>Local Blockchain</div>
-                <div>Port 8545</div>
+                <div>Polygon Network</div>
+                <div>Via Alchemy</div>
             </div>
             <div class="metric">
                 <div class="metric-value">24</div>
@@ -181,30 +181,19 @@
         </div>
 
         <div class="actions">
-            <button class="button" onclick="window.open('http://localhost:8545', '_blank')">
-                🌐 View Blockchain Network
+            <button class="button" onclick="window.open('https://polygonscan.com', '_blank')">
+                🌐 View Polygon Network
             </button>
-            <button class="button" onclick="alert('Ready for Polygon deployment!')">
-                🚀 Deploy to Polygon
+            <button class="button" onclick="window.open('frontend/', '_blank')">
+                🚀 Open Escrow Platform
             </button>
         </div>
     </div>
 
     <script>
-        // Display dynamic connection status
-        setTimeout(() => {
-            fetch('http://localhost:8545', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({jsonrpc: '2.0', method: 'eth_blockNumber', params: [], id: 1})})
-                .then(response => response.json())
-                .then(data => {
-                    if (data.result) {
-                        console.log('✅ Blockchain network connected and running');
-                        console.log('📊 Current block:', parseInt(data.result, 16));
-                    }
-                })
-                .catch(error => {
-                    console.log('ℹ️ Network status check complete');
-                });
-        }, 1000);
+        // Platform ready for Polygon deployment
+        console.log('✅ Property Escrow Platform ready for Alchemy integration');
+        console.log('📊 Configure REACT_APP_ALCHEMY_RPC_URL in environment to connect');
     </script>
 </body>
 </html>
