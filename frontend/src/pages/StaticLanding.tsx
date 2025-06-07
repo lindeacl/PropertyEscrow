@@ -46,7 +46,11 @@ const StaticLanding: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #eff6ff 0%, #ffffff 50%, #faf5ff 100%)',
+      fontFamily: 'Inter, system-ui, sans-serif'
+    }}>
       {/* Connection Status Bar */}
       {testing && (
         <div className="bg-yellow-50 border-b border-yellow-200 text-center py-2">
@@ -66,44 +70,126 @@ const StaticLanding: React.FC = () => {
       )}
 
       {/* Navigation */}
-      <nav className="bg-white/90 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Shield className="h-8 w-8 text-blue-600" />
-              <span className="ml-2 text-xl font-bold text-gray-900">PropertyEscrow</span>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">Secure Property Transactions</span>
-              <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                Connect Wallet
-              </button>
-            </div>
+      <nav style={{
+        background: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        borderBottom: '1px solid #e5e7eb',
+        position: 'sticky',
+        top: 0,
+        zIndex: 50
+      }}>
+        <div style={{
+          maxWidth: '1280px',
+          margin: '0 auto',
+          padding: '0 24px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          height: '64px'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Shield style={{ height: '32px', width: '32px', color: '#2563eb' }} />
+            <span style={{ 
+              marginLeft: '8px', 
+              fontSize: '20px', 
+              fontWeight: 'bold', 
+              color: '#111827' 
+            }}>PropertyEscrow</span>
+          </div>
+          
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <span style={{ fontSize: '14px', color: '#6b7280' }}>Secure Property Transactions</span>
+            <button style={{
+              background: '#2563eb',
+              color: 'white',
+              padding: '8px 24px',
+              borderRadius: '8px',
+              border: 'none',
+              fontWeight: '500',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}>
+              Connect Wallet
+            </button>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-20 pb-32 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6">
+      <section style={{
+        position: 'relative',
+        paddingTop: '80px',
+        paddingBottom: '128px',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          maxWidth: '1280px',
+          margin: '0 auto',
+          padding: '0 24px'
+        }}>
+          <div style={{ textAlign: 'center' }}>
+            <h1 style={{
+              fontSize: '4rem',
+              fontWeight: 'bold',
+              color: '#111827',
+              marginBottom: '24px',
+              lineHeight: '1.1'
+            }}>
               Secure Property
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+              <span style={{
+                background: 'linear-gradient(to right, #2563eb, #9333ea)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                color: 'transparent'
+              }}>
                 {" "}Escrow
               </span>
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            <p style={{
+              fontSize: '20px',
+              color: '#6b7280',
+              marginBottom: '32px',
+              maxWidth: '768px',
+              margin: '0 auto 32px auto',
+              lineHeight: '1.6'
+            }}>
               Revolutionary blockchain-powered escrow platform that simplifies complex real estate 
               transactions with enterprise-grade security and transparency.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center justify-center">
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '16px',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              <button style={{
+                background: '#2563eb',
+                color: 'white',
+                padding: '16px 32px',
+                borderRadius: '8px',
+                border: 'none',
+                fontWeight: '500',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                transition: 'all 0.2s'
+              }}>
                 Start Escrow Transaction
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRight style={{ height: '20px', width: '20px' }} />
               </button>
-              <button className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg hover:border-gray-400 transition-colors font-medium">
+              <button style={{
+                border: '2px solid #d1d5db',
+                color: '#374151',
+                padding: '16px 32px',
+                borderRadius: '8px',
+                background: 'transparent',
+                fontWeight: '500',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}>
                 View Demo
               </button>
             </div>
@@ -112,21 +198,63 @@ const StaticLanding: React.FC = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      <section style={{
+        padding: '80px 0',
+        backgroundColor: 'white'
+      }}>
+        <div style={{
+          maxWidth: '1280px',
+          margin: '0 auto',
+          padding: '0 24px'
+        }}>
+          <div style={{
+            textAlign: 'center',
+            marginBottom: '64px'
+          }}>
+            <h2 style={{
+              fontSize: '2.5rem',
+              fontWeight: 'bold',
+              color: '#111827',
+              marginBottom: '16px'
+            }}>
               Enterprise-Grade Features
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p style={{
+              fontSize: '20px',
+              color: '#6b7280',
+              maxWidth: '768px',
+              margin: '0 auto'
+            }}>
               Built for professionals who demand security, transparency, and efficiency in property transactions.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-8 rounded-2xl border border-gray-200 hover:shadow-lg transition-shadow">
-              <Shield className="h-12 w-12 text-blue-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Military-Grade Security</h3>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '32px'
+          }}>
+            <div style={{
+              textAlign: 'center',
+              padding: '32px',
+              borderRadius: '16px',
+              border: '1px solid #e5e7eb',
+              backgroundColor: 'white',
+              transition: 'all 0.2s',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+            }}>
+              <Shield style={{ 
+                height: '48px', 
+                width: '48px', 
+                color: '#2563eb', 
+                margin: '0 auto 16px auto' 
+              }} />
+              <h3 style={{
+                fontSize: '20px',
+                fontWeight: '600',
+                color: '#111827',
+                marginBottom: '8px'
+              }}>Military-Grade Security</h3>
               <p className="text-gray-600">Advanced encryption and smart contract validation ensure your funds are completely secure.</p>
             </div>
 
