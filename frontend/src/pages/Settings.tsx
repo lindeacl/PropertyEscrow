@@ -5,8 +5,6 @@ import {
   Shield, 
   Bell, 
   Wallet, 
-  Eye,
-  EyeOff,
   CheckCircle,
   AlertCircle,
   Copy,
@@ -33,7 +31,7 @@ const Settings: React.FC = () => {
     documentStatus: 'Pending',
     lastUpdated: '2025-05-25'
   });
-  const [showPrivateKey, setShowPrivateKey] = useState(false);
+  // const [showPrivateKey, setShowPrivateKey] = useState(false); // Reserved for future private key display
 
   useEffect(() => {
     // Load user preferences from localStorage
