@@ -35,7 +35,7 @@ class Logger {
   private isDevelopment = process.env.NODE_ENV === 'development';
 
   private formatLog(entry: LogEntry): string {
-    const { timestamp, level, category, action, data, error, txHash, userAddress } = entry;
+    const { timestamp, level, category, action, txHash, userAddress } = entry;
     
     let logMessage = `[${timestamp}] [${level}] [${category}] ${action}`;
     
