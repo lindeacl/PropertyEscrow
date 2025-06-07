@@ -14,6 +14,8 @@ import Dashboard from './pages/Dashboard';
 import CreateEscrow from './pages/CreateEscrow';
 import EscrowDetails from './pages/EscrowDetails';
 import Settings from './pages/Settings';
+import ConnectionTest from './components/ConnectionTest';
+import ConnectionDiagnostic from './pages/ConnectionDiagnostic';
 
 function App() {
   return (
@@ -46,6 +48,7 @@ function App() {
                 </WalletProvider>
               } />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/diagnostic" element={<ConnectionDiagnostic />} />
             </Routes>
             <Toaster 
               position="top-right"
