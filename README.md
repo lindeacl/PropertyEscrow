@@ -37,13 +37,34 @@ Edit `.env.local` and set your Alchemy RPC URL:
 REACT_APP_ALCHEMY_RPC_URL=https://polygon-mainnet.g.alchemy.com/v2/YOUR_API_KEY_HERE
 ```
 
-4. **Start frontend development server**
+4. **Start services**
+
+**Production Landing Page (Port 5000):**
+```bash
+python3 -m http.server 5000 --bind 0.0.0.0
+```
+
+**React Development Server (Port 3000):**
 ```bash
 cd frontend && npm start
 ```
 
 5. **Access the application**
-- Web Interface: http://localhost:5000
+- Production Landing Page: http://localhost:5000
+- React Development Server: http://localhost:3000
+
+## Port Configuration
+
+| Service | Port | Purpose |
+|---------|------|---------|
+| PropertyEscrow Server | 5000 | Professional landing page with enhanced styling |
+| React Development | 3000 | Frontend development server |
+| Smart Contract Tests | Manual | Run via `npx hardhat test` when needed |
+
+**Port Configuration Files:**
+- Frontend port: Set in `frontend/.env` (PORT=3000)
+- Package.json scripts: No PORT variables (use .env only)
+- Production server: Port 5000 (PropertyEscrow landing page)
 
 ### MetaMask Setup
 
