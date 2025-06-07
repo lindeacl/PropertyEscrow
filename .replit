@@ -59,6 +59,10 @@ args = "Accessible Frontend Server"
 task = "workflow.run"
 args = "Frontend Development Server"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Static Server"
+
 [[workflows.workflow]]
 name = "Hardhat Development Server"
 author = "agent"
@@ -158,6 +162,15 @@ author = "agent"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd frontend && HOST=0.0.0.0 PORT=5000 npm start"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "Static Server"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd frontend && npx serve -s build -l 5000 -H 0.0.0.0"
 waitForPort = 5000
 
 [deployment]

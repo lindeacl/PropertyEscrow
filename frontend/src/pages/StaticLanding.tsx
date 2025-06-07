@@ -53,17 +53,32 @@ const StaticLanding: React.FC = () => {
     }}>
       {/* Connection Status Bar */}
       {testing && (
-        <div className="bg-yellow-50 border-b border-yellow-200 text-center py-2">
-          <span className="text-yellow-800 text-sm">Testing blockchain connection...</span>
+        <div style={{
+          backgroundColor: '#fefce8',
+          borderBottom: '1px solid #fde047',
+          textAlign: 'center',
+          padding: '8px 0'
+        }}>
+          <span style={{
+            color: '#92400e',
+            fontSize: '14px'
+          }}>Testing blockchain connection...</span>
         </div>
       )}
       
       {connectionTest && (
-        <div className={`border-b text-center py-2 text-sm ${
-          connectionTest.blockchain.success && connectionTest.contracts.success 
-            ? 'bg-green-50 border-green-200 text-green-800'
-            : 'bg-red-50 border-red-200 text-red-800'
-        }`}>
+        <div style={{
+          borderBottom: '1px solid',
+          textAlign: 'center',
+          padding: '8px 0',
+          fontSize: '14px',
+          backgroundColor: connectionTest.blockchain.success && connectionTest.contracts.success 
+            ? '#ecfdf5' : '#fef2f2',
+          borderColor: connectionTest.blockchain.success && connectionTest.contracts.success 
+            ? '#bbf7d0' : '#fecaca',
+          color: connectionTest.blockchain.success && connectionTest.contracts.success 
+            ? '#166534' : '#991b1b'
+        }}>
           Blockchain: {connectionTest.blockchain.success ? '✓ ' + (connectionTest.blockchain.message || 'Connected') : '✗ ' + (connectionTest.blockchain.error || 'Unavailable')} | 
           Contracts: {connectionTest.contracts.success ? '✓ ' + (connectionTest.contracts.message || 'Deployed') : '✗ ' + (connectionTest.contracts.error || 'Unavailable')}
         </div>
@@ -561,51 +576,104 @@ const StaticLanding: React.FC = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
+      <footer style={{
+        backgroundColor: '#111827',
+        color: 'white',
+        padding: '64px 0'
+      }}>
+        <div style={{
+          maxWidth: '1280px',
+          margin: '0 auto',
+          padding: '0 24px'
+        }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gap: '32px'
+          }}>
             <div>
-              <div className="flex items-center mb-4">
-                <Shield className="h-8 w-8 text-blue-400" />
-                <span className="ml-2 text-xl font-bold">PropertyEscrow</span>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                marginBottom: '16px'
+              }}>
+                <Shield style={{ height: '32px', width: '32px', color: '#60a5fa' }} />
+                <span style={{
+                  marginLeft: '8px',
+                  fontSize: '20px',
+                  fontWeight: 'bold'
+                }}>PropertyEscrow</span>
               </div>
-              <p className="text-gray-400">
+              <p style={{
+                color: '#9ca3af',
+                lineHeight: '1.6'
+              }}>
                 Securing the future of property transactions with blockchain technology.
               </p>
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold mb-4">Platform</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li>Create Escrow</li>
-                <li>Dashboard</li>
-                <li>Transaction History</li>
-                <li>Security Features</li>
+              <h3 style={{
+                fontSize: '18px',
+                fontWeight: '600',
+                marginBottom: '16px'
+              }}>Platform</h3>
+              <ul style={{
+                listStyle: 'none',
+                padding: 0,
+                margin: 0
+              }}>
+                <li style={{ marginBottom: '8px', color: '#9ca3af' }}>Create Escrow</li>
+                <li style={{ marginBottom: '8px', color: '#9ca3af' }}>Dashboard</li>
+                <li style={{ marginBottom: '8px', color: '#9ca3af' }}>Transaction History</li>
+                <li style={{ marginBottom: '8px', color: '#9ca3af' }}>Security Features</li>
               </ul>
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold mb-4">Support</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li>Documentation</li>
-                <li>Help Center</li>
-                <li>Contact Support</li>
-                <li>Status Page</li>
+              <h3 style={{
+                fontSize: '18px',
+                fontWeight: '600',
+                marginBottom: '16px'
+              }}>Support</h3>
+              <ul style={{
+                listStyle: 'none',
+                padding: 0,
+                margin: 0
+              }}>
+                <li style={{ marginBottom: '8px', color: '#9ca3af' }}>Documentation</li>
+                <li style={{ marginBottom: '8px', color: '#9ca3af' }}>Help Center</li>
+                <li style={{ marginBottom: '8px', color: '#9ca3af' }}>Contact Support</li>
+                <li style={{ marginBottom: '8px', color: '#9ca3af' }}>Status Page</li>
               </ul>
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold mb-4">Company</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li>About Us</li>
-                <li>Security</li>
-                <li>Privacy Policy</li>
-                <li>Terms of Service</li>
+              <h3 style={{
+                fontSize: '18px',
+                fontWeight: '600',
+                marginBottom: '16px'
+              }}>Company</h3>
+              <ul style={{
+                listStyle: 'none',
+                padding: 0,
+                margin: 0
+              }}>
+                <li style={{ marginBottom: '8px', color: '#9ca3af' }}>About Us</li>
+                <li style={{ marginBottom: '8px', color: '#9ca3af' }}>Security</li>
+                <li style={{ marginBottom: '8px', color: '#9ca3af' }}>Privacy Policy</li>
+                <li style={{ marginBottom: '8px', color: '#9ca3af' }}>Terms of Service</li>
               </ul>
             </div>
           </div>
 
-          <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+          <div style={{
+            borderTop: '1px solid #374151',
+            marginTop: '48px',
+            paddingTop: '32px',
+            textAlign: 'center',
+            color: '#9ca3af'
+          }}>
             <p>&copy; 2024 PropertyEscrow. All rights reserved. Built with enterprise-grade security.</p>
           </div>
         </div>
