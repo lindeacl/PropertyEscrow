@@ -83,26 +83,31 @@ export class RobustProvider {
       }
     }
 
-    // Try proxy server first
-    try {
-      const proxyProvider = await this.createProviderWithRetry('http://127.0.0.1:8546/rpc');
-      if (proxyProvider) {
-        this.instance = proxyProvider;
-        return proxyProvider;
+    // Try Alchemy provider first
+    const alchemyUrl = process.env.REACT_APP_ALCHEMY_RPC_URL;
+    if (alchemyUrl && alchemyUrl !== 'https://polygon-mainnet.g.alchemy.com/v2/YOUR_API_KEY_HERE') {
+      try {
+        const alchemyProvider = await this.createProviderWithRetry(alchemyUrl);
+        if (alchemyProvider) {
+          this.instance = alchemyProvider;
+          console.log('Connected to Alchemy provider');
+          return alchemyProvider;
+        }
+      } catch (error) {
+        console.warn('Alchemy provider failed:', error);
       }
-    } catch (error) {
-      console.warn('Proxy provider failed:', error);
     }
 
-    // Try direct connection as fallback
+    // Try public Polygon RPC as fallback
     try {
-      const directProvider = await this.createProviderWithRetry('http://127.0.0.1:8545');
-      if (directProvider) {
-        this.instance = directProvider;
-        return directProvider;
+      const polygonProvider = await this.createProviderWithRetry('https://polygon-rpc.com/');
+      if (polygonProvider) {
+        this.instance = polygonProvider;
+        console.log('Connected to public Polygon RPC');
+        return polygonProvider;
       }
     } catch (error) {
-      console.warn('Direct provider failed:', error);
+      console.warn('Public Polygon RPC failed:', error);
     }
 
     // Try MetaMask as final fallback
@@ -111,6 +116,7 @@ export class RobustProvider {
         const metamaskProvider = new ethers.BrowserProvider(window.ethereum);
         await this.withTimeout(metamaskProvider.getBlockNumber(), 3000);
         this.instance = metamaskProvider;
+        console.log('Connected via MetaMask wallet');
         return metamaskProvider;
       } catch (error) {
         console.warn('MetaMask provider failed:', error);

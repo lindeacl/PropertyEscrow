@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/51</span>
+                <span class='fraction'>0/54</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/16</span>
+                <span class='fraction'>0/20</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/50</span>
+                <span class='fraction'>0/53</span>
             </div>
         
             
@@ -159,7 +159,12 @@
 <a name='L94'></a><a href='#L94'>94</a>
 <a name='L95'></a><a href='#L95'>95</a>
 <a name='L96'></a><a href='#L96'>96</a>
-<a name='L97'></a><a href='#L97'>97</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -201,6 +206,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -259,14 +269,14 @@
 import { RobustProvider } from './robustProvider';
 &nbsp;
 let cachedProvider: ethers.Provider | null = <span class="cstat-no" title="statement not covered" >null;</span>
-let connectionMode: 'metamask' | 'local' | 'offline' = <span class="cstat-no" title="statement not covered" >'offline';</span>
+let connectionMode: 'metamask' | 'alchemy' | 'offline' = <span class="cstat-no" title="statement not covered" >'offline';</span>
 &nbsp;
 export const getProvider = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >  if (cachedProvider &amp;&amp; connectionMode !== 'offline') {</span>
 <span class="cstat-no" title="statement not covered" >    return cachedProvider;</span>
   }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  console.log('Initializing robust provider connection...');</span>
+<span class="cstat-no" title="statement not covered" >  console.log('Initializing Alchemy provider connection...');</span>
   
 <span class="cstat-no" title="statement not covered" >  try {</span>
     const provider = <span class="cstat-no" title="statement not covered" >await RobustProvider.getProvider();</span>
@@ -279,8 +289,8 @@ export const getProvider = <span class="cstat-no" title="statement not covered" 
 <span class="cstat-no" title="statement not covered" >        connectionMode = 'metamask';</span>
 <span class="cstat-no" title="statement not covered" >        console.log('Connected via MetaMask wallet');</span>
       } else {
-<span class="cstat-no" title="statement not covered" >        connectionMode = 'local';</span>
-<span class="cstat-no" title="statement not covered" >        console.log('Connected to local blockchain network');</span>
+<span class="cstat-no" title="statement not covered" >        connectionMode = 'alchemy';</span>
+<span class="cstat-no" title="statement not covered" >        console.log('Connected to Alchemy blockchain network');</span>
       }
       
 <span class="cstat-no" title="statement not covered" >      return cachedProvider;</span>
@@ -295,9 +305,14 @@ export const getProvider = <span class="cstat-no" title="statement not covered" 
   }
 };
 &nbsp;
-export const connectToLocalNetwork = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {</span>
+export const connectToAlchemyNetwork = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >  try {</span>
-    const provider = <span class="cstat-no" title="statement not covered" >new ethers.JsonRpcProvider('http://127.0.0.1:8546/rpc', undefined, {</span>
+    const alchemyUrl = <span class="cstat-no" title="statement not covered" >process.env.REACT_APP_ALCHEMY_RPC_URL;</span>
+<span class="cstat-no" title="statement not covered" >    if (!alchemyUrl || alchemyUrl === 'https://polygon-mainnet.g.alchemy.com/v2/YOUR_API_KEY_HERE') {</span>
+<span class="cstat-no" title="statement not covered" >      throw new Error('Alchemy RPC URL not configured. Please set REACT_APP_ALCHEMY_RPC_URL');</span>
+    }
+&nbsp;
+    const provider = <span class="cstat-no" title="statement not covered" >new ethers.JsonRpcProvider(alchemyUrl, undefined, {</span>
       staticNetwork: true
     });
     
@@ -305,20 +320,20 @@ export const connectToLocalNetwork = <span class="cstat-no" title="statement not
     const blockNumber = <span class="cstat-no" title="statement not covered" >await Promise.race([</span>
       provider.getBlockNumber(),
       new Promise(<span class="fstat-no" title="function not covered" >(_</span>, reject) =&gt; 
-<span class="cstat-no" title="statement not covered" >        setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >reject(new Error('Connection timeout')),</span> 3000)</span>
+<span class="cstat-no" title="statement not covered" >        setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >reject(new Error('Connection timeout')),</span> 5000)</span>
       )
     ]);
     
 <span class="cstat-no" title="statement not covered" >    if (typeof blockNumber === 'number') {</span>
 <span class="cstat-no" title="statement not covered" >      cachedProvider = provider;</span>
-<span class="cstat-no" title="statement not covered" >      connectionMode = 'local';</span>
-<span class="cstat-no" title="statement not covered" >      console.log('Local network connected, block:', blockNumber);</span>
+<span class="cstat-no" title="statement not covered" >      connectionMode = 'alchemy';</span>
+<span class="cstat-no" title="statement not covered" >      console.log('Alchemy network connected, block:', blockNumber);</span>
 <span class="cstat-no" title="statement not covered" >      return provider;</span>
     } else {
 <span class="cstat-no" title="statement not covered" >      throw new Error('Invalid response from blockchain');</span>
     }
   } catch (error) {
-<span class="cstat-no" title="statement not covered" >    console.warn('Local network unavailable:', error);</span>
+<span class="cstat-no" title="statement not covered" >    console.warn('Alchemy network unavailable:', error);</span>
 <span class="cstat-no" title="statement not covered" >    connectionMode = 'offline';</span>
 <span class="cstat-no" title="statement not covered" >    cachedProvider = null;</span>
 <span class="cstat-no" title="statement not covered" >    throw error;</span>
@@ -358,7 +373,7 @@ export const resetProvider = <span class="cstat-no" title="statement not covered
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-07T14:35:22.734Z
+                at 2025-06-07T14:43:39.730Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

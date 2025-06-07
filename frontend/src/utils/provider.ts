@@ -2,14 +2,14 @@ import { ethers } from 'ethers';
 import { RobustProvider } from './robustProvider';
 
 let cachedProvider: ethers.Provider | null = null;
-let connectionMode: 'metamask' | 'local' | 'offline' = 'offline';
+let connectionMode: 'metamask' | 'alchemy' | 'offline' = 'offline';
 
 export const getProvider = async () => {
   if (cachedProvider && connectionMode !== 'offline') {
     return cachedProvider;
   }
 
-  console.log('Initializing robust provider connection...');
+  console.log('Initializing Alchemy provider connection...');
   
   try {
     const provider = await RobustProvider.getProvider();
@@ -22,8 +22,8 @@ export const getProvider = async () => {
         connectionMode = 'metamask';
         console.log('Connected via MetaMask wallet');
       } else {
-        connectionMode = 'local';
-        console.log('Connected to local blockchain network');
+        connectionMode = 'alchemy';
+        console.log('Connected to Alchemy blockchain network');
       }
       
       return cachedProvider;
@@ -38,9 +38,14 @@ export const getProvider = async () => {
   }
 };
 
-export const connectToLocalNetwork = async () => {
+export const connectToAlchemyNetwork = async () => {
   try {
-    const provider = new ethers.JsonRpcProvider('http://127.0.0.1:8546/rpc', undefined, {
+    const alchemyUrl = process.env.REACT_APP_ALCHEMY_RPC_URL;
+    if (!alchemyUrl || alchemyUrl === 'https://polygon-mainnet.g.alchemy.com/v2/YOUR_API_KEY_HERE') {
+      throw new Error('Alchemy RPC URL not configured. Please set REACT_APP_ALCHEMY_RPC_URL');
+    }
+
+    const provider = new ethers.JsonRpcProvider(alchemyUrl, undefined, {
       staticNetwork: true
     });
     
@@ -48,20 +53,20 @@ export const connectToLocalNetwork = async () => {
     const blockNumber = await Promise.race([
       provider.getBlockNumber(),
       new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Connection timeout')), 3000)
+        setTimeout(() => reject(new Error('Connection timeout')), 5000)
       )
     ]);
     
     if (typeof blockNumber === 'number') {
       cachedProvider = provider;
-      connectionMode = 'local';
-      console.log('Local network connected, block:', blockNumber);
+      connectionMode = 'alchemy';
+      console.log('Alchemy network connected, block:', blockNumber);
       return provider;
     } else {
       throw new Error('Invalid response from blockchain');
     }
   } catch (error) {
-    console.warn('Local network unavailable:', error);
+    console.warn('Alchemy network unavailable:', error);
     connectionMode = 'offline';
     cachedProvider = null;
     throw error;

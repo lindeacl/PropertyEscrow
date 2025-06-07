@@ -1,15 +1,4 @@
 export const NETWORK_CONFIG = {
-  localhost: {
-    chainId: 31337,
-    chainName: 'Localhost 8545',
-    nativeCurrency: {
-      name: 'Ethereum',
-      symbol: 'ETH',
-      decimals: 18,
-    },
-    rpcUrls: ['http://127.0.0.1:8546/rpc'],
-    blockExplorerUrls: null,
-  },
   polygon: {
     chainId: 137,
     chainName: 'Polygon Mainnet',
@@ -18,9 +7,20 @@ export const NETWORK_CONFIG = {
       symbol: 'MATIC',
       decimals: 18,
     },
-    rpcUrls: ['https://polygon-rpc.com/'],
+    rpcUrls: [process.env.REACT_APP_ALCHEMY_RPC_URL || 'https://polygon-rpc.com/'],
     blockExplorerUrls: ['https://polygonscan.com/'],
+  },
+  polygonMumbai: {
+    chainId: 80001,
+    chainName: 'Polygon Mumbai Testnet',
+    nativeCurrency: {
+      name: 'MATIC',
+      symbol: 'MATIC',
+      decimals: 18,
+    },
+    rpcUrls: ['https://polygon-mumbai.g.alchemy.com/v2/demo'],
+    blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
   },
 };
 
-export const DEFAULT_NETWORK = 'localhost';
+export const DEFAULT_NETWORK = 'polygon';

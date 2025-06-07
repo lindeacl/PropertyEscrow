@@ -5,7 +5,7 @@ import { AlertCircle, CheckCircle, Loader, RefreshCw } from 'lucide-react';
 
 const ConnectionDiagnostic: React.FC = () => {
   const [tests, setTests] = useState<Record<string, 'pending' | 'success' | 'error'>>({
-    proxy: 'pending',
+    alchemy: 'pending',
     jsonRpc: 'pending',
     blockchain: 'pending',
     provider: 'pending'
@@ -27,7 +27,7 @@ const ConnectionDiagnostic: React.FC = () => {
     
     // Reset all tests
     const initialTests: Record<string, 'pending' | 'success' | 'error'> = { 
-      proxy: 'pending', 
+      alchemy: 'pending', 
       jsonRpc: 'pending', 
       blockchain: 'pending', 
       provider: 'pending' 
@@ -35,49 +35,33 @@ const ConnectionDiagnostic: React.FC = () => {
     setTests(initialTests);
     setResults({});
 
-    // Test 1: Proxy server connectivity
-    try {
-      const proxyResponse = await fetch('http://127.0.0.1:8546/api/status', {
-        method: 'GET',
-        headers: { 'Accept': 'application/json' }
-      });
-
-      if (proxyResponse.ok) {
-        const responseText = await proxyResponse.text();
-        if (responseText.trim()) {
-          try {
-            const data = JSON.parse(responseText);
-            updateTest('proxy', 'success', `Proxy server operational. Response: ${JSON.stringify(data).substring(0, 100)}...`);
-          } catch {
-            updateTest('proxy', 'error', 'Proxy returned invalid JSON');
-          }
-        } else {
-          updateTest('proxy', 'error', 'Proxy returned empty response');
-        }
-      } else {
-        updateTest('proxy', 'error', `Proxy server error: ${proxyResponse.status} ${proxyResponse.statusText}`);
-      }
-    } catch (error) {
-      updateTest('proxy', 'error', `Proxy connection failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    // Test 1: Alchemy configuration check
+    const alchemyUrl = process.env.REACT_APP_ALCHEMY_RPC_URL;
+    if (!alchemyUrl || alchemyUrl === 'https://polygon-mainnet.g.alchemy.com/v2/YOUR_API_KEY_HERE') {
+      updateTest('alchemy', 'error', 'Alchemy RPC URL not configured. Please set REACT_APP_ALCHEMY_RPC_URL in your environment.');
+    } else {
+      updateTest('alchemy', 'success', `Alchemy RPC URL configured: ${alchemyUrl.substring(0, 50)}...`);
     }
 
-    // Test 2: JSON-RPC communication
+    // Test 2: JSON-RPC communication with Alchemy
     try {
+      const rpcUrl = alchemyUrl || 'https://polygon-rpc.com/';
       const rpcResponse = await JsonRpcValidator.safeJsonRpcCall(
-        'http://127.0.0.1:8546/rpc',
+        rpcUrl,
         'eth_chainId',
         [],
-        5000
+        10000
       );
 
       if (rpcResponse) {
         if (rpcResponse.error) {
           updateTest('jsonRpc', 'error', `RPC Error: ${JsonRpcValidator.handleJsonRpcError(rpcResponse)}`);
         } else {
-          updateTest('jsonRpc', 'success', `Chain ID retrieved: ${rpcResponse.result}`);
+          const chainId = parseInt(rpcResponse.result, 16);
+          updateTest('jsonRpc', 'success', `Chain ID retrieved: ${chainId} (${chainId === 137 ? 'Polygon Mainnet' : 'Unknown Network'})`);
         }
       } else {
-        updateTest('jsonRpc', 'error', 'JSON-RPC call returned null - possible parsing issue');
+        updateTest('jsonRpc', 'error', 'JSON-RPC call returned null - possible network issue');
       }
     } catch (error) {
       updateTest('jsonRpc', 'error', `JSON-RPC failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -85,16 +69,17 @@ const ConnectionDiagnostic: React.FC = () => {
 
     // Test 3: Blockchain data retrieval
     try {
+      const rpcUrl = alchemyUrl || 'https://polygon-rpc.com/';
       const blockResponse = await JsonRpcValidator.safeJsonRpcCall(
-        'http://127.0.0.1:8546/rpc',
+        rpcUrl,
         'eth_blockNumber',
         [],
-        5000
+        10000
       );
 
       if (blockResponse && blockResponse.result) {
         const blockNumber = parseInt(blockResponse.result, 16);
-        updateTest('blockchain', 'success', `Current block: ${blockNumber}`);
+        updateTest('blockchain', 'success', `Current block: ${blockNumber.toLocaleString()}`);
       } else {
         updateTest('blockchain', 'error', 'Failed to retrieve block number');
       }

@@ -9,7 +9,7 @@ interface ConnectionState {
   chainId: number;
   account: string | null;
   lastConnected: number;
-  connectionType: 'local' | 'metamask' | 'offline';
+  connectionType: 'alchemy' | 'metamask' | 'offline';
 }
 
 class ConnectionManager {
@@ -17,7 +17,7 @@ class ConnectionManager {
   private state: ConnectionState = {
     provider: null,
     isConnected: false,
-    chainId: 31337,
+    chainId: 137,
     account: null,
     lastConnected: 0,
     connectionType: 'offline'
@@ -63,7 +63,7 @@ class ConnectionManager {
         chainId: Number(network.chainId),
         account,
         lastConnected: Date.now(),
-        connectionType: provider instanceof ethers.BrowserProvider ? 'metamask' : 'local'
+        connectionType: provider instanceof ethers.BrowserProvider ? 'metamask' : 'alchemy'
       };
 
       this.startHealthCheck();
@@ -153,7 +153,7 @@ class ConnectionManager {
     this.state = {
       provider: null,
       isConnected: false,
-      chainId: 31337,
+      chainId: 137,
       account: null,
       lastConnected: 0,
       connectionType: 'offline'
