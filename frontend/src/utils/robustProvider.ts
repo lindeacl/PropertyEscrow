@@ -1,5 +1,7 @@
 // Robust provider with fallback strategies and enhanced error handling
 import { ethers } from 'ethers';
+import { JsonRpcValidator } from './jsonRpcValidator';
+import { SafeProviderFactory } from './safeEthersProvider';
 
 interface ProviderConfig {
   timeout: number;
@@ -35,28 +37,8 @@ export class RobustProvider {
   }
 
   static async testConnection(url: string): Promise<boolean> {
-    try {
-      const response = await this.withTimeout(
-        fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            jsonrpc: '2.0',
-            method: 'net_version',
-            params: [],
-            id: 1
-          })
-        }),
-        3000
-      );
-
-      if (!response.ok) return false;
-
-      const data = await response.json();
-      return data && (data.result !== undefined || data.error !== undefined);
-    } catch {
-      return false;
-    }
+    const response = await JsonRpcValidator.safeJsonRpcCall(url, 'net_version', [], 3000);
+    return response !== null && (response.result !== undefined || response.error !== undefined);
   }
 
   static async createProviderWithRetry(url: string): Promise<ethers.Provider | null> {
@@ -64,33 +46,15 @@ export class RobustProvider {
       try {
         console.log(`Provider creation attempt ${attempt}/${this.config.retries} for ${url}`);
 
-        // Test basic connectivity first
-        const isConnected = await this.testConnection(url);
-        if (!isConnected) {
-          throw new Error(`Connection test failed for ${url}`);
+        // Use SafeProviderFactory for JSON-validated connection
+        const provider = await SafeProviderFactory.createProvider(url);
+        
+        if (provider) {
+          console.log(`Provider created successfully for ${url}`);
+          return provider;
+        } else {
+          throw new Error(`SafeProviderFactory failed for ${url}`);
         }
-
-        // Create provider with specific configuration
-        const provider = new ethers.JsonRpcProvider(url, undefined, {
-          staticNetwork: true,
-          batchMaxCount: 1, // Disable batching to avoid JSON parsing issues
-          batchMaxSize: 1,
-          batchStallTime: 0
-        });
-
-        // Test provider functionality
-        const blockNumber = await this.withTimeout(
-          provider.getBlockNumber(),
-          this.config.timeout,
-          `Provider test timeout for ${url}`
-        );
-
-        if (typeof blockNumber !== 'number' || blockNumber < 0) {
-          throw new Error(`Invalid block number response: ${blockNumber}`);
-        }
-
-        console.log(`Provider created successfully for ${url}, block: ${blockNumber}`);
-        return provider;
 
       } catch (error) {
         console.warn(`Provider creation attempt ${attempt} failed:`, error);

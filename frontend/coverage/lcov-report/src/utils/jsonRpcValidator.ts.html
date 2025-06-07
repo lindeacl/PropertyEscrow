@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/utils/robustProvider.ts</title>
+    <title>Code coverage report for src/utils/jsonRpcValidator.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/utils</a> robustProvider.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/utils</a> jsonRpcValidator.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/54</span>
+                <span class='fraction'>0/55</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/18</span>
+                <span class='fraction'>0/51</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/51</span>
+                <span class='fraction'>0/54</span>
             </div>
         
             
@@ -193,7 +193,118 @@
 <a name='L128'></a><a href='#L128'>128</a>
 <a name='L129'></a><a href='#L129'>129</a>
 <a name='L130'></a><a href='#L130'>130</a>
-<a name='L131'></a><a href='#L131'>131</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -208,67 +319,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -285,173 +339,149 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Robust provider with fallback strategies and enhanced error handling
-import { ethers } from 'ethers';
-import { JsonRpcValidator } from './jsonRpcValidator';
-import { SafeProviderFactory } from './safeEthersProvider';
-&nbsp;
-interface ProviderConfig {
-  timeout: number;
-  retries: number;
-  retryDelay: number;
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// JSON-RPC response validation and error handling
+export interface JsonRpcResponse {
+  jsonrpc: string;
+  id: number | string;
+  result?: any;
+  error?: {
+    code: number;
+    message: string;
+    data?: any;
+  };
 }
 &nbsp;
-const DEFAULT_CONFIG: ProviderConfig = <span class="cstat-no" title="statement not covered" >{</span>
-  timeout: 5000,
-  retries: 3,
-  retryDelay: 1000
-};
-&nbsp;
-export class RobustProvider {
-  private static instance: ethers.Provider | null = <span class="cstat-no" title="statement not covered" >null;</span>
-  private static config = <span class="cstat-no" title="statement not covered" >DEFAULT_CONFIG;</span>
-&nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic async delay(ms: number): Promise&lt;void&gt; {
-<span class="cstat-no" title="statement not covered" >    return new Promise(<span class="fstat-no" title="function not covered" >re</span>solve =&gt; <span class="cstat-no" title="statement not covered" >setTimeout(resolve, ms))</span>;</span>
-  }
-&nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic async withTimeout&lt;T&gt;(
-    promise: Promise&lt;T&gt;, 
-    timeoutMs: number, 
-    errorMessage = <span class="branch-0 cbranch-no" title="branch not covered" >'Operation timeout'</span>
-  ): Promise&lt;T&gt; {
-<span class="cstat-no" title="statement not covered" >    return Promise.race([</span>
-      promise,
-      new Promise&lt;never&gt;(<span class="fstat-no" title="function not covered" >(_</span>, reject) =&gt; 
-<span class="cstat-no" title="statement not covered" >        setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >reject(new Error(errorMessage)),</span> timeoutMs)</span>
-      )
-    ]);
-  }
-&nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic async testConnection(url: string): Promise&lt;boolean&gt; {
-    const response = <span class="cstat-no" title="statement not covered" >await JsonRpcValidator.safeJsonRpcCall(url, 'net_version', [], 3000);</span>
-<span class="cstat-no" title="statement not covered" >    return response !== null &amp;&amp; (response.result !== undefined || response.error !== undefined);</span>
-  }
-&nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic async createProviderWithRetry(url: string): Promise&lt;ethers.Provider | null&gt; {
-<span class="cstat-no" title="statement not covered" >    for (let attempt = <span class="cstat-no" title="statement not covered" >1;</span> attempt &lt;= this.config.retries; attempt++) {</span>
-<span class="cstat-no" title="statement not covered" >      try {</span>
-<span class="cstat-no" title="statement not covered" >        console.log(`Provider creation attempt ${attempt}/${this.config.retries} for ${url}`);</span>
-&nbsp;
-        // Use SafeProviderFactory for JSON-validated connection
-        const provider = <span class="cstat-no" title="statement not covered" >await SafeProviderFactory.createProvider(url);</span>
-        
-<span class="cstat-no" title="statement not covered" >        if (provider) {</span>
-<span class="cstat-no" title="statement not covered" >          console.log(`Provider created successfully for ${url}`);</span>
-<span class="cstat-no" title="statement not covered" >          return provider;</span>
-        } else {
-<span class="cstat-no" title="statement not covered" >          throw new Error(`SafeProviderFactory failed for ${url}`);</span>
-        }
-&nbsp;
-      } catch (error) {
-<span class="cstat-no" title="statement not covered" >        console.warn(`Provider creation attempt ${attempt} failed:`, error);</span>
-        
-<span class="cstat-no" title="statement not covered" >        if (attempt &lt; this.config.retries) {</span>
-<span class="cstat-no" title="statement not covered" >          await this.delay(this.config.retryDelay * attempt);</span>
-<span class="cstat-no" title="statement not covered" >          continue;</span>
-        }
-        
-<span class="cstat-no" title="statement not covered" >        throw error;</span>
-      }
+export class JsonRpcValidator {
+<span class="fstat-no" title="function not covered" >  st</span>atic validateResponse(responseText: string): JsonRpcResponse | null {
+    // Check for empty or whitespace-only responses
+<span class="cstat-no" title="statement not covered" >    if (!responseText || typeof responseText !== 'string' || responseText.trim() === '') {</span>
+<span class="cstat-no" title="statement not covered" >      console.error('Empty or invalid response received');</span>
+<span class="cstat-no" title="statement not covered" >      return null;</span>
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return null;</span>
-  }
-&nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic async getProvider(): Promise&lt;ethers.Provider | null&gt; {
-<span class="cstat-no" title="statement not covered" >    if (this.instance) {</span>
-<span class="cstat-no" title="statement not covered" >      try {</span>
-        // Verify existing provider is still working
-<span class="cstat-no" title="statement not covered" >        await this.withTimeout(this.instance.getBlockNumber(), 2000);</span>
-<span class="cstat-no" title="statement not covered" >        return this.instance;</span>
-      } catch {
-<span class="cstat-no" title="statement not covered" >        console.warn('Cached provider failed, creating new one');</span>
-<span class="cstat-no" title="statement not covered" >        this.instance = null;</span>
-      }
+    // Check for common non-JSON responses
+<span class="cstat-no" title="statement not covered" >    if (responseText.startsWith('&lt;html') || responseText.startsWith('&lt;!DOCTYPE')) {</span>
+<span class="cstat-no" title="statement not covered" >      console.error('Received HTML response instead of JSON');</span>
+<span class="cstat-no" title="statement not covered" >      return null;</span>
     }
 &nbsp;
-    // Try proxy server first
+<span class="cstat-no" title="statement not covered" >    if (responseText.includes('404 Not Found') || responseText.includes('500 Internal Server Error')) {</span>
+<span class="cstat-no" title="statement not covered" >      console.error('Received HTTP error response:', responseText.substring(0, 200));</span>
+<span class="cstat-no" title="statement not covered" >      return null;</span>
+    }
+&nbsp;
+    // Attempt to parse JSON
+    let parsedResponse: any;
 <span class="cstat-no" title="statement not covered" >    try {</span>
-      const proxyProvider = <span class="cstat-no" title="statement not covered" >await this.createProviderWithRetry('http://127.0.0.1:8546/rpc');</span>
-<span class="cstat-no" title="statement not covered" >      if (proxyProvider) {</span>
-<span class="cstat-no" title="statement not covered" >        this.instance = proxyProvider;</span>
-<span class="cstat-no" title="statement not covered" >        return proxyProvider;</span>
-      }
-    } catch (error) {
-<span class="cstat-no" title="statement not covered" >      console.warn('Proxy provider failed:', error);</span>
+<span class="cstat-no" title="statement not covered" >      parsedResponse = JSON.parse(responseText);</span>
+    } catch (parseError) {
+<span class="cstat-no" title="statement not covered" >      console.error('JSON parse error:', parseError);</span>
+<span class="cstat-no" title="statement not covered" >      console.error('Response text (first 500 chars):', responseText.substring(0, 500));</span>
+<span class="cstat-no" title="statement not covered" >      return null;</span>
     }
 &nbsp;
-    // Try direct connection as fallback
+    // Validate JSON-RPC structure
+<span class="cstat-no" title="statement not covered" >    if (!this.isValidJsonRpcResponse(parsedResponse)) {</span>
+<span class="cstat-no" title="statement not covered" >      console.error('Invalid JSON-RPC response structure:', parsedResponse);</span>
+<span class="cstat-no" title="statement not covered" >      return null;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return parsedResponse as JsonRpcResponse;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  st</span>atic isValidJsonRpcResponse(obj: any): boolean {
+<span class="cstat-no" title="statement not covered" >    if (!obj || typeof obj !== 'object') {</span>
+<span class="cstat-no" title="statement not covered" >      return false;</span>
+    }
+&nbsp;
+    // Check required fields
+<span class="cstat-no" title="statement not covered" >    if (obj.jsonrpc !== '2.0') {</span>
+<span class="cstat-no" title="statement not covered" >      return false;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (obj.id === undefined &amp;&amp; obj.id !== null) {</span>
+<span class="cstat-no" title="statement not covered" >      return false;</span>
+    }
+&nbsp;
+    // Must have either result or error, but not both
+    const hasResult = <span class="cstat-no" title="statement not covered" >obj.result !== undefined;</span>
+    const hasError = <span class="cstat-no" title="statement not covered" >obj.error !== undefined;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!hasResult &amp;&amp; !hasError) {</span>
+<span class="cstat-no" title="statement not covered" >      return false;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (hasResult &amp;&amp; hasError) {</span>
+<span class="cstat-no" title="statement not covered" >      return false;</span>
+    }
+&nbsp;
+    // Validate error structure if present
+<span class="cstat-no" title="statement not covered" >    if (hasError) {</span>
+      const error = <span class="cstat-no" title="statement not covered" >obj.error;</span>
+<span class="cstat-no" title="statement not covered" >      if (!error || typeof error !== 'object') {</span>
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      if (typeof error.code !== 'number' || typeof error.message !== 'string') {</span>
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+      }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return true;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  st</span>atic async safeJsonRpcCall(
+    url: string, 
+    method: string, 
+    params: any[] = <span class="branch-0 cbranch-no" title="branch not covered" >[], </span>
+    timeout: number = <span class="branch-0 cbranch-no" title="branch not covered" >5000</span>
+  ): Promise&lt;JsonRpcResponse | null&gt; {
 <span class="cstat-no" title="statement not covered" >    try {</span>
-      const directProvider = <span class="cstat-no" title="statement not covered" >await this.createProviderWithRetry('http://127.0.0.1:8545');</span>
-<span class="cstat-no" title="statement not covered" >      if (directProvider) {</span>
-<span class="cstat-no" title="statement not covered" >        this.instance = directProvider;</span>
-<span class="cstat-no" title="statement not covered" >        return directProvider;</span>
+      const response = <span class="cstat-no" title="statement not covered" >await Promise.race([</span>
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            jsonrpc: '2.0',
+            method,
+            params,
+            id: Date.now()
+          })
+        }),
+        new Promise&lt;never&gt;(<span class="fstat-no" title="function not covered" >(_</span>, reject) =&gt; 
+<span class="cstat-no" title="statement not covered" >          setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >reject(new Error(`Request timeout after ${timeout}ms`)),</span> timeout)</span>
+        )
+      ]);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (!response.ok) {</span>
+<span class="cstat-no" title="statement not covered" >        console.error(`HTTP ${response.status}: ${response.statusText}`);</span>
+<span class="cstat-no" title="statement not covered" >        return null;</span>
       }
+&nbsp;
+      const responseText = <span class="cstat-no" title="statement not covered" >await response.text();</span>
+<span class="cstat-no" title="statement not covered" >      return this.validateResponse(responseText);</span>
     } catch (error) {
-<span class="cstat-no" title="statement not covered" >      console.warn('Direct provider failed:', error);</span>
+<span class="cstat-no" title="statement not covered" >      console.error('JSON-RPC call failed:', error);</span>
+<span class="cstat-no" title="statement not covered" >      return null;</span>
     }
+  }
 &nbsp;
-    // Try MetaMask as final fallback
-<span class="cstat-no" title="statement not covered" >    if (typeof window !== 'undefined' &amp;&amp; window.ethereum) {</span>
-<span class="cstat-no" title="statement not covered" >      try {</span>
-        const metamaskProvider = <span class="cstat-no" title="statement not covered" >new ethers.BrowserProvider(window.ethereum);</span>
-<span class="cstat-no" title="statement not covered" >        await this.withTimeout(metamaskProvider.getBlockNumber(), 3000);</span>
-<span class="cstat-no" title="statement not covered" >        this.instance = metamaskProvider;</span>
-<span class="cstat-no" title="statement not covered" >        return metamaskProvider;</span>
-      } catch (error) {
-<span class="cstat-no" title="statement not covered" >        console.warn('MetaMask provider failed:', error);</span>
+<span class="fstat-no" title="function not covered" >  st</span>atic handleJsonRpcError(response: JsonRpcResponse): string {
+<span class="cstat-no" title="statement not covered" >    if (response.error) {</span>
+      const { code, message, data } = <span class="cstat-no" title="statement not covered" >response.error;</span>
+      let errorMsg = <span class="cstat-no" title="statement not covered" >`RPC Error ${code}: ${message}`;</span>
+<span class="cstat-no" title="statement not covered" >      if (data) {</span>
+<span class="cstat-no" title="statement not covered" >        errorMsg += ` (${JSON.stringify(data)})`;</span>
       }
+<span class="cstat-no" title="statement not covered" >      return errorMsg;</span>
     }
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    console.error('All provider strategies failed');</span>
-<span class="cstat-no" title="statement not covered" >    return null;</span>
-  }
-&nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic resetProvider(): void {
-<span class="cstat-no" title="statement not covered" >    this.instance = null;</span>
-  }
-&nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic updateConfig(newConfig: Partial&lt;ProviderConfig&gt;): void {
-<span class="cstat-no" title="statement not covered" >    this.config = { ...this.config, ...newConfig };</span>
+<span class="cstat-no" title="statement not covered" >    return 'Unknown RPC error';</span>
   }
 }</pre></td></tr></table></pre>
 

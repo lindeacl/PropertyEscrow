@@ -12,68 +12,61 @@ export interface BlockchainConnection {
 let cachedConnection: BlockchainConnection | null = null;
 
 export const initializeBlockchainConnection = async (): Promise<BlockchainConnection> => {
-  if (cachedConnection?.isConnected) {
-    ConnectionDebugger.log('Using cached connection');
-    return cachedConnection;
+  const connectionManager = ConnectionManager.getInstance();
+  const state = connectionManager.getState();
+  
+  if (state.isConnected && state.provider) {
+    ConnectionDebugger.log('Using existing connection manager state');
+    return {
+      provider: state.provider,
+      isConnected: true,
+      chainId: state.chainId
+    };
   }
 
-  ConnectionDebugger.log('Initializing new blockchain connection');
+  ConnectionDebugger.log('Initializing connection through manager');
 
   try {
-    // Run diagnostic first to identify issues
-    const diagnostic = await ConnectionDebugger.runFullDiagnostic();
+    const success = await connectionManager.initialize();
     
-    if (!diagnostic.proxy.success) {
-      throw new Error(`Proxy connection failed: ${diagnostic.proxy.error}`);
+    if (success) {
+      const newState = connectionManager.getState();
+      const connection: BlockchainConnection = {
+        provider: newState.provider!,
+        isConnected: true,
+        chainId: newState.chainId
+      };
+      
+      cachedConnection = connection;
+      ConnectionDebugger.log('Connection manager initialization successful');
+      return connection;
+    } else {
+      throw new Error('Connection manager initialization failed');
     }
-    
-    if (!diagnostic.jsonRpc.success) {
-      throw new Error(`JSON-RPC connection failed: ${diagnostic.jsonRpc.error}`);
-    }
-    
-    if (!diagnostic.ethers.success) {
-      throw new Error(`Ethers provider failed: ${diagnostic.ethers.error}`);
-    }
-
-    // If all diagnostics pass, get the provider
-    const provider = await getProvider();
-    
-    if (!provider) {
-      throw new Error('No provider available after successful diagnostics');
-    }
-    
-    ConnectionDebugger.log('Provider obtained successfully');
-
-    // Test with a simple call
-    const blockNumber = await Promise.race([
-      provider.getBlockNumber(),
-      new Promise<never>((_, reject) => 
-        setTimeout(() => reject(new Error('Connection timeout')), 3000)
-      )
-    ]);
-
-    ConnectionDebugger.log(`Block number retrieved: ${blockNumber}`);
-
-    // Get network info
-    const network = await provider.getNetwork();
-    ConnectionDebugger.log('Network info retrieved', { chainId: network.chainId.toString() });
-
-    const connection: BlockchainConnection = {
-      provider,
-      isConnected: true,
-      chainId: Number(network.chainId)
-    };
-
-    cachedConnection = connection;
-    ConnectionDebugger.log('Connection initialized successfully');
-    return connection;
   } catch (error) {
-    ConnectionDebugger.error('Blockchain connection failed', error);
+    ConnectionDebugger.error('Connection manager failed', error);
     
-    // Log the diagnostic results for debugging
-    console.error('Connection diagnostic logs:', ConnectionDebugger.getLogs());
+    // Fallback to direct provider method
+    try {
+      ConnectionDebugger.log('Attempting fallback provider connection');
+      const provider = await getProvider();
+      
+      if (provider) {
+        const network = await provider.getNetwork();
+        const connection: BlockchainConnection = {
+          provider,
+          isConnected: true,
+          chainId: Number(network.chainId)
+        };
+        
+        cachedConnection = connection;
+        return connection;
+      }
+    } catch (fallbackError) {
+      ConnectionDebugger.error('Fallback provider also failed', fallbackError);
+    }
     
-    // Return fallback without attempting provider calls
+    // Return safe offline state
     const fallbackConnection: BlockchainConnection = {
       provider: null as any,
       isConnected: false,
