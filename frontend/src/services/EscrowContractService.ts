@@ -1,6 +1,5 @@
 import { ethers } from 'ethers';
 import { ESCROW_FACTORY_ABI, PROPERTY_ESCROW_ABI, MOCK_ERC20_ABI } from '../utils/contractABI';
-import logger from '../utils/logger';
 
 export interface CreateEscrowParams {
   buyer: string;
@@ -62,7 +61,7 @@ export class EscrowContractService {
 
   async createEscrow(params: CreateEscrowParams): Promise<{ escrowContract: string; escrowId: number }> {
     try {
-      logger.contractCall('EscrowFactory', 'createEscrow', [params], '', this.factoryAddress);
+      console.log('Creating escrow with parameters:', params);
       
       const factory = new ethers.Contract(this.factoryAddress, ESCROW_FACTORY_ABI, this.signer);
       
@@ -106,91 +105,91 @@ export class EscrowContractService {
       const escrowContract = parsed?.args[0];
       const escrowId = Number(parsed?.args[2]);
 
-      logger.contractEvent('EscrowContractDeployed', { escrowContract, escrowId }, tx.hash, this.factoryAddress);
+      console.log('Escrow created successfully:', { escrowContract, escrowId, txHash: tx.hash });
       
       return { escrowContract, escrowId };
     } catch (error) {
-      logger.contractError('createEscrow', error as Error, 'EscrowFactory');
+      console.error('Failed to create escrow:', error);
       throw error;
     }
   }
 
   async depositFunds(escrowAddress: string, escrowId: number): Promise<string> {
     try {
-      logger.contractCall('depositFunds', 'PropertyEscrow', { escrowAddress, escrowId });
+      console.log('Depositing funds to escrow:', { escrowAddress, escrowId });
       
       const escrow = new ethers.Contract(escrowAddress, PROPERTY_ESCROW_ABI, this.signer);
       const tx = await escrow.depositFunds(escrowId);
       await tx.wait();
 
-      logger.contractEvent('FundsDeposited', { escrowId }, tx.hash);
+      console.log('Funds deposited successfully:', { escrowId, txHash: tx.hash });
       return tx.hash;
     } catch (error) {
-      logger.contractError('depositFunds', error as Error, 'PropertyEscrow');
+      console.error('Failed to deposit funds:', error);
       throw error;
     }
   }
 
   async completeVerification(escrowAddress: string, escrowId: number): Promise<string> {
     try {
-      logger.contractCall('completeVerification', 'PropertyEscrow', { escrowAddress, escrowId });
+      console.log('Completing verification for escrow:', { escrowAddress, escrowId });
       
       const escrow = new ethers.Contract(escrowAddress, PROPERTY_ESCROW_ABI, this.signer);
       const tx = await escrow.completeVerification(escrowId);
       await tx.wait();
 
-      logger.contractEvent('VerificationCompleted', { escrowId }, tx.hash);
+      console.log('Verification completed successfully:', { escrowId, txHash: tx.hash });
       return tx.hash;
     } catch (error) {
-      logger.contractError('completeVerification', error as Error, 'PropertyEscrow');
+      console.error('Failed to complete verification:', error);
       throw error;
     }
   }
 
   async giveApproval(escrowAddress: string, escrowId: number): Promise<string> {
     try {
-      logger.contractCall('giveApproval', 'PropertyEscrow', { escrowAddress, escrowId });
+      console.log('Giving approval for escrow:', { escrowAddress, escrowId });
       
       const escrow = new ethers.Contract(escrowAddress, PROPERTY_ESCROW_ABI, this.signer);
       const tx = await escrow.giveApproval(escrowId);
       await tx.wait();
 
-      logger.contractEvent('ApprovalGiven', { escrowId }, tx.hash);
+      console.log('Approval given successfully:', { escrowId, txHash: tx.hash });
       return tx.hash;
     } catch (error) {
-      logger.contractError('giveApproval', error as Error, 'PropertyEscrow');
+      console.error('Failed to give approval:', error);
       throw error;
     }
   }
 
   async releaseFunds(escrowAddress: string, escrowId: number): Promise<string> {
     try {
-      logger.contractCall('releaseFunds', 'PropertyEscrow', { escrowAddress, escrowId });
+      console.log('Releasing funds from escrow:', { escrowAddress, escrowId });
       
       const escrow = new ethers.Contract(escrowAddress, PROPERTY_ESCROW_ABI, this.signer);
       const tx = await escrow.releaseFunds(escrowId);
       await tx.wait();
 
-      logger.contractEvent('FundsReleased', { escrowId }, tx.hash);
+      console.log('Funds released successfully:', { escrowId, txHash: tx.hash });
       return tx.hash;
     } catch (error) {
-      logger.contractError('releaseFunds', error as Error, 'PropertyEscrow');
+      console.error('Failed to release funds:', error);
       throw error;
     }
   }
 
   async raiseDispute(escrowAddress: string, escrowId: number, reason: string): Promise<string> {
     try {
-      logger.contractCall('raiseDispute', 'PropertyEscrow', { escrowAddress, escrowId, reason });
+      console.log('Raising dispute for escrow:', { escrowAddress, escrowId, reason });
       
       const escrow = new ethers.Contract(escrowAddress, PROPERTY_ESCROW_ABI, this.signer);
       const tx = await escrow.raiseDispute(escrowId, reason);
       await tx.wait();
 
-      logger.contractEvent('DisputeRaised', { escrowId, reason }, tx.hash);
+      console.log('Dispute raised successfully:', { escrowId, reason, txHash: tx.hash });
       return tx.hash;
     } catch (error) {
-      logger.contractError('raiseDispute', error as Error, 'PropertyEscrow');
+      console.error('Failed to raise dispute:', error);
       throw error;
     }
   }
@@ -220,23 +219,23 @@ export class EscrowContractService {
         resolutionText: details[15]
       };
     } catch (error) {
-      logger.contractError('getEscrowDetails', error as Error, 'PropertyEscrow');
+      console.error('Failed to get escrow details:', error);
       throw error;
     }
   }
 
   async approveToken(tokenAddress: string, spender: string, amount: string): Promise<string> {
     try {
-      logger.contractCall('approve', 'ERC20', { tokenAddress, spender, amount });
+      console.log('Approving token spending:', { tokenAddress, spender, amount });
       
       const token = new ethers.Contract(tokenAddress, MOCK_ERC20_ABI, this.signer);
       const tx = await token.approve(spender, ethers.parseEther(amount));
       await tx.wait();
 
-      logger.contractEvent('Approval', { spender, amount }, tx.hash);
+      console.log('Token approval successful:', { spender, amount, txHash: tx.hash });
       return tx.hash;
     } catch (error) {
-      logger.contractError('approve', error as Error, 'ERC20');
+      console.error('Failed to approve token:', error);
       throw error;
     }
   }
@@ -247,7 +246,7 @@ export class EscrowContractService {
       const balance = await token.balanceOf(address);
       return ethers.formatEther(balance);
     } catch (error) {
-      logger.contractError('balanceOf', error as Error, 'ERC20');
+      console.error('Failed to get token balance:', error);
       throw error;
     }
   }
