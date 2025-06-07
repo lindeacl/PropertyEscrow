@@ -51,6 +51,10 @@ args = "Deploy Contracts"
 task = "workflow.run"
 args = "Static Frontend Server"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Production Server"
+
 [[workflows.workflow]]
 name = "Hardhat Development Server"
 author = "agent"
@@ -130,7 +134,16 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd frontend && npx serve -s build -l 5000"
+args = "cd frontend && npm run build && npx serve -s build -l 5000"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "Production Server"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd frontend && npm run build && cd .. && node simple-server.js"
 waitForPort = 5000
 
 [deployment]
