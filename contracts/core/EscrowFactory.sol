@@ -146,22 +146,7 @@ contract EscrowFactory is IEscrowFactory, Ownable, ReentrancyGuard {
         return escrowContracts[escrowId];
     }
 
-    /**
-     * @dev Gets the total number of escrows created
-     * @return The total number of escrows
-     */
-    function getEscrowCount() external view returns (uint256) {
-        return escrowCounter;
-    }
 
-    /**
-     * @dev Checks if a token is whitelisted
-     * @param token The token address to check
-     * @return Whether the token is whitelisted
-     */
-    function isTokenWhitelisted(address token) external view returns (bool) {
-        return whitelistedTokens[token];
-    }
 
     /**
      * @dev Sets token whitelist status (alias for whitelistToken)
@@ -190,7 +175,7 @@ contract EscrowFactory is IEscrowFactory, Ownable, ReentrancyGuard {
      * @return escrowContract The address of the created escrow contract
      * @return escrowId The ID of the created escrow
      */
-    function createEscrowWithStruct(
+    function createEscrow(
         EscrowStructs.CreateEscrowParams calldata params
     ) external override nonReentrant returns (address escrowContract, uint256 escrowId) {
         return _createEscrowWithStruct(params);
@@ -246,15 +231,6 @@ contract EscrowFactory is IEscrowFactory, Ownable, ReentrancyGuard {
     }
 
     /**
-     * @dev Checks if a token is whitelisted
-     * @param token The token address to check
-     * @return Whether the token is whitelisted
-     */
-    function isTokenWhitelisted(address token) external view override returns (bool) {
-        return whitelistedTokens[token];
-    }
-
-    /**
      * @dev Gets the current platform fee
      * @return The platform fee in basis points
      */
@@ -284,5 +260,14 @@ contract EscrowFactory is IEscrowFactory, Ownable, ReentrancyGuard {
      */
     function getEscrowCount() external view returns (uint256) {
         return escrowCounter;
+    }
+
+    /**
+     * @dev Checks if a token is whitelisted
+     * @param token The token address to check
+     * @return Whether the token is whitelisted
+     */
+    function isTokenWhitelisted(address token) external view override returns (bool) {
+        return whitelistedTokens[token];
     }
 }
