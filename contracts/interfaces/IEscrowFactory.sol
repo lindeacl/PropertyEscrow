@@ -25,7 +25,7 @@ interface IEscrowFactory {
     /**
      * @dev Functions
      */
-    function createEscrowWithStruct(
+    function createEscrow(
         EscrowStructs.CreateEscrowParams calldata params
     ) external returns (address escrowContract, uint256 escrowId);
 

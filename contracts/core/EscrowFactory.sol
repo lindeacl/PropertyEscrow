@@ -195,7 +195,7 @@ contract EscrowFactory is IEscrowFactory, Ownable, ReentrancyGuard {
      * @return escrowContract The address of the created escrow contract
      * @return escrowId The ID of the created escrow
      */
-    function createEscrow(
+    function createEscrowLegacy(
         string memory propertyId,
         address buyer,
         address seller,

@@ -178,7 +178,7 @@
           "type": "tuple"
         }
       ],
-      "name": "createEscrowWithStruct",
+      "name": "createEscrowWithParams",
       "outputs": [
         {
           "internalType": "address",
