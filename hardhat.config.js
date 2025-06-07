@@ -7,8 +7,8 @@ require("solidity-coverage");
 require("dotenv").config();
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "0x" + "0".repeat(64);
-const ALCHEMY_API_KEY = process.env.REACT_APP_ALCHEMY_RPC_URL;
-const POLYGON_RPC_URL = ALCHEMY_API_KEY ? `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}` : "https://polygon-rpc.com";
+const ALCHEMY_RPC_URL = process.env.REACT_APP_ALCHEMY_RPC_URL;
+const POLYGON_RPC_URL = ALCHEMY_RPC_URL || "https://polygon-rpc.com";
 const MUMBAI_RPC_URL = process.env.MUMBAI_RPC_URL || "https://rpc-mumbai.maticvigil.com";
 const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY || "";
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || "";

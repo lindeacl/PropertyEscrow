@@ -40,12 +40,11 @@ export const getProvider = async () => {
 
 export const connectToAlchemyNetwork = async () => {
   try {
-    const alchemyApiKey = process.env.REACT_APP_ALCHEMY_RPC_URL;
-    if (!alchemyApiKey || alchemyApiKey === 'YOUR_API_KEY_HERE') {
-      throw new Error('Alchemy API key not configured. Please set REACT_APP_ALCHEMY_RPC_URL');
+    const alchemyUrl = process.env.REACT_APP_ALCHEMY_RPC_URL;
+    if (!alchemyUrl || !alchemyUrl.startsWith('https://polygon-mainnet.g.alchemy.com/v2/')) {
+      throw new Error('Alchemy RPC URL not configured. Please set REACT_APP_ALCHEMY_RPC_URL');
     }
 
-    const alchemyUrl = `https://polygon-mainnet.g.alchemy.com/v2/${alchemyApiKey}`;
     const provider = new ethers.JsonRpcProvider(alchemyUrl, undefined, {
       staticNetwork: true
     });
