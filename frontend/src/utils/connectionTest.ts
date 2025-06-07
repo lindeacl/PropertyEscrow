@@ -6,7 +6,7 @@ export const testDirectConnection = async () => {
   
   try {
     // Test API status endpoint first
-    const response = await fetch('/api/status');
+    const response = await fetch('http://127.0.0.1:8546/api/status');
     if (response.ok) {
       const statusData = await response.json();
       console.log('Status data received:', statusData);
@@ -52,7 +52,7 @@ export const testContractConnection = async () => {
   
   try {
     // Test API status endpoint for contract deployment
-    const response = await fetch('/api/status');
+    const response = await fetch('http://127.0.0.1:8546/api/status');
     if (response.ok) {
       const statusData = await response.json();
       
