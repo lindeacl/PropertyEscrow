@@ -1,4 +1,5 @@
 import { ethers } from 'ethers';
+import { RobustProvider } from './robustProvider';
 
 let cachedProvider: ethers.Provider | null = null;
 let connectionMode: 'metamask' | 'local' | 'offline' = 'offline';
@@ -8,73 +9,33 @@ export const getProvider = async () => {
     return cachedProvider;
   }
 
-  // First try local network via CORS-enabled proxy
+  console.log('Initializing robust provider connection...');
+  
   try {
-    console.log('Attempting connection to proxy server...');
+    const provider = await RobustProvider.getProvider();
     
-    // Test the proxy endpoint first
-    const testResponse = await fetch('http://127.0.0.1:8546/api/status', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+    if (provider) {
+      cachedProvider = provider;
+      
+      // Detect connection type based on provider
+      if (provider instanceof ethers.BrowserProvider) {
+        connectionMode = 'metamask';
+        console.log('Connected via MetaMask wallet');
+      } else {
+        connectionMode = 'local';
+        console.log('Connected to local blockchain network');
       }
-    });
-    
-    if (!testResponse.ok) {
-      throw new Error(`Proxy server responded with ${testResponse.status}: ${testResponse.statusText}`);
-    }
-    
-    const statusData = await testResponse.json();
-    console.log('Proxy server status:', statusData);
-    
-    // Now create the provider
-    const localProvider = new ethers.JsonRpcProvider('http://127.0.0.1:8546/rpc', undefined, {
-      staticNetwork: true
-    });
-    
-    // Test the connection with timeout and proper error handling
-    const blockNumber = await Promise.race([
-      localProvider.getBlockNumber(),
-      new Promise<never>((_, reject) => 
-        setTimeout(() => reject(new Error('Connection timeout')), 3000)
-      )
-    ]);
-    
-    if (typeof blockNumber === 'number' && blockNumber >= 0) {
-      cachedProvider = localProvider;
-      connectionMode = 'local';
-      console.log('Successfully connected to local blockchain, block:', blockNumber);
+      
       return cachedProvider;
     } else {
-      throw new Error('Invalid block number response');
+      throw new Error('All provider connection strategies failed');
     }
   } catch (error) {
-    console.error('Local network connection failed:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    console.error('Error details:', errorMessage);
+    console.error('Provider initialization failed:', error);
+    connectionMode = 'offline';
     cachedProvider = null;
+    return null;
   }
-
-  // Try MetaMask if available
-  if (typeof window !== 'undefined' && window.ethereum) {
-    try {
-      const metamaskProvider = new ethers.BrowserProvider(window.ethereum);
-      // Test the connection
-      await metamaskProvider.getNetwork();
-      cachedProvider = metamaskProvider;
-      connectionMode = 'metamask';
-      console.log('Connected to MetaMask');
-      return cachedProvider;
-    } catch (error) {
-      console.warn('MetaMask connection failed:', error);
-    }
-  }
-
-  // Return null instead of broken provider to prevent JSON-RPC errors
-  connectionMode = 'offline';
-  console.warn('No blockchain connection available');
-  return null;
 };
 
 export const connectToLocalNetwork = async () => {
