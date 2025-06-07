@@ -3,15 +3,13 @@ const { ethers } = require('ethers');
 async function testAlchemyConnection() {
   console.log('🔗 Testing Alchemy Connection...');
   
-  const alchemyApiKey = process.env.REACT_APP_ALCHEMY_RPC_URL;
+  const alchemyUrl = process.env.REACT_APP_ALCHEMY_RPC_URL;
   
-  if (!alchemyApiKey) {
+  if (!alchemyUrl) {
     console.error('❌ REACT_APP_ALCHEMY_RPC_URL not found in environment');
     return false;
   }
   
-  // Construct proper Alchemy URL
-  const alchemyUrl = `https://polygon-mainnet.g.alchemy.com/v2/${alchemyApiKey}`;
   console.log('🔧 Using Alchemy URL:', alchemyUrl.substring(0, 50) + '...');
   
   try {
