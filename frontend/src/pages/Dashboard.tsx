@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useWallet } from '../contexts/WalletContext';
 import { 
@@ -14,12 +14,30 @@ import {
   Activity
 } from 'lucide-react';
 import { Card, Button, Grid, StatusChip } from '../components/ui';
+import logger from '../utils/logger';
+import { initializeEventListeners, cleanupEventListeners } from '../utils/eventListeners';
 
 const Dashboard: React.FC = () => {
-  const { isConnected, connectWallet } = useWallet();
+  const { isConnected, connectWallet, provider } = useWallet();
   
   // Show dashboard immediately for demonstration - bypass wallet requirement
   const showDashboard = true;
+
+  useEffect(() => {
+    logger.uiAction('Dashboard mounted');
+    
+    // Initialize event listeners if provider is available
+    if (provider) {
+      const eventService = initializeEventListeners(provider);
+      // Setup factory event listeners for known contracts
+      // eventService.setupFactoryEventListeners('0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512');
+    }
+
+    return () => {
+      cleanupEventListeners();
+      logger.uiAction('Dashboard unmounted');
+    };
+  }, [provider]);
   const [stats] = useState({
     totalEscrows: 12,
     activeEscrows: 4,

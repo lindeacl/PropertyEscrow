@@ -11,6 +11,7 @@ import {
   FileText
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import logger from '../utils/logger';
 
 const CreateEscrow: React.FC = () => {
   const navigate = useNavigate();
@@ -70,16 +71,35 @@ const CreateEscrow: React.FC = () => {
   };
 
   const handleNext = () => {
+    logger.uiAction('Form step navigation', { 
+      action: 'next', 
+      fromStep: currentStep, 
+      toStep: currentStep + 1 
+    });
+    
     if (validateStep(currentStep)) {
       setCurrentStep(currentStep + 1);
+      logger.uiAction('Form step completed', { step: currentStep });
+    } else {
+      logger.uiAction('Form validation failed', { 
+        step: currentStep, 
+        errors: Object.keys(errors) 
+      });
     }
   };
 
   const handleBack = () => {
+    logger.uiAction('Form step navigation', { 
+      action: 'back', 
+      fromStep: currentStep, 
+      toStep: currentStep - 1 
+    });
     setCurrentStep(currentStep - 1);
   };
 
   const handleInputChange = (field: string, value: string | number) => {
+    logger.uiAction('Form field changed', { field, hasValue: !!value });
+    
     setFormData(prev => ({
       ...prev,
       [field]: value
@@ -95,19 +115,38 @@ const CreateEscrow: React.FC = () => {
   };
 
   const handleCreateEscrow = async () => {
+    logger.uiAction('Escrow creation initiated', { 
+      step: currentStep,
+      formData: {
+        propertyId: formData.propertyId,
+        depositAmount: formData.depositAmount,
+        hasParticipants: !!(formData.buyer && formData.seller)
+      }
+    });
+
     if (!isConnected || !signer) {
+      logger.uiError(new Error('Wallet not connected'), 'CreateEscrow', 'Form submission');
       toast.error('Please connect your wallet');
       return;
     }
 
     if (!validateStep(2)) {
+      logger.uiAction('Form validation failed on submission', { 
+        errors: Object.keys(errors)
+      });
       return;
     }
 
     setLoading(true);
+    logger.uiAction('Escrow creation form submitted', { 
+      propertyId: formData.propertyId,
+      depositAmount: formData.depositAmount
+    });
+
     try {
       // This will be implemented once contracts are deployed
       toast.success('Escrow creation will be available once contracts are deployed');
+      logger.uiAction('Escrow creation placeholder completed');
       
       // Placeholder for actual contract interaction:
       // const factory = getContract(CONTRACT_ADDRESSES.ESCROW_FACTORY, ESCROW_FACTORY_ABI, signer);
@@ -116,7 +155,7 @@ const CreateEscrow: React.FC = () => {
       
       // navigate('/');
     } catch (error) {
-      console.error('Failed to create escrow:', error);
+      logger.uiError(error as Error, 'CreateEscrow', 'Escrow creation');
       toast.error('Failed to create escrow');
     } finally {
       setLoading(false);

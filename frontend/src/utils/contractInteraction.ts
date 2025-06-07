@@ -116,14 +116,20 @@ export class ContractInteractionService {
     agentFee?: string;
     platformFee?: string;
   }): Promise<{ success: boolean; escrowAddress?: string; transactionHash?: string; error?: string }> {
+    const userAddress = await this.signer?.getAddress();
+    
     try {
       if (!this.signer) {
-        return { success: false, error: 'No signer available - wallet not connected' };
+        const error = 'No signer available - wallet not connected';
+        logger.contractError('EscrowFactory', 'createEscrow', new Error(error), userAddress);
+        return { success: false, error };
       }
 
       const contract = this.getEscrowFactoryContract(true);
       if (!contract) {
-        return { success: false, error: 'Contract not available' };
+        const error = 'Contract not available';
+        logger.contractError('EscrowFactory', 'createEscrow', new Error(error), userAddress);
+        return { success: false, error };
       }
 
       // Calculate deadlines (24 hours for deposit, 7 days for verification)
@@ -152,11 +158,16 @@ export class ContractInteractionService {
         verificationDeadline: verificationDeadline
       };
 
+      logger.escrowCreateAttempt(params, userAddress!);
+      logger.contractCall('EscrowFactory', 'createEscrow', [createEscrowParams], userAddress!, this.config.escrowFactoryAddress!);
+
       const tx = await contract.createEscrow(createEscrowParams);
+      logger.transactionSent('Create Escrow', tx.hash, userAddress!, this.config.escrowFactoryAddress);
 
       const receipt = await tx.wait();
+      logger.transactionMined('Create Escrow', receipt.hash, receipt.blockNumber, receipt.gasUsed.toString());
       
-      // Extract escrow address from events
+      // Extract escrow address from events and log contract events
       const escrowCreatedEvent = receipt.logs.find((log: any) => {
         try {
           const parsed = contract.interface.parseLog(log);
@@ -167,9 +178,23 @@ export class ContractInteractionService {
       });
 
       let escrowAddress;
+      let escrowId;
       if (escrowCreatedEvent) {
         const parsed = contract.interface.parseLog(escrowCreatedEvent);
         escrowAddress = parsed?.args?.escrowAddress;
+        escrowId = parsed?.args?.escrowId?.toString();
+        
+        logger.contractEvent('EscrowCreated', {
+          escrowAddress,
+          escrowId,
+          creator: parsed?.args?.creator,
+          buyer: params.buyer,
+          seller: params.seller
+        }, receipt.hash, this.config.escrowFactoryAddress!);
+      }
+
+      if (escrowAddress && escrowId) {
+        logger.escrowCreated(escrowAddress, escrowId, receipt.hash, userAddress!);
       }
 
       return {
@@ -178,7 +203,7 @@ export class ContractInteractionService {
         transactionHash: receipt.hash
       };
     } catch (error: any) {
-      console.error('Failed to create escrow:', error);
+      logger.contractError('EscrowFactory', 'createEscrow', error, userAddress);
       return {
         success: false,
         error: error.message || 'Failed to create escrow'
