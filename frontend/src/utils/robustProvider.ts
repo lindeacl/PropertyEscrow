@@ -84,9 +84,10 @@ export class RobustProvider {
     }
 
     // Try Alchemy provider first
-    const alchemyUrl = process.env.REACT_APP_ALCHEMY_RPC_URL;
-    if (alchemyUrl && alchemyUrl !== 'https://polygon-mainnet.g.alchemy.com/v2/YOUR_API_KEY_HERE') {
+    const alchemyApiKey = process.env.REACT_APP_ALCHEMY_RPC_URL;
+    if (alchemyApiKey && alchemyApiKey !== 'YOUR_API_KEY_HERE') {
       try {
+        const alchemyUrl = `https://polygon-mainnet.g.alchemy.com/v2/${alchemyApiKey}`;
         const alchemyProvider = await this.createProviderWithRetry(alchemyUrl);
         if (alchemyProvider) {
           this.instance = alchemyProvider;
