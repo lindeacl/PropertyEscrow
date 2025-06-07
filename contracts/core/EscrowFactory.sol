@@ -147,12 +147,50 @@ contract EscrowFactory is IEscrowFactory, Ownable, ReentrancyGuard {
     }
 
     /**
+     * @dev Gets the total number of escrows created
+     * @return The total number of escrows
+     */
+    function getEscrowCount() external view returns (uint256) {
+        return escrowCounter;
+    }
+
+    /**
+     * @dev Checks if a token is whitelisted
+     * @param token The token address to check
+     * @return Whether the token is whitelisted
+     */
+    function isTokenWhitelisted(address token) external view returns (bool) {
+        return whitelistedTokens[token];
+    }
+
+    /**
+     * @dev Sets token whitelist status (alias for whitelistToken)
+     * @param token The token address
+     * @param whitelisted Whether to whitelist the token
+     */
+    function setTokenWhitelist(address token, bool whitelisted) external onlyOwner {
+        require(token != address(0), "Invalid token address");
+        whitelistedTokens[token] = whitelisted;
+        emit TokenWhitelisted(token, whitelisted);
+    }
+
+    /**
+     * @dev Removes a token from the whitelist
+     * @param token The token address to remove
+     */
+    function removeTokenFromWhitelist(address token) external onlyOwner {
+        require(token != address(0), "Invalid token address");
+        whitelistedTokens[token] = false;
+        emit TokenWhitelisted(token, false);
+    }
+
+    /**
      * @dev Creates a new escrow contract using struct parameters (public interface)
      * @param params The escrow creation parameters
      * @return escrowContract The address of the created escrow contract
      * @return escrowId The ID of the created escrow
      */
-    function createEscrow(
+    function createEscrowWithStruct(
         EscrowStructs.CreateEscrowParams calldata params
     ) external override nonReentrant returns (address escrowContract, uint256 escrowId) {
         return _createEscrowWithStruct(params);
@@ -172,7 +210,7 @@ contract EscrowFactory is IEscrowFactory, Ownable, ReentrancyGuard {
      * @return escrowContract The address of the created escrow contract
      * @return escrowId The ID of the created escrow
      */
-    function createEscrowLegacy(
+    function createEscrow(
         string memory propertyId,
         address buyer,
         address seller,
