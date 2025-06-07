@@ -66,7 +66,7 @@ const EnhancedHomepage: React.FC = () => {
       toast.success('Wallet connected successfully');
       logger.walletConnected(address || 'unknown', 'Polygon Mainnet');
     } catch (error) {
-      logger.walletConnectError(error as Error);
+      logger.error('Wallet connection failed', error as Error);
       toast.error('Failed to connect wallet');
     } finally {
       setLoading(false);

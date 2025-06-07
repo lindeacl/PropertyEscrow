@@ -106,7 +106,7 @@ export class EscrowContractService {
       const escrowContract = parsed?.args[0];
       const escrowId = Number(parsed?.args[2]);
 
-      logger.contractEvent('EscrowContractDeployed', { escrowContract, escrowId }, tx.hash);
+      logger.contractEvent('EscrowContractDeployed', { escrowContract, escrowId }, tx.hash, this.factoryAddress);
       
       return { escrowContract, escrowId };
     } catch (error) {
