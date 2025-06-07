@@ -21,13 +21,12 @@ export interface EscrowData {
 
 export enum EscrowStatus {
   CREATED = 0,
-  FUNDED = 1,
+  DEPOSITED = 1,
   VERIFIED = 2,
-  APPROVED = 3,
-  COMPLETED = 4,
-  CANCELLED = 5,
-  DISPUTED = 6,
-  RESOLVED = 7
+  RELEASED = 3,
+  DISPUTED = 4,
+  REFUNDED = 5,
+  CANCELLED = 6
 }
 
 export interface CreateEscrowParams {

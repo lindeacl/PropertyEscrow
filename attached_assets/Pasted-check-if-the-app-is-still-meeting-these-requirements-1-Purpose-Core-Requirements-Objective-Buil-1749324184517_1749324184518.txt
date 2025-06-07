@@ -1,0 +1,57 @@
+check if the app is still meeting these requirements
+
+1. Purpose & Core Requirements
+Objective:
+Build a smart contract-based escrow platform on Polygon (EVM-compatible, ERC20) to facilitate secure, transparent property sales. The platform must allow intake of various payment forms (including cash equivalents) as part of the escrow process, with enterprise readiness as a non-negotiable.
+
+Key Capabilities:
+
+Escrow smart contract manages buyer/seller/property/agent relationships
+
+Supports deposit, lock, and release of funds (ERC20 and potentially other forms)
+
+Handles multi-step property sale flows: deposit, verification, conditional release, dispute resolution, and refunds
+
+Auditability, clear state transitions, and secure role-based access
+
+Designed for integration with external payment rails for fiat on/off-ramp
+
+2. High-Level Design Principles
+Security First: Prevent re-entrancy, unauthorized access, double spend, and front-running
+
+Transparency: All contract state transitions must be auditable on-chain
+
+Modular and Upgradeable: Separate contract logic, storage, and interfaces; consider using proxies if upgradeability is required
+
+Compliance Ready: Log all actions and include hooks for compliance checks (e.g., KYC)
+
+Gas Efficiency: Optimize all contract operations for Polygon’s cost model
+
+Fail-Safe: Funds must always be recoverable in case of any failure or dispute
+
+Extensible Payment Methods: Out of the box ERC20 support, but interfaces for integrating with fiat gateways (can stub for now)
+
+4. Core Smart Contract Features
+Property Escrow Lifecycle:
+
+Escrow Creation: Seller (or platform) lists property, sets terms
+
+Deposit Funds: Buyer deposits ERC20 tokens (or other supported forms) into escrow
+
+Verification: Optional third-party (agent, platform, etc.) verifies off-chain conditions (e.g., property inspection, paperwork)
+
+Release Conditions: On successful verification, funds are released to the seller. If dispute, a resolution flow is triggered.
+
+Refunds: Buyer can be refunded if sale conditions are not met (with agreed rules)
+
+Dispute Resolution: Built-in, with roles for trusted arbiters or platform
+
+Roles & Permissions:
+
+Buyer, Seller, Escrow Agent/Arbiter, Admin
+
+Only authorized parties can trigger sensitive functions
+
+Events & Logging:
+
+Emit detailed events for all state changes (escrow creation, deposit, release, dispute, refund, etc.)
