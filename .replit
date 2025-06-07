@@ -33,10 +33,6 @@ args = "CLI Demo"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Frontend Development Server"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
 args = "UI Test Suite"
 
 [[workflows.workflow.tasks]]
@@ -58,6 +54,14 @@ args = "Production Server"
 [[workflows.workflow.tasks]]
 task = "workflow.run"
 args = "Static Production Server"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Accessible Frontend Server"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Frontend Development Server"
 
 [[workflows.workflow]]
 name = "Hardhat Development Server"
@@ -98,15 +102,6 @@ author = "agent"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "node cli-demo.js"
-
-[[workflows.workflow]]
-name = "Frontend Development Server"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd frontend && PORT=5000 npm start"
-waitForPort = 5000
 
 [[workflows.workflow]]
 name = "UI Test Suite"
@@ -157,6 +152,24 @@ author = "agent"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "node frontend-server.js"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "Accessible Frontend Server"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd frontend && HOST=0.0.0.0 PORT=5000 npm start"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "Frontend Development Server"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd frontend && HOST=0.0.0.0 PORT=5000 npm start"
 waitForPort = 5000
 
 [deployment]
