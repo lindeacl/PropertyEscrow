@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.14% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/14</span>
+                <span class='fraction'>8/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">72.22% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/18</span>
+                <span class='fraction'>13/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>2/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.14% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/14</span>
+                <span class='fraction'>8/14</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -193,21 +193,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -226,7 +226,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -239,8 +239,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -309,21 +309,21 @@ interface WalletConnectionProps {
   onSwitchNetwork?: () =&gt; void;
 }
 &nbsp;
-const WalletConnection: React.FC&lt;WalletConnectionProps&gt; = <span class="fstat-no" title="function not covered" >({</span>
-  account = <span class="branch-0 cbranch-no" title="branch not covered" >null,</span>
-  isConnected = <span class="branch-0 cbranch-no" title="branch not covered" >false,</span>
-  isConnecting = <span class="branch-0 cbranch-no" title="branch not covered" >false,</span>
-  balance = <span class="branch-0 cbranch-no" title="branch not covered" >'0',</span>
-  chainId = <span class="branch-0 cbranch-no" title="branch not covered" >null,</span>
-  onConnect = <span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >()</span> =&gt; {},</span>
-  onDisconnect = <span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >()</span> =&gt; {},</span>
-  onSwitchNetwork = <span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >()</span> =&gt; {}</span>
+const WalletConnection: React.FC&lt;WalletConnectionProps&gt; = ({
+  account = null,
+  isConnected = false,
+  isConnecting = false,
+  balance = '0',
+  chainId = null,
+  onConnect = () =&gt; {},
+  onDisconnect = <span class="fstat-no" title="function not covered" >()</span> =&gt; {},
+  onSwitchNetwork = <span class="fstat-no" title="function not covered" >()</span> =&gt; {}
 }) =&gt; {
-  const isPolygon = <span class="cstat-no" title="statement not covered" >chainId === '0x89';</span>
-  const isWrongNetwork = <span class="cstat-no" title="statement not covered" >isConnected &amp;&amp; !isPolygon;</span>
+  const isPolygon = chainId === '0x89';
+  const isWrongNetwork = isConnected &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!isPolygon;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  if (!window.ethereum) {</span>
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  if (!window.ethereum) {
+    return (
       &lt;div className="flex items-center gap-2 p-4 bg-yellow-50 border border-yellow-200 rounded-lg"&gt;
         &lt;AlertCircle className="w-5 h-5 text-yellow-600" /&gt;
         &lt;div&gt;
@@ -342,7 +342,7 @@ const WalletConnection: React.FC&lt;WalletConnectionProps&gt; = <span class="fst
     );
   }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  if (isConnecting) {</span>
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (isConnecting) {
 <span class="cstat-no" title="statement not covered" >    return (</span>
       &lt;button 
         disabled
@@ -355,8 +355,8 @@ const WalletConnection: React.FC&lt;WalletConnectionProps&gt; = <span class="fst
     );
   }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  if (!isConnected) {</span>
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (!isConnected) {
+    return (
       &lt;button 
         onClick={onConnect}
         className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -418,7 +418,7 @@ export default WalletConnection;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-07T16:57:44.400Z
+                at 2025-06-07T17:09:10.054Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
