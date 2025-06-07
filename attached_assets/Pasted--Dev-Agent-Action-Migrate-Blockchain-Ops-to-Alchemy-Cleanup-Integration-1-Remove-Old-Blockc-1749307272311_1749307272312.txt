@@ -1,0 +1,117 @@
+🛠️ Dev Agent Action: Migrate Blockchain Ops to Alchemy (Cleanup & Integration)
+1. Remove Old Blockchain Configuration & Dependencies
+A. Clean Out Local/Legacy RPC References
+
+Search the codebase for:
+
+localhost:8545, 127.0.0.1:8545, "http://0.0.0.0:8545", "INFURA", "QUICKNODE", "hardhat" (in provider configs)
+
+Remove any config, environment variables, or references not related to Alchemy.
+
+B. Remove Local Node Scripts & Hardhat Dev References (Frontend)
+
+Delete dev helper scripts that start/stop a local blockchain for frontend integration.
+
+Remove any code or documentation instructing users to run a local Ethereum/Polygon node for UI functionality.
+
+C. Remove Unused Provider Packages (if any)
+
+Uninstall dependencies no longer required (e.g., if you used web3.js only for local dev, or other RPC managers you will not use):
+
+bash
+Copy
+Edit
+npm uninstall web3
+(if not used elsewhere)
+
+2. Integrate Alchemy Provider for All Blockchain Reads/Writes
+A. Add Alchemy Environment Variable
+
+Add this to your .env (frontend and backend, if any):
+
+ini
+Copy
+Edit
+REACT_APP_ALCHEMY_RPC_URL=https://polygon-mainnet.g.alchemy.com/v2/<YOUR-API-KEY>
+(Replace with your real Alchemy project key and endpoint.)
+
+B. Refactor All Provider Initialization to Use Alchemy
+
+Wherever you see:
+
+js
+Copy
+Edit
+new ethers.providers.JsonRpcProvider("http://localhost:8545")
+or
+
+js
+Copy
+Edit
+new ethers.providers.JsonRpcProvider(process.env.REACT_APP_RPC_URL)
+Change to:
+
+js
+Copy
+Edit
+new ethers.providers.JsonRpcProvider(process.env.REACT_APP_ALCHEMY_RPC_URL)
+If you use a custom provider context/hook, update the default/fallback to Alchemy.
+
+C. Remove/Comment Out All Old RPC Options
+
+If you previously offered a UI/network selection for “localhost,” “Infura,” “Hardhat,” etc.—remove these from the dropdown/config. Only allow Alchemy (or the chain's public RPC as a fallback if required for testnet).
+
+3. Update Documentation & Onboarding
+In README.md, replace any instruction about starting a local blockchain or using other RPC providers with:
+
+“This project now uses Alchemy as the default blockchain RPC provider for all smart contract interactions.”
+
+“Set your Alchemy RPC endpoint in your .env file as REACT_APP_ALCHEMY_RPC_URL.”
+
+4. Test Thoroughly
+Run the app locally using only your Alchemy endpoint.
+
+Test all major flows:
+
+Connect wallet
+
+Read escrow data
+
+Write (create escrow, deposit, release, dispute)
+
+See event/log updates
+
+Confirm no code path or error message still mentions “localhost” or “Hardhat.”
+
+5. Clean Up & Commit
+Remove all dead code, docs, configs, and dependencies related to the previous blockchain setup.
+
+Commit with a message like:
+
+vbnet
+Copy
+Edit
+refactor: migrate all blockchain operations to Alchemy and clean up legacy RPC setup
+Checklist Table
+Step	Action
+1. Remove old RPC refs	Purge local/Infura/QuickNode configs
+2. Clean dependencies	Uninstall any unneeded packages
+3. Add .env variable	Add Alchemy endpoint as REACT_APP_ALCHEMY_RPC_URL
+4. Update provider code	Only use Alchemy RPC in all ethers.js initializers
+5. Update docs	Remove old instructions, document Alchemy usage
+6. Test all flows	Confirm ONLY Alchemy is used for blockchain ops
+7. Commit & push	Clear commit msg referencing migration
+
+Dev Agent:
+Work through each step in order.
+Ping the team if any hard dependency on local nodes is found.
+Deliver a branch or PR with only Alchemy as the blockchain interface, and updated documentation.
+
+If you need a specific code snippet for any file, just specify which file or function, and we’ll generate the diff for you!
+
+
+
+
+
+
+
