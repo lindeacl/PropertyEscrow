@@ -175,7 +175,7 @@ contract EscrowFactory is IEscrowFactory, Ownable, ReentrancyGuard {
      * @return escrowContract The address of the created escrow contract
      * @return escrowId The ID of the created escrow
      */
-    function createEscrow(
+    function createEscrowWithStruct(
         EscrowStructs.CreateEscrowParams calldata params
     ) external override nonReentrant returns (address escrowContract, uint256 escrowId) {
         return _createEscrowWithStruct(params);
@@ -195,7 +195,7 @@ contract EscrowFactory is IEscrowFactory, Ownable, ReentrancyGuard {
      * @return escrowContract The address of the created escrow contract
      * @return escrowId The ID of the created escrow
      */
-    function createEscrowLegacy(
+    function createEscrow(
         string memory propertyId,
         address buyer,
         address seller,
