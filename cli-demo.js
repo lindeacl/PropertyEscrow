@@ -147,27 +147,48 @@ class EscrowCLI {
     const description = await this.prompt("Property Description: ");
 
     const priceWei = ethers.parseUnits(price, 6);
+    const agentFeeWei = ethers.parseUnits("0.1", 6); // 0.1 USDC agent fee
+    const platformFeeWei = ethers.parseUnits("0.05", 6); // 0.05 USDC platform fee
     
-    const tx = await this.contracts.factory.connect(this.accounts.seller).createEscrow(
-      propertyId,
-      this.accounts.buyer.address,
-      this.accounts.seller.address,
-      this.accounts.agent.address,
-      this.accounts.arbiter.address,
-      await this.contracts.token.getAddress(),
-      priceWei,
-      Math.floor(Date.now() / 1000) + 86400, // 24 hours
-      description
-    );
+    // Create the structured parameters that match CreateEscrowParams
+    const escrowParams = {
+      buyer: this.accounts.buyer.address,
+      seller: this.accounts.seller.address,
+      agent: this.accounts.agent.address,
+      arbiter: this.accounts.arbiter.address,
+      tokenAddress: await this.contracts.token.getAddress(),
+      depositAmount: priceWei,
+      agentFee: agentFeeWei,
+      platformFee: platformFeeWei,
+      property: {
+        propertyId: propertyId,
+        description: description,
+        salePrice: priceWei,
+        documentHash: "QmExampleHash123456789",
+        verified: false
+      },
+      depositDeadline: Math.floor(Date.now() / 1000) + 86400, // 24 hours
+      verificationDeadline: Math.floor(Date.now() / 1000) + (7 * 86400) // 7 days
+    };
+    
+    const tx = await this.contracts.factory.connect(this.accounts.seller).createEscrow(escrowParams);
 
     const receipt = await tx.wait();
-    const event = receipt.logs.find(log => 
-      log.fragment && log.fragment.name === 'EscrowCreated'
-    );
+    const event = receipt.logs.find(log => {
+      try {
+        const parsed = this.contracts.factory.interface.parseLog(log);
+        return parsed?.name === 'EscrowContractDeployed';
+      } catch {
+        return false;
+      }
+    });
     
     if (event) {
-      console.log(`✅ Escrow created! Address: ${event.args.escrowAddress}`);
-      this.lastEscrowAddress = event.args.escrowAddress;
+      const parsed = this.contracts.factory.interface.parseLog(event);
+      console.log(`✅ Escrow created! Contract: ${parsed.args.escrowContract}`);
+      console.log(`   Escrow ID: ${parsed.args.escrowId}`);
+      this.lastEscrowAddress = parsed.args.escrowContract;
+      this.lastEscrowId = parsed.args.escrowId;
     }
   }
 

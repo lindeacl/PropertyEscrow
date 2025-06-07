@@ -134,14 +134,14 @@ export class ContractInteractionService {
         agent: params.agent || ethers.ZeroAddress, // Will use default if zero address
         arbiter: params.arbiter || ethers.ZeroAddress, // Will use default if zero address
         tokenAddress: params.token,
-        depositAmount: ethers.parseEther(params.amount),
-        agentFee: ethers.parseEther(params.agentFee || "0.01"), // Default 0.01 ETH
-        platformFee: ethers.parseEther(params.platformFee || "0.005"), // Default 0.005 ETH
+        depositAmount: ethers.parseUnits(params.amount, 6), // USDC has 6 decimals
+        agentFee: ethers.parseUnits(params.agentFee || "0.1", 6), // Default 0.1 USDC
+        platformFee: ethers.parseUnits(params.platformFee || "0.05", 6), // Default 0.05 USDC
         property: {
           propertyId: params.propertyId,
           description: params.propertyDetails,
-          salePrice: ethers.parseEther(params.salePrice || params.amount),
-          documentHash: "QmDefault123", // Default IPFS hash
+          salePrice: ethers.parseUnits(params.salePrice || params.amount, 6),
+          documentHash: "QmDefault123456789", // Default IPFS hash
           verified: false
         },
         depositDeadline: depositDeadline,
