@@ -1,3 +1,7 @@
+import React, { useState, useEffect } from 'react';
+import logger from './utils/logger';
+import ErrorBoundary from './components/ErrorBoundary';
+
 const App: React.FC = () => {
   const [walletConnected, setWalletConnected] = useState(false);
   const [currentAddress, setCurrentAddress] = useState<string>('');
