@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useWallet } from '../contexts/WalletContext';
 import { 
@@ -17,8 +17,8 @@ import {
 import toast from 'react-hot-toast';
 import { EscrowData, EscrowStatus, UserRole } from '../types';
 import DisputeModal from '../components/modals/DisputeModal';
-import { Card, Button, StatusChip, Modal, Tooltip, AuditLog, AccessibleModal } from '../components/ui';
-import { microcopy, getTooltipContent, getReassurance } from '../utils/microcopy';
+import { Tooltip, AuditLog, AccessibleModal } from '../components/ui';
+import { getTooltipContent, getReassurance } from '../utils/microcopy';
 
 const EscrowDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -37,13 +37,7 @@ const EscrowDetails: React.FC = () => {
   const [showAuditLog, setShowAuditLog] = useState(false);
   const [auditEntries, setAuditEntries] = useState<any[]>([]);
 
-  useEffect(() => {
-    if (isConnected && id) {
-      loadEscrowDetails();
-    }
-  }, [isConnected, id, address]);
-
-  const loadEscrowDetails = async () => {
+  const loadEscrowDetails = useCallback(async () => {
     try {
       setLoading(true);
       
@@ -135,7 +129,13 @@ const EscrowDetails: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, address]);
+
+  useEffect(() => {
+    if (isConnected && id) {
+      loadEscrowDetails();
+    }
+  }, [isConnected, id, loadEscrowDetails]);
 
   const handleDepositFunds = async () => {
     if (!escrow || !signer) return;
@@ -393,7 +393,7 @@ const EscrowDetails: React.FC = () => {
               ].map((step, index) => {
                 const isCompleted = escrow.status > step.status;
                 const isCurrent = escrow.status === step.status;
-                const isUpcoming = escrow.status < step.status;
+                // const isUpcoming = escrow.status < step.status; // Reserved for future styling
                 const Icon = step.icon;
                 
                 return (

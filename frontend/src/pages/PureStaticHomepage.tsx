@@ -3,10 +3,7 @@ import {
   Shield, 
   Zap, 
   Globe, 
-  CheckCircle, 
   ArrowRight,
-  DollarSign,
-  Clock,
   Users,
   FileText,
   TrendingUp,
@@ -14,9 +11,7 @@ import {
   Menu,
   X
 } from 'lucide-react';
-import Tooltip from '../components/ui/Tooltip';
 import AccessibleButton from '../components/ui/AccessibleButton';
-import { getTooltipContent, microcopy } from '../utils/microcopy';
 
 const PureStaticHomepage: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -382,20 +377,20 @@ const PureStaticHomepage: React.FC = () => {
             <div>
               <h3 className="text-lg font-semibold mb-4">Platform</h3>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">How It Works</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Security</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">API Docs</a></li>
+                <li><button className="hover:text-white transition-colors text-left">How It Works</button></li>
+                <li><button className="hover:text-white transition-colors text-left">Security</button></li>
+                <li><button className="hover:text-white transition-colors text-left">Pricing</button></li>
+                <li><button className="hover:text-white transition-colors text-left">API Docs</button></li>
               </ul>
             </div>
             
             <div>
               <h3 className="text-lg font-semibold mb-4">Support</h3>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Contact Us</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Status</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Community</a></li>
+                <li><button className="hover:text-white transition-colors text-left">Help Center</button></li>
+                <li><button className="hover:text-white transition-colors text-left">Contact Us</button></li>
+                <li><button className="hover:text-white transition-colors text-left">Status</button></li>
+                <li><button className="hover:text-white transition-colors text-left">Community</button></li>
               </ul>
             </div>
             

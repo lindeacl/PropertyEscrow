@@ -66,7 +66,7 @@ const Dashboard: React.FC = () => {
       status: 'disputed' as const
     }
   ]);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false); // Reserved for future use
 
   const summaryCards = [
     {

@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/99</span>
+                <span class='fraction'>0/98</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/94</span>
+                <span class='fraction'>0/93</span>
             </div>
         
             
@@ -868,14 +868,9 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -891,7 +886,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -956,10 +950,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1219,7 +1219,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1585,7 +1585,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useEffect, useState } from 'react';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useWallet } from '../contexts/WalletContext';
 import { 
@@ -1604,8 +1604,8 @@ import {
 import toast from 'react-hot-toast';
 import { EscrowData, EscrowStatus, UserRole } from '../types';
 import DisputeModal from '../components/modals/DisputeModal';
-import { Card, Button, StatusChip, Modal, Tooltip, AuditLog, AccessibleModal } from '../components/ui';
-import { microcopy, getTooltipContent, getReassurance } from '../utils/microcopy';
+import { Tooltip, AuditLog, AccessibleModal } from '../components/ui';
+import { getTooltipContent, getReassurance } from '../utils/microcopy';
 &nbsp;
 const EscrowDetails: React.FC = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
   const { id } = <span class="cstat-no" title="statement not covered" >useParams&lt;{ id: string }&gt;();</span>
@@ -1624,13 +1624,7 @@ const EscrowDetails: React.FC = <span class="cstat-no" title="statement not cove
   const [showAuditLog, setShowAuditLog] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
   const [auditEntries, setAuditEntries] = <span class="cstat-no" title="statement not covered" >useState&lt;any[]&gt;([]);</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    if (isConnected &amp;&amp; id) {</span>
-<span class="cstat-no" title="statement not covered" >      loadEscrowDetails();</span>
-    }
-  }, [isConnected, id, address]);
-&nbsp;
-  const loadEscrowDetails = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {</span>
+  const loadEscrowDetails = <span class="cstat-no" title="statement not covered" >useCallback(<span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    try {</span>
 <span class="cstat-no" title="statement not covered" >      setLoading(true);</span>
       
@@ -1722,7 +1716,13 @@ const EscrowDetails: React.FC = <span class="cstat-no" title="statement not cove
     } finally {
 <span class="cstat-no" title="statement not covered" >      setLoading(false);</span>
     }
-  };
+  }, [id, address]);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    if (isConnected &amp;&amp; id) {</span>
+<span class="cstat-no" title="statement not covered" >      loadEscrowDetails();</span>
+    }
+  }, [isConnected, id, loadEscrowDetails]);
 &nbsp;
   const handleDepositFunds = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    if (!escrow || !signer) <span class="cstat-no" title="statement not covered" >return;</span></span>
@@ -1980,7 +1980,7 @@ const EscrowDetails: React.FC = <span class="cstat-no" title="statement not cove
               ].map(<span class="fstat-no" title="function not covered" >(s</span>tep, index) =&gt; {
                 const isCompleted = <span class="cstat-no" title="statement not covered" >escrow.status &gt; step.status;</span>
                 const isCurrent = <span class="cstat-no" title="statement not covered" >escrow.status === step.status;</span>
-                const isUpcoming = <span class="cstat-no" title="statement not covered" >escrow.status &lt; step.status;</span>
+                // const isUpcoming = escrow.status &lt; step.status; // Reserved for future styling
                 const Icon = <span class="cstat-no" title="statement not covered" >step.icon;</span>
                 
 <span class="cstat-no" title="statement not covered" >                return (</span>
@@ -2353,7 +2353,7 @@ export default EscrowDetails;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-07T15:18:03.704Z
+                at 2025-06-07T15:20:41.627Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
