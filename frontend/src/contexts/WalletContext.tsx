@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { handleBlockchainError } from '../utils/errorHandling';
 import { getWalletProvider } from '../utils/provider';
+import logger from '../utils/logger';
 
 interface WalletState {
   isConnected: boolean;
@@ -43,8 +44,12 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   };
 
   const connectWallet = async () => {
+    logger.walletConnectAttempt('MetaMask');
+    
     if (typeof window.ethereum === 'undefined') {
-      throw new Error('MetaMask is not installed. Please install MetaMask to connect your wallet.');
+      const error = new Error('MetaMask is not installed. Please install MetaMask to connect your wallet.');
+      logger.walletError(error, 'MetaMask detection');
+      throw error;
     }
 
     try {
@@ -53,7 +58,9 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       
       const walletProvider = await getWalletProvider();
       if (!walletProvider) {
-        throw new Error('No wallet provider available');
+        const error = new Error('No wallet provider available');
+        logger.walletError(error, 'Provider initialization');
+        throw error;
       }
       
       const signer = await walletProvider.getSigner();
@@ -61,11 +68,13 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       
       // Try to get network info, but don't fail if it's not available
       let chainId = 1; // Default to mainnet
+      let networkName = 'Unknown';
       try {
         const network = await walletProvider.getNetwork();
         chainId = Number(network.chainId);
+        networkName = network.name || `Chain ${chainId}`;
       } catch (networkError) {
-        console.warn('Could not get network info, using default');
+        logger.error('Could not get network info, using default', networkError as Error);
       }
       
       setWalletState({
@@ -77,19 +86,23 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         balance: '0'
       });
 
+      logger.walletConnected(address, networkName);
+
       // Try to update balance, but don't fail connection if it doesn't work
       try {
         await updateBalance(address, walletProvider);
       } catch (balanceError) {
-        console.warn('Could not fetch balance:', balanceError);
+        logger.error('Could not fetch balance', balanceError as Error);
       }
     } catch (error: any) {
-      console.error('Failed to connect wallet:', error);
+      logger.walletError(error, 'Connection process');
       throw new Error(handleBlockchainError(error));
     }
   };
 
   const disconnectWallet = () => {
+    logger.walletDisconnected(walletState.address || undefined);
+    
     setWalletState({
       isConnected: false,
       address: null,

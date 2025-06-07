@@ -1,5 +1,5 @@
 import React, { Component, ReactNode } from 'react';
-import { AlertTriangle, RefreshCw } from 'lucide-react';
+import logger from '../utils/logger';
 
 interface Props {
   children: ReactNode;
@@ -9,7 +9,7 @@ interface Props {
 interface State {
   hasError: boolean;
   error?: Error;
-  errorInfo?: React.ErrorInfo;
+  errorInfo?: any;
 }
 
 class ErrorBoundary extends Component<Props, State> {
@@ -22,50 +22,71 @@ class ErrorBoundary extends Component<Props, State> {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('Error boundary caught an error:', error, errorInfo);
-    this.setState({ error, errorInfo });
-  }
+  componentDidCatch(error: Error, errorInfo: any) {
+    // Log the error with full stack trace and component info
+    logger.uiError(error, 'ErrorBoundary', 'Component rendering');
+    
+    console.error('Error Boundary caught an error:', {
+      error: error.message,
+      stack: error.stack,
+      componentStack: errorInfo.componentStack,
+      timestamp: new Date().toISOString()
+    });
 
-  handleRetry = () => {
-    this.setState({ hasError: false, error: undefined, errorInfo: undefined });
-  };
+    this.setState({ 
+      hasError: true, 
+      error, 
+      errorInfo 
+    });
+  }
 
   render() {
     if (this.state.hasError) {
-      if (this.props.fallback) {
-        return this.props.fallback;
-      }
-
-      return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
-          <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-6 text-center">
-            <AlertTriangle className="mx-auto h-12 w-12 text-red-500 mb-4" />
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">
-              Connection Error
-            </h2>
-            <p className="text-gray-600 mb-4">
-              Unable to establish blockchain connection. This may be due to network issues or configuration problems.
-            </p>
-            <button
-              onClick={this.handleRetry}
-              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-            >
-              <RefreshCw className="w-4 h-4 mr-2" />
-              Retry Connection
-            </button>
-            {process.env.NODE_ENV === 'development' && this.state.error && (
-              <details className="mt-4 text-left">
-                <summary className="cursor-pointer text-sm text-gray-500">
-                  Technical Details
-                </summary>
-                <pre className="mt-2 text-xs bg-gray-100 p-2 rounded overflow-auto">
-                  {this.state.error.toString()}
-                  {this.state.errorInfo?.componentStack}
-                </pre>
-              </details>
-            )}
-          </div>
+      return this.props.fallback || (
+        <div style={{
+          padding: '40px',
+          textAlign: 'center',
+          backgroundColor: '#fef2f2',
+          border: '1px solid #fecaca',
+          borderRadius: '8px',
+          margin: '20px'
+        }}>
+          <h2 style={{ color: '#dc2626', marginBottom: '16px' }}>
+            Something went wrong
+          </h2>
+          <p style={{ color: '#7f1d1d', marginBottom: '16px' }}>
+            An unexpected error occurred. Please refresh the page and try again.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            style={{
+              backgroundColor: '#dc2626',
+              color: 'white',
+              padding: '8px 16px',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            Refresh Page
+          </button>
+          {process.env.NODE_ENV === 'development' && this.state.error && (
+            <details style={{ marginTop: '20px', textAlign: 'left' }}>
+              <summary style={{ cursor: 'pointer', fontWeight: 'bold' }}>
+                Error Details (Development Only)
+              </summary>
+              <pre style={{
+                backgroundColor: '#f3f4f6',
+                padding: '10px',
+                borderRadius: '4px',
+                fontSize: '12px',
+                overflow: 'auto',
+                marginTop: '10px'
+              }}>
+                {this.state.error.stack}
+              </pre>
+            </details>
+          )}
         </div>
       );
     }

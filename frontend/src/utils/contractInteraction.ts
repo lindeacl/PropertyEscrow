@@ -1,6 +1,7 @@
 import { ethers } from 'ethers';
 import { getProvider, getConnectionStatus } from './provider';
 import { ESCROW_FACTORY_ABI, PROPERTY_ESCROW_ABI, MOCK_ERC20_ABI } from './contractABI';
+import logger from './logger';
 
 
 
@@ -34,23 +35,26 @@ export class ContractInteractionService {
       if (signer) {
         this.signer = signer;
         this.provider = signer.provider;
+        logger.providerInitialized('Contract service with signer');
       } else {
         const status = getConnectionStatus();
         if (!status.isConnected || !status.provider) {
-          console.warn('No blockchain connection available');
+          logger.error('No blockchain connection available', new Error('Provider not initialized'));
           return false;
         }
         this.provider = status.provider;
+        logger.providerInitialized('Contract service with provider');
       }
 
       // Test connection with a simple call
       if (this.provider) {
-        await this.provider.getBlockNumber();
+        const blockNumber = await this.provider.getBlockNumber();
+        logger.uiAction('Contract service initialized', { blockNumber });
         return true;
       }
       return false;
     } catch (error) {
-      console.error('Failed to initialize contract service:', error);
+      logger.error('Failed to initialize contract service', error as Error);
       return false;
     }
   }

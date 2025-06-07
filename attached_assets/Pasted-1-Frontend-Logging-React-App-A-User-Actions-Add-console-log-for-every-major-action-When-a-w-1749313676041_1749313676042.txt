@@ -1,0 +1,70 @@
+1. Frontend Logging (React App)
+A. User Actions
+
+Add console.log() for every major action:
+
+When a wallet is connected/disconnected
+
+On every escrow create, deposit, release, refund, or dispute
+
+On transaction sent, mined, and failed
+
+On network change/provider initialization
+
+B. Error Logging
+
+Wrap your app in an Error Boundary. Use console.error() for any caught UI error.
+
+For all contract and provider errors, log the error stack and a human-readable message.
+
+C. Transaction Details
+
+On every contract call, log:
+
+The action (method), arguments, involved addresses
+
+The transaction hash (on submission)
+
+The success or error status
+
+D. Event Logs
+
+When listening to smart contract events in the frontend (ethers.js), log the event name and full payload.
+
+E. (Optional, Advanced)
+
+Integrate a remote error/session logger (like Sentry or LogRocket) for production for persistent error monitoring.
+
+2. Smart Contract Logging (Solidity Events)
+A. Emit Events for Every State Change
+
+For all major contract actions, emit a descriptive event, e.g.:
+
+event EscrowCreated(...), event FundsDeposited(...), event FundsReleased(...), event DisputeRaised(...)
+
+Emit the event after the state change in each function.
+
+B. Document Event Names and Fields
+
+In README.md or LOGGING.md, list all emitted event names, with their parameters and meaning.
+
+3. Documentation
+Create or update LOGGING.md:
+
+Describe every log and event.
+
+Include sample log output.
+
+Add a note that all critical actions and errors are logged to the browser console (frontend) and can be viewed on-chain/block explorer (Solidity events).
+
+4. Verification
+Test every core workflow:
+
+Escrow creation, deposit, dispute, error (simulate failures)
+
+Confirm logs appear in browser console for UI actions and in block explorer/event logs for smart contracts.
+
+Collect sample log output for stakeholder review.
+
+Do not mark this as done until logs for all key actions, state changes, errors, and transactions are visible and documented.
+If you have questions about where to place logs, paste the relevant code and ask for a line-by-line example.

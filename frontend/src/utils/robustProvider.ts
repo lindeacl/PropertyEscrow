@@ -2,6 +2,7 @@
 import { ethers } from 'ethers';
 import { JsonRpcValidator } from './jsonRpcValidator';
 import { SafeProviderFactory } from './safeEthersProvider';
+import logger from './logger';
 
 interface ProviderConfig {
   timeout: number;
@@ -44,20 +45,20 @@ export class RobustProvider {
   static async createProviderWithRetry(url: string): Promise<ethers.Provider | null> {
     for (let attempt = 1; attempt <= this.config.retries; attempt++) {
       try {
-        console.log(`Provider creation attempt ${attempt}/${this.config.retries} for ${url}`);
+        logger.providerInitialized(`Attempt ${attempt}/${this.config.retries} for ${url}`);
 
         // Use SafeProviderFactory for JSON-validated connection
         const provider = await SafeProviderFactory.createProvider(url);
         
         if (provider) {
-          console.log(`Provider created successfully for ${url}`);
+          logger.providerInitialized(`Provider created successfully for ${url}`);
           return provider;
         } else {
           throw new Error(`SafeProviderFactory failed for ${url}`);
         }
 
       } catch (error) {
-        console.warn(`Provider creation attempt ${attempt} failed:`, error);
+        logger.error(`Provider creation attempt ${attempt} failed`, error as Error);
         
         if (attempt < this.config.retries) {
           await this.delay(this.config.retryDelay * attempt);
