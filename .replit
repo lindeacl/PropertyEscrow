@@ -29,10 +29,6 @@ args = "Run Escrow Tests"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "CLI Demo"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
 args = "UI Test Suite"
 
 [[workflows.workflow.tasks]]
@@ -94,14 +90,6 @@ author = "agent"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npx hardhat test"
-
-[[workflows.workflow]]
-name = "CLI Demo"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "node cli-demo.js"
 
 [[workflows.workflow]]
 name = "UI Test Suite"
