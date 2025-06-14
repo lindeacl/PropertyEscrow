@@ -41,7 +41,7 @@ const WalletConnection: React.FC = () => {
     4. Save and switch to this network
     5. Try connecting again
     `;
-    console.log(instructions);
+
   };
 
   const isLocalNetwork = chainId === 31337;
