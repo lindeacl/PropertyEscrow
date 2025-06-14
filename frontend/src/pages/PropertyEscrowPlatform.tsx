@@ -251,35 +251,36 @@ const PropertyEscrowPlatform: React.FC = () => {
             <h1 className="text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               The Future of Property Transactions
             </h1>
-            <p className="text-2xl text-gray-300 max-w-4xl mx-auto mb-8">
+            <p className="text-2xl text-contrast-gray max-w-4xl mx-auto mb-8">
               Secure, transparent, and efficient property escrow powered by blockchain technology on Polygon Mainnet
             </p>
             
             {/* Platform Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-6xl mx-auto mb-12">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <div className="text-3xl font-bold text-blue-400">{platformStats.totalEscrows}</div>
-                <div className="text-sm text-gray-300">Total Escrows</div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-6xl mx-auto mb-12" role="region" aria-labelledby="platform-stats">
+              <h2 id="platform-stats" className="sr-only">Platform Statistics</h2>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 bg-contrast-overlay">
+                <div className="text-3xl font-bold text-blue-400" aria-label="{platformStats.totalEscrows} total escrows">{platformStats.totalEscrows}</div>
+                <div className="text-sm text-contrast-gray">Total Escrows</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <div className="text-3xl font-bold text-green-400">${platformStats.totalVolume}</div>
-                <div className="text-sm text-gray-300">Volume Processed</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 bg-contrast-overlay">
+                <div className="text-3xl font-bold text-green-400" aria-label="${platformStats.totalVolume} volume processed">${platformStats.totalVolume}</div>
+                <div className="text-sm text-contrast-gray">Volume Processed</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <div className="text-3xl font-bold text-purple-400">{platformStats.activeEscrows}</div>
-                <div className="text-sm text-gray-300">Active Deals</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 bg-contrast-overlay">
+                <div className="text-3xl font-bold text-purple-400" aria-label="{platformStats.activeEscrows} active deals">{platformStats.activeEscrows}</div>
+                <div className="text-sm text-contrast-gray">Active Deals</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <div className="text-3xl font-bold text-yellow-400">{platformStats.completedEscrows}</div>
-                <div className="text-sm text-gray-300">Completed</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 bg-contrast-overlay">
+                <div className="text-3xl font-bold text-yellow-400" aria-label="{platformStats.completedEscrows} completed escrows">{platformStats.completedEscrows}</div>
+                <div className="text-sm text-contrast-gray">Completed</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <div className="text-3xl font-bold text-emerald-400">{platformStats.totalUsers}</div>
-                <div className="text-sm text-gray-300">Active Users</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 bg-contrast-overlay">
+                <div className="text-3xl font-bold text-emerald-400" aria-label="{platformStats.totalUsers} active users">{platformStats.totalUsers}</div>
+                <div className="text-sm text-contrast-gray">Active Users</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <div className="text-2xl font-bold text-red-400">{platformStats.averageTransactionTime}</div>
-                <div className="text-sm text-gray-300">Avg. Time</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 bg-contrast-overlay">
+                <div className="text-2xl font-bold text-red-400" aria-label="Average transaction time {platformStats.averageTransactionTime}">{platformStats.averageTransactionTime}</div>
+                <div className="text-sm text-contrast-gray">Avg. Time</div>
               </div>
             </div>
 
@@ -287,16 +288,18 @@ const PropertyEscrowPlatform: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button
                 onClick={() => setActiveTab('demo')}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors flex items-center space-x-2"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+                aria-label="Try the live demo of PropertyEscrow platform"
               >
                 <span>Try Live Demo</span>
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-5 h-5" aria-hidden="true" />
               </button>
               <button
                 onClick={() => isConnected ? navigate('/create-escrow') : handleConnectWallet()}
-                className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors flex items-center space-x-2"
+                className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 min-h-[44px]"
+                aria-label={isConnected ? "Start creating a new escrow transaction" : "Connect wallet to start transaction"}
               >
-                <Building className="w-5 h-5" />
+                <Building className="w-5 h-5" aria-hidden="true" />
                 <span>Start Transaction</span>
               </button>
             </div>

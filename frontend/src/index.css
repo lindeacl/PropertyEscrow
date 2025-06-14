@@ -28,6 +28,27 @@
   outline: none;
 }
 
+/* Color contrast improvements for WCAG compliance */
+.text-contrast-safe {
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.text-contrast-gray {
+  color: #e5e7eb; /* Lighter gray for better contrast on dark backgrounds */
+}
+
+.bg-contrast-overlay {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+}
+
+/* Enhanced focus indicators */
+.focus-enhanced:focus {
+  outline: 3px solid #60a5fa;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 1px #1e40af;
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *,
