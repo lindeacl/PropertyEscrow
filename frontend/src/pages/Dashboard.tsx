@@ -95,7 +95,7 @@ const Dashboard: React.FC = () => {
   const determineUserRole = (walletAddress: string) => {
     // In production, this would check the blockchain for user roles
     // For now, logging user role determination
-    logger.info('Determining user role for address:', walletAddress);
+    logger.uiAction('Determining user role for address: ' + walletAddress);
   };
 
   const getStatusColor = (status: EscrowStatus) => {

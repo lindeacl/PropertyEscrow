@@ -12,7 +12,6 @@ import {
   ArrowRight,
   Star,
   Zap,
-  BarChart3
 } from 'lucide-react';
 import { useWallet } from '../contexts/WalletContext';
 import { EscrowContractService } from '../services/EscrowContractService';
@@ -24,7 +23,7 @@ const PropertyEscrowPlatform: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
-  const [platformStats, setPlatformStats] = useState({
+  const [platformStats] = useState({
     totalEscrows: 127,
     totalVolume: '24.8M',
     activeEscrows: 15,
@@ -49,7 +48,7 @@ const PropertyEscrowPlatform: React.FC = () => {
     
     if (provider && signer) {
       const service = new EscrowContractService(provider, signer);
-      logger.info('Contract service initialized', service);
+      logger.uiAction('Contract service initialized');
     }
   }, [provider, signer]);
 
