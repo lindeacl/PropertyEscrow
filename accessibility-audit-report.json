@@ -1,0 +1,317 @@
+{
+  "title": "PropertyEscrow Platform - Accessibility Audit Report",
+  "date": "2025-06-14T15:52:40.612Z",
+  "summary": {
+    "totalIssues": 11,
+    "criticalIssues": 1,
+    "recommendations": [
+      {
+        "priority": "high",
+        "title": "Implement Form Accessibility",
+        "description": "Add aria-required, aria-invalid, and proper error announcements to all forms",
+        "effort": "medium",
+        "impact": "high"
+      },
+      {
+        "priority": "high",
+        "title": "Enhance Color Contrast",
+        "description": "Review all text on gradient backgrounds and ensure WCAG AA compliance",
+        "effort": "low",
+        "impact": "high"
+      },
+      {
+        "priority": "medium",
+        "title": "Add Table Accessibility",
+        "description": "Implement proper table headers with scope attributes for data tables",
+        "effort": "low",
+        "impact": "medium"
+      },
+      {
+        "priority": "medium",
+        "title": "Dynamic Content Announcements",
+        "description": "Add aria-live regions for status updates and real-time changes",
+        "effort": "medium",
+        "impact": "medium"
+      },
+      {
+        "priority": "low",
+        "title": "Heading Structure Review",
+        "description": "Ensure proper heading hierarchy across all pages",
+        "effort": "low",
+        "impact": "medium"
+      }
+    ]
+  },
+  "pages": {
+    "PropertyEscrowPlatform": {
+      "url": "/",
+      "issues": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Elements must have sufficient color contrast",
+          "nodes": [
+            "Text elements in gradient backgrounds"
+          ],
+          "recommendation": "Ensure 4.5:1 contrast ratio for normal text, 3:1 for large text",
+          "fixed": false
+        },
+        {
+          "id": "keyboard-navigation",
+          "impact": "critical",
+          "description": "All interactive elements must be keyboard accessible",
+          "nodes": [
+            "Modal close buttons",
+            "Dropdown menus",
+            "Tab navigation"
+          ],
+          "recommendation": "Add proper tabindex and keyboard event handlers",
+          "fixed": true
+        },
+        {
+          "id": "aria-labels",
+          "impact": "serious",
+          "description": "Interactive elements need accessible names",
+          "nodes": [
+            "Icon-only buttons",
+            "Form inputs without labels"
+          ],
+          "recommendation": "Add aria-label or aria-labelledby attributes",
+          "fixed": true
+        }
+      ],
+      "score": 85,
+      "timestamp": "2025-06-14T15:52:40.611Z"
+    },
+    "Dashboard": {
+      "url": "/dashboard",
+      "issues": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Elements must have sufficient color contrast",
+          "nodes": [
+            "Text elements in gradient backgrounds"
+          ],
+          "recommendation": "Ensure 4.5:1 contrast ratio for normal text, 3:1 for large text",
+          "fixed": false
+        },
+        {
+          "id": "keyboard-navigation",
+          "impact": "critical",
+          "description": "All interactive elements must be keyboard accessible",
+          "nodes": [
+            "Modal close buttons",
+            "Dropdown menus",
+            "Tab navigation"
+          ],
+          "recommendation": "Add proper tabindex and keyboard event handlers",
+          "fixed": true
+        },
+        {
+          "id": "aria-labels",
+          "impact": "serious",
+          "description": "Interactive elements need accessible names",
+          "nodes": [
+            "Icon-only buttons",
+            "Form inputs without labels"
+          ],
+          "recommendation": "Add aria-label or aria-labelledby attributes",
+          "fixed": true
+        },
+        {
+          "id": "heading-hierarchy",
+          "impact": "moderate",
+          "description": "Heading levels should not be skipped",
+          "nodes": [
+            "Stats cards missing h2/h3 structure"
+          ],
+          "recommendation": "Use proper heading hierarchy (h1 > h2 > h3)",
+          "fixed": false
+        },
+        {
+          "id": "table-headers",
+          "impact": "serious",
+          "description": "Data tables need proper headers",
+          "nodes": [
+            "Escrow listings table"
+          ],
+          "recommendation": "Add scope attributes to table headers",
+          "fixed": false
+        }
+      ],
+      "score": 60,
+      "timestamp": "2025-06-14T15:52:40.612Z"
+    },
+    "CreateEscrow": {
+      "url": "/create-escrow",
+      "issues": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Elements must have sufficient color contrast",
+          "nodes": [
+            "Text elements in gradient backgrounds"
+          ],
+          "recommendation": "Ensure 4.5:1 contrast ratio for normal text, 3:1 for large text",
+          "fixed": false
+        },
+        {
+          "id": "keyboard-navigation",
+          "impact": "critical",
+          "description": "All interactive elements must be keyboard accessible",
+          "nodes": [
+            "Modal close buttons",
+            "Dropdown menus",
+            "Tab navigation"
+          ],
+          "recommendation": "Add proper tabindex and keyboard event handlers",
+          "fixed": true
+        },
+        {
+          "id": "aria-labels",
+          "impact": "serious",
+          "description": "Interactive elements need accessible names",
+          "nodes": [
+            "Icon-only buttons",
+            "Form inputs without labels"
+          ],
+          "recommendation": "Add aria-label or aria-labelledby attributes",
+          "fixed": true
+        },
+        {
+          "id": "form-validation",
+          "impact": "critical",
+          "description": "Form errors must be announced to screen readers",
+          "nodes": [
+            "Property address validation",
+            "Amount validation"
+          ],
+          "recommendation": "Use aria-live regions for error announcements",
+          "fixed": false
+        },
+        {
+          "id": "required-fields",
+          "impact": "serious",
+          "description": "Required form fields must be indicated",
+          "nodes": [
+            "All form inputs"
+          ],
+          "recommendation": "Add aria-required and visual indicators",
+          "fixed": false
+        }
+      ],
+      "score": 45,
+      "timestamp": "2025-06-14T15:52:40.612Z"
+    },
+    "EscrowDetails": {
+      "url": "/escrow/:id",
+      "issues": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Elements must have sufficient color contrast",
+          "nodes": [
+            "Text elements in gradient backgrounds"
+          ],
+          "recommendation": "Ensure 4.5:1 contrast ratio for normal text, 3:1 for large text",
+          "fixed": false
+        },
+        {
+          "id": "keyboard-navigation",
+          "impact": "critical",
+          "description": "All interactive elements must be keyboard accessible",
+          "nodes": [
+            "Modal close buttons",
+            "Dropdown menus",
+            "Tab navigation"
+          ],
+          "recommendation": "Add proper tabindex and keyboard event handlers",
+          "fixed": true
+        },
+        {
+          "id": "aria-labels",
+          "impact": "serious",
+          "description": "Interactive elements need accessible names",
+          "nodes": [
+            "Icon-only buttons",
+            "Form inputs without labels"
+          ],
+          "recommendation": "Add aria-label or aria-labelledby attributes",
+          "fixed": true
+        },
+        {
+          "id": "dynamic-content",
+          "impact": "moderate",
+          "description": "Dynamic status updates need announcements",
+          "nodes": [
+            "Status timeline",
+            "Document uploads"
+          ],
+          "recommendation": "Use aria-live regions for status changes",
+          "fixed": false
+        }
+      ],
+      "score": 75,
+      "timestamp": "2025-06-14T15:52:40.612Z"
+    },
+    "Settings": {
+      "url": "/settings",
+      "issues": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Elements must have sufficient color contrast",
+          "nodes": [
+            "Text elements in gradient backgrounds"
+          ],
+          "recommendation": "Ensure 4.5:1 contrast ratio for normal text, 3:1 for large text",
+          "fixed": false
+        },
+        {
+          "id": "keyboard-navigation",
+          "impact": "critical",
+          "description": "All interactive elements must be keyboard accessible",
+          "nodes": [
+            "Modal close buttons",
+            "Dropdown menus",
+            "Tab navigation"
+          ],
+          "recommendation": "Add proper tabindex and keyboard event handlers",
+          "fixed": true
+        },
+        {
+          "id": "aria-labels",
+          "impact": "serious",
+          "description": "Interactive elements need accessible names",
+          "nodes": [
+            "Icon-only buttons",
+            "Form inputs without labels"
+          ],
+          "recommendation": "Add aria-label or aria-labelledby attributes",
+          "fixed": true
+        },
+        {
+          "id": "toggle-states",
+          "impact": "serious",
+          "description": "Toggle switches need clear state indication",
+          "nodes": [
+            "Notification preferences",
+            "Security settings"
+          ],
+          "recommendation": "Add aria-pressed and clear visual states",
+          "fixed": false
+        }
+      ],
+      "score": 70,
+      "timestamp": "2025-06-14T15:52:40.612Z"
+    }
+  },
+  "nextSteps": [
+    "Implement form accessibility enhancements",
+    "Review and fix color contrast issues",
+    "Add proper table headers and ARIA attributes",
+    "Implement dynamic content announcements",
+    "Test with actual screen readers"
+  ]
+}

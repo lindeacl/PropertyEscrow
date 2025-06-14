@@ -56,11 +56,6 @@ const Toast: React.FC<ToastProps> = ({
   };
 
   const getIcon = () => {
-    const commonProps = {
-      className: "w-5 h-5 flex-shrink-0",
-      'aria-hidden': true
-    };
-    
     switch (type) {
       case 'success':
         return <CheckCircle className="w-5 h-5 flex-shrink-0 text-green-400" aria-hidden={true} />;
