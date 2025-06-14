@@ -165,6 +165,6 @@ frontend/
 
 The PropertyEscrow Platform successfully delivers a comprehensive blockchain-based property escrow solution with enterprise-grade security, intuitive user experience, and production-ready deployment capabilities. All development phases completed with comprehensive testing, documentation, and stakeholder handoff materials prepared.
 
-**Platform URL (Development)**: http://localhost:3000
+**Platform URL (Development)**: http://localhost:5000
 **Landing Page URL**: http://localhost:5000
 **Repository Status**: Ready for final commit and production deployment

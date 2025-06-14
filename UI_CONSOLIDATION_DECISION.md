@@ -1,6 +1,6 @@
 # UI Codebase Consolidation Decision
 
-## Foundation Selection: React Application (PORT 3000)
+## Foundation Selection: React Application (PORT 5000)
 
 **Selected as Primary Foundation**: `./frontend/` React Application
 
@@ -32,7 +32,7 @@
 
 ## Unique Features Analysis
 
-### React Application (PORT 3000) - Unique Features
+### React Application (PORT 5000) - Unique Features
 1. **Complete Escrow Workflow**: 
    - Dashboard with transaction overview
    - Create Escrow wizard with step-by-step process

@@ -85,7 +85,7 @@ frontend/
 Both UIs serve different purposes but have some overlap:
 - **Wallet Connection**: Both implement wallet connectivity
 - **Branding**: Both use "PropertyEscrow" branding
-- **Purpose**: Landing page (PORT 5000) is marketing, React app (PORT 3000) is functional
+- **Purpose**: Landing page (PORT 5000) is marketing, React app (PORT 5000) is functional
 
 ### Integration Level
 - **React App (PORT 5000)**: Deep smart contract integration, real transaction handling
@@ -100,6 +100,6 @@ Both UIs serve different purposes but have some overlap:
 Two distinct UI layers exist serving different purposes:
 
 1. **Keep Landing Page (PORT 5000)**: Professional marketing entry point
-2. **Keep React App (PORT 3000)**: Complete functional application
+2. **Keep React App (PORT 5000)**: Complete functional application
 
 The landing page should redirect to the React application for actual escrow functionality, creating a seamless user journey from marketing to application.
