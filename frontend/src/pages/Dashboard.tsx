@@ -152,7 +152,7 @@ const Dashboard: React.FC = () => {
 
   const handleCreateEscrow = () => {
     logger.uiAction('Navigate to create escrow from dashboard');
-    navigate('/create-escrow');
+    navigate('/create');
   };
 
   const handleViewEscrow = (escrowId: string) => {
