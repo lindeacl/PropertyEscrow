@@ -76,7 +76,7 @@ export const AccessibleFormField: React.FC<FormFieldProps> = ({
             helpText ? helpId : ''
           ].filter(Boolean).join(' ') || undefined}
           className={`
-            w-full px-4 py-3 rounded-lg border transition-colors duration-200
+            w-full px-4 py-3 rounded-xl border transition-colors duration-200
             bg-white/10 backdrop-blur-sm text-white placeholder-gray-400
             min-h-[44px] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent
             ${hasError 
@@ -117,7 +117,7 @@ export const AccessibleFormField: React.FC<FormFieldProps> = ({
       {helpText && !hasError && (
         <div 
           id={helpId}
-          className="text-sm text-gray-400"
+          className="text-sm text-grey-400"
         >
           {helpText}
         </div>
@@ -187,7 +187,7 @@ export const AccessibleFormSelect: React.FC<FormSelectProps> = ({
           helpText ? helpId : ''
         ].filter(Boolean).join(' ') || undefined}
         className={`
-          w-full px-4 py-3 rounded-lg border transition-colors duration-200
+          w-full px-4 py-3 rounded-xl border transition-colors duration-200
           bg-white/10 backdrop-blur-sm text-white
           min-h-[44px] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent
           ${hasError 
@@ -221,7 +221,7 @@ export const AccessibleFormSelect: React.FC<FormSelectProps> = ({
       {helpText && !hasError && (
         <div 
           id={helpId}
-          className="text-sm text-gray-400"
+          className="text-sm text-grey-400"
         >
           {helpText}
         </div>

@@ -35,7 +35,7 @@ const WalletConnection: React.FC<WalletConnectionProps> = ({
             href="https://metamask.io/download/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block mt-1 px-3 py-1 bg-gold-500 text-grey-900 text-xs rounded-lg hover:bg-gold-600 transition-colors"
+            className="inline-block mt-1 px-3 py-1 bg-gold-500 text-grey-900 text-xs rounded-xl hover:bg-gold-600 transition-colors"
             aria-label="Install MetaMask browser extension"
           >
             Install MetaMask
@@ -79,7 +79,7 @@ const WalletConnection: React.FC<WalletConnectionProps> = ({
           <p className="text-sm font-medium text-red-800">Wrong Network</p>
           <button 
             onClick={onSwitchNetwork}
-            className="inline-block mt-1 px-3 py-1 bg-red-600 text-white text-xs rounded-lg hover:bg-red-700 transition-colors"
+            className="inline-block mt-1 px-3 py-1 bg-red-600 text-white text-xs rounded-xl hover:bg-red-700 transition-colors"
             aria-label="Switch to Polygon network"
           >
             Switch to Polygon
@@ -105,7 +105,7 @@ const WalletConnection: React.FC<WalletConnectionProps> = ({
       </div>
       <button 
         onClick={onDisconnect}
-        className="px-3 py-1 text-xs bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+        className="px-3 py-1 text-xs bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors"
         aria-label="Disconnect wallet"
       >
         Disconnect

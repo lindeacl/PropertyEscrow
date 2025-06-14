@@ -100,7 +100,7 @@ const AccessibleModal: React.FC<AccessibleModalProps> = ({
         <div
           ref={modalRef}
           className={`
-            relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl 
+            relative transform overflow-hidden rounded-xl bg-white text-left shadow-xl 
             transition-all w-full ${sizeClasses[size]} mx-auto
             ${focusRingStyles.modal}
           `}
@@ -122,7 +122,7 @@ const AccessibleModal: React.FC<AccessibleModalProps> = ({
                 <button
                   type="button"
                   className={`
-                    rounded-md bg-white text-gray-400 hover:text-gray-500
+                    rounded-md bg-white text-grey-400 hover:text-gray-500
                     p-2 ${focusRingStyles.button}
                   `}
                   onClick={onClose}

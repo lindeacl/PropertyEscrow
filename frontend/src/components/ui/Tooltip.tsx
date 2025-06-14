@@ -81,7 +81,7 @@ const Tooltip: React.FC<TooltipProps> = ({
           type="button"
           className={`
             inline-flex items-center justify-center w-5 h-5 
-            text-gray-400 hover:text-gray-600 
+            text-grey-400 hover:text-gray-600 
             ${focusRingStyles.base} rounded-full
           `}
           aria-label="More information"

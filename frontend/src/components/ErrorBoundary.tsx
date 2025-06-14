@@ -99,8 +99,8 @@ Please describe what you were doing when this error occurred:
             </p>
 
             {this.state.eventId && (
-              <div className="bg-white/5 border border-white/10 rounded-lg p-3 mb-6">
-                <p className="text-xs text-gray-400 mb-1">Error ID for support:</p>
+              <div className="bg-white/5 border border-white/10 rounded-xl p-3 mb-6">
+                <p className="text-xs text-grey-400 mb-1">Error ID for support:</p>
                 <code className="text-sm font-mono text-blue-300">{this.state.eventId}</code>
               </div>
             )}
@@ -108,7 +108,7 @@ Please describe what you were doing when this error occurred:
             <div className="space-y-3">
               <button
                 onClick={this.handleRefresh}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-transparent flex items-center justify-center gap-2"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-transparent flex items-center justify-center gap-2"
                 aria-describedby="error-description"
               >
                 <RefreshCw className="w-4 h-4" aria-hidden="true" />
@@ -117,7 +117,7 @@ Please describe what you were doing when this error occurred:
               
               <button
                 onClick={this.handleGoHome}
-                className="w-full bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-4 rounded-lg transition-colors border border-white/30 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent flex items-center justify-center gap-2"
+                className="w-full bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-4 rounded-xl transition-colors border border-white/30 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent flex items-center justify-center gap-2"
               >
                 <Home className="w-4 h-4" aria-hidden="true" />
                 Go to Homepage
@@ -125,7 +125,7 @@ Please describe what you were doing when this error occurred:
               
               <button
                 onClick={this.handleReportIssue}
-                className="w-full bg-transparent hover:bg-white/5 text-gray-300 font-medium py-2 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-transparent flex items-center justify-center gap-2"
+                className="w-full bg-transparent hover:bg-white/5 text-gray-300 font-medium py-2 px-4 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-transparent flex items-center justify-center gap-2"
               >
                 <MessageCircle className="w-4 h-4" aria-hidden="true" />
                 Report Issue
@@ -137,7 +137,7 @@ Please describe what you were doing when this error occurred:
                 <summary className="cursor-pointer font-semibold text-sm text-yellow-400 hover:text-yellow-300 focus:outline-none focus:text-yellow-300">
                   Technical Details (Development)
                 </summary>
-                <div className="mt-3 bg-black/20 border border-white/10 rounded-lg p-3 overflow-auto">
+                <div className="mt-3 bg-black/20 border border-white/10 rounded-xl p-3 overflow-auto">
                   <pre className="text-xs text-gray-300 whitespace-pre-wrap break-words">
                     {this.state.error.stack}
                   </pre>

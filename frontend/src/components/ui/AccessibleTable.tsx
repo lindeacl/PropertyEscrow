@@ -86,7 +86,7 @@ export const AccessibleTable: React.FC<AccessibleTableProps> = ({
       </table>
       
       {data.length === 0 && (
-        <div className="text-center py-8 text-gray-400">
+        <div className="text-center py-8 text-grey-400">
           <p>No data available</p>
         </div>
       )}

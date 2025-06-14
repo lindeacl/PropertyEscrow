@@ -29,7 +29,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(({
   disabled,
   ...props
 }, ref) => {
-  const baseClasses = 'px-3 py-2 pr-10 border rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed appearance-none bg-white dark:bg-gray-800';
+  const baseClasses = 'px-3 py-2 pr-10 border rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed appearance-none bg-white dark:bg-gray-800';
   
   const variantClasses = {
     default: 'border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white',
@@ -70,14 +70,14 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(({
           ))}
         </select>
         <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-          <ChevronDown className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+          <ChevronDown className="h-4 w-4 text-grey-400 dark:text-gray-500" />
         </div>
       </div>
       {error && (
         <p className="mt-1 text-sm text-red-600 dark:text-red-400">{error}</p>
       )}
       {helperText && !error && (
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{helperText}</p>
+        <p className="mt-1 text-sm text-gray-500 dark:text-grey-400">{helperText}</p>
       )}
     </div>
   );

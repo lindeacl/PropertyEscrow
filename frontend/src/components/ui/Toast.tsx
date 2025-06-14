@@ -103,7 +103,7 @@ const Toast: React.FC<ToastProps> = ({
         transform transition-all duration-300 ease-in-out
         ${isVisible && !isExiting ? 'translate-x-0 opacity-100 scale-100' : 'translate-x-full opacity-0 scale-95'}
         ${getStyles()}
-        rounded-lg shadow-xl p-4
+        rounded-xl shadow-xl p-4
       `}
       style={{
         top: '20px',

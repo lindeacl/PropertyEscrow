@@ -213,7 +213,7 @@ const EscrowDetails: React.FC = () => {
   const getStatusColor = (status: EscrowStatus) => {
     switch (status) {
       case EscrowStatus.CREATED:
-        return 'text-blue-400 bg-blue-500/20 border-blue-500/40';
+        return 'text-royal-400 bg-blue-500/20 border-royal-500/40';
       case EscrowStatus.DEPOSITED:
         return 'text-yellow-400 bg-yellow-500/20 border-yellow-500/40';
       case EscrowStatus.VERIFIED:
@@ -223,9 +223,9 @@ const EscrowDetails: React.FC = () => {
       case EscrowStatus.DISPUTED:
         return 'text-red-400 bg-red-500/20 border-red-500/40';
       case EscrowStatus.REFUNDED:
-        return 'text-gray-400 bg-gray-500/20 border-gray-500/40';
+        return 'text-grey-400 bg-gray-500/20 border-gray-500/40';
       default:
-        return 'text-gray-400 bg-gray-500/20 border-gray-500/40';
+        return 'text-grey-400 bg-gray-500/20 border-gray-500/40';
     }
   };
 
@@ -250,7 +250,7 @@ const EscrowDetails: React.FC = () => {
             <p className="text-gray-300 mb-8">The requested escrow could not be found.</p>
             <button
               onClick={() => navigate('/dashboard')}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+              className="bg-royal-500 hover:bg-royal-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors"
             >
               Return to Dashboard
             </button>
@@ -268,7 +268,7 @@ const EscrowDetails: React.FC = () => {
           <div className="flex items-center space-x-4">
             <button
               onClick={() => navigate('/dashboard')}
-              className="bg-white/10 hover:bg-white/20 text-white p-2 rounded-lg transition-colors"
+              className="bg-white/10 hover:bg-white/20 text-white p-2 rounded-xl transition-colors"
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
@@ -290,8 +290,8 @@ const EscrowDetails: React.FC = () => {
               onClick={() => setActiveTab(tab)}
               className={`pb-4 px-2 text-sm font-medium capitalize transition-colors ${
                 activeTab === tab
-                  ? 'text-blue-400 border-b-2 border-blue-400'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'text-royal-400 border-b-2 border-royal-400'
+                  : 'text-grey-400 hover:text-white'
               }`}
             >
               {tab}
@@ -311,20 +311,20 @@ const EscrowDetails: React.FC = () => {
                 </h3>
                 <div className="space-y-4">
                   <div>
-                    <label className="text-sm text-gray-400">Property ID</label>
+                    <label className="text-sm text-grey-400">Property ID</label>
                     <div className="flex items-center space-x-2">
                       <p className="text-white font-mono">{escrowData.propertyId}</p>
                       <button onClick={() => copyToClipboard(escrowData.propertyId)}>
-                        <Copy className="w-4 h-4 text-gray-400 hover:text-white" />
+                        <Copy className="w-4 h-4 text-grey-400 hover:text-white" />
                       </button>
                     </div>
                   </div>
                   <div>
-                    <label className="text-sm text-gray-400">Address</label>
+                    <label className="text-sm text-grey-400">Address</label>
                     <p className="text-white">123 Blockchain Ave, Web3 City, DeFi State 12345</p>
                   </div>
                   <div>
-                    <label className="text-sm text-gray-400">Sale Price</label>
+                    <label className="text-sm text-grey-400">Sale Price</label>
                     <p className="text-white text-xl font-semibold">750,000 USDC</p>
                   </div>
                 </div>
@@ -338,24 +338,24 @@ const EscrowDetails: React.FC = () => {
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm text-gray-400">Deposit Amount</label>
+                    <label className="text-sm text-grey-400">Deposit Amount</label>
                     <p className="text-white font-semibold">750,000 USDC</p>
                   </div>
                   <div>
-                    <label className="text-sm text-gray-400">Token Contract</label>
+                    <label className="text-sm text-grey-400">Token Contract</label>
                     <div className="flex items-center space-x-2">
                       <p className="text-white font-mono text-sm">{formatAddress(escrowData.tokenAddress)}</p>
                       <button onClick={() => copyToClipboard(escrowData.tokenAddress)}>
-                        <Copy className="w-4 h-4 text-gray-400 hover:text-white" />
+                        <Copy className="w-4 h-4 text-grey-400 hover:text-white" />
                       </button>
                     </div>
                   </div>
                   <div>
-                    <label className="text-sm text-gray-400">Agent Fee</label>
+                    <label className="text-sm text-grey-400">Agent Fee</label>
                     <p className="text-white">2.5% (18,750 USDC)</p>
                   </div>
                   <div>
-                    <label className="text-sm text-gray-400">Platform Fee</label>
+                    <label className="text-sm text-grey-400">Platform Fee</label>
                     <p className="text-white">0.5% (3,750 USDC)</p>
                   </div>
                 </div>
@@ -378,16 +378,16 @@ const EscrowDetails: React.FC = () => {
                   ].map((participant) => (
                     <div key={participant.role} className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-gray-400">{participant.role}</p>
+                        <p className="text-sm text-grey-400">{participant.role}</p>
                         <div className="flex items-center space-x-2">
                           <p className="text-white font-mono text-sm">{formatAddress(participant.address)}</p>
                           {participant.isYou && (
-                            <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">You</span>
+                            <span className="text-xs bg-blue-500/20 text-royal-400 px-2 py-1 rounded">You</span>
                           )}
                         </div>
                       </div>
                       <button onClick={() => copyToClipboard(participant.address)}>
-                        <Copy className="w-4 h-4 text-gray-400 hover:text-white" />
+                        <Copy className="w-4 h-4 text-grey-400 hover:text-white" />
                       </button>
                     </div>
                   ))}
@@ -405,7 +405,7 @@ const EscrowDetails: React.FC = () => {
                     <button
                       onClick={() => handleAction('deposit')}
                       disabled={actionLoading === 'deposit'}
-                      className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white py-3 px-4 rounded-lg font-semibold transition-colors flex items-center justify-center"
+                      className="w-full bg-royal-500 hover:bg-royal-600 disabled:bg-gray-600 text-white py-3 px-4 rounded-xl font-semibold transition-colors flex items-center justify-center"
                     >
                       {actionLoading === 'deposit' ? (
                         <RefreshCw className="w-4 h-4 animate-spin" />
@@ -422,7 +422,7 @@ const EscrowDetails: React.FC = () => {
                     <button
                       onClick={() => handleAction('verify')}
                       disabled={actionLoading === 'verify'}
-                      className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white py-3 px-4 rounded-lg font-semibold transition-colors flex items-center justify-center"
+                      className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white py-3 px-4 rounded-xl font-semibold transition-colors flex items-center justify-center"
                     >
                       {actionLoading === 'verify' ? (
                         <RefreshCw className="w-4 h-4 animate-spin" />
@@ -439,7 +439,7 @@ const EscrowDetails: React.FC = () => {
                     <button
                       onClick={() => handleAction('approve')}
                       disabled={actionLoading === 'approve'}
-                      className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white py-3 px-4 rounded-lg font-semibold transition-colors flex items-center justify-center"
+                      className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white py-3 px-4 rounded-xl font-semibold transition-colors flex items-center justify-center"
                     >
                       {actionLoading === 'approve' ? (
                         <RefreshCw className="w-4 h-4 animate-spin" />
@@ -455,7 +455,7 @@ const EscrowDetails: React.FC = () => {
                   <button
                     onClick={() => handleAction('dispute')}
                     disabled={actionLoading === 'dispute' || escrowData.status === EscrowStatus.RELEASED}
-                    className="w-full bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white py-3 px-4 rounded-lg font-semibold transition-colors flex items-center justify-center"
+                    className="w-full bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white py-3 px-4 rounded-xl font-semibold transition-colors flex items-center justify-center"
                   >
                     {actionLoading === 'dispute' ? (
                       <RefreshCw className="w-4 h-4 animate-spin" />
@@ -484,10 +484,10 @@ const EscrowDetails: React.FC = () => {
                 {timeline.map((event, index) => (
                   <div key={event.id} className="flex items-start space-x-4">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                      event.type === 'creation' ? 'bg-blue-500/20 text-blue-400' :
+                      event.type === 'creation' ? 'bg-blue-500/20 text-royal-400' :
                       event.type === 'deposit' ? 'bg-green-500/20 text-green-400' :
                       event.type === 'verification' ? 'bg-purple-500/20 text-purple-400' :
-                      'bg-gray-500/20 text-gray-400'
+                      'bg-gray-500/20 text-grey-400'
                     }`}>
                       {event.type === 'creation' && <Building className="w-5 h-5" />}
                       {event.type === 'deposit' && <DollarSign className="w-5 h-5" />}
@@ -498,19 +498,19 @@ const EscrowDetails: React.FC = () => {
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
                         <h4 className="font-semibold text-white">{event.title}</h4>
-                        <span className="text-sm text-gray-400">
+                        <span className="text-sm text-grey-400">
                           {event.timestamp.toLocaleDateString()}
                         </span>
                       </div>
                       <p className="text-gray-300 mt-1">{event.description}</p>
                       <div className="flex items-center space-x-4 mt-2">
-                        <span className="text-xs text-gray-400">
+                        <span className="text-xs text-grey-400">
                           By: {formatAddress(event.actor)}
                         </span>
                         {event.txHash && (
                           <button
                             onClick={() => copyToClipboard(event.txHash!)}
-                            className="text-xs text-blue-400 hover:text-blue-300 flex items-center"
+                            className="text-xs text-royal-400 hover:text-blue-300 flex items-center"
                           >
                             <ExternalLink className="w-3 h-3 mr-1" />
                             View Transaction
@@ -534,25 +534,25 @@ const EscrowDetails: React.FC = () => {
                   <FileText className="w-5 h-5 mr-2" />
                   Documents & Attachments
                 </h3>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+                <button className="bg-royal-500 hover:bg-royal-600 text-white px-4 py-2 rounded-xl flex items-center">
                   <Upload className="w-4 h-4 mr-2" />
                   Upload Document
                 </button>
               </div>
               <div className="space-y-4">
                 {documents.map((doc) => (
-                  <div key={doc.id} className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10">
+                  <div key={doc.id} className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10">
                     <div className="flex items-center space-x-4">
-                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                        doc.type === 'contract' ? 'bg-blue-500/20 text-blue-400' :
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                        doc.type === 'contract' ? 'bg-blue-500/20 text-royal-400' :
                         doc.type === 'title' ? 'bg-green-500/20 text-green-400' :
-                        'bg-gray-500/20 text-gray-400'
+                        'bg-gray-500/20 text-grey-400'
                       }`}>
                         <FileText className="w-5 h-5" />
                       </div>
                       <div>
                         <h4 className="font-semibold text-white">{doc.name}</h4>
-                        <div className="flex items-center space-x-4 text-sm text-gray-400">
+                        <div className="flex items-center space-x-4 text-sm text-grey-400">
                           <span>Uploaded by {formatAddress(doc.uploadedBy)}</span>
                           <span>{doc.uploadedAt.toLocaleDateString()}</span>
                           <span>{doc.size}</span>
@@ -560,10 +560,10 @@ const EscrowDetails: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <button className="text-gray-400 hover:text-white p-2">
+                      <button className="text-grey-400 hover:text-white p-2">
                         <Eye className="w-4 h-4" />
                       </button>
-                      <button className="text-gray-400 hover:text-white p-2">
+                      <button className="text-grey-400 hover:text-white p-2">
                         <Download className="w-4 h-4" />
                       </button>
                     </div>
@@ -591,7 +591,7 @@ const EscrowDetails: React.FC = () => {
                     <button
                       onClick={() => handleAction('deposit')}
                       disabled={actionLoading === 'deposit'}
-                      className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white p-4 rounded-lg font-semibold transition-colors flex items-center justify-center"
+                      className="w-full bg-royal-500 hover:bg-royal-600 disabled:bg-gray-600 text-white p-4 rounded-xl font-semibold transition-colors flex items-center justify-center"
                     >
                       {actionLoading === 'deposit' ? (
                         <RefreshCw className="w-5 h-5 animate-spin mr-2" />
@@ -606,7 +606,7 @@ const EscrowDetails: React.FC = () => {
                     <button
                       onClick={() => handleAction('verify')}
                       disabled={actionLoading === 'verify'}
-                      className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white p-4 rounded-lg font-semibold transition-colors flex items-center justify-center"
+                      className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white p-4 rounded-xl font-semibold transition-colors flex items-center justify-center"
                     >
                       {actionLoading === 'verify' ? (
                         <RefreshCw className="w-5 h-5 animate-spin mr-2" />
@@ -621,7 +621,7 @@ const EscrowDetails: React.FC = () => {
                     <button
                       onClick={() => handleAction('approve')}
                       disabled={actionLoading === 'approve'}
-                      className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white p-4 rounded-lg font-semibold transition-colors flex items-center justify-center"
+                      className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white p-4 rounded-xl font-semibold transition-colors flex items-center justify-center"
                     >
                       {actionLoading === 'approve' ? (
                         <RefreshCw className="w-5 h-5 animate-spin mr-2" />
@@ -640,7 +640,7 @@ const EscrowDetails: React.FC = () => {
                   <button
                     onClick={() => handleAction('dispute')}
                     disabled={actionLoading === 'dispute' || escrowData.status === EscrowStatus.RELEASED}
-                    className="w-full bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white p-4 rounded-lg font-semibold transition-colors flex items-center justify-center"
+                    className="w-full bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white p-4 rounded-xl font-semibold transition-colors flex items-center justify-center"
                   >
                     {actionLoading === 'dispute' ? (
                       <RefreshCw className="w-5 h-5 animate-spin mr-2" />
@@ -650,12 +650,12 @@ const EscrowDetails: React.FC = () => {
                     Initiate Dispute Resolution
                   </button>
 
-                  <button className="w-full bg-gray-600 hover:bg-gray-700 text-white p-4 rounded-lg font-semibold transition-colors flex items-center justify-center">
+                  <button className="w-full bg-gray-600 hover:bg-grey-700 text-white p-4 rounded-xl font-semibold transition-colors flex items-center justify-center">
                     <MessageSquare className="w-5 h-5 mr-2" />
                     Contact Support
                   </button>
 
-                  <button className="w-full bg-gray-600 hover:bg-gray-700 text-white p-4 rounded-lg font-semibold transition-colors flex items-center justify-center">
+                  <button className="w-full bg-gray-600 hover:bg-grey-700 text-white p-4 rounded-xl font-semibold transition-colors flex items-center justify-center">
                     <Download className="w-5 h-5 mr-2" />
                     Export Transaction Data
                   </button>
@@ -663,24 +663,24 @@ const EscrowDetails: React.FC = () => {
               </div>
 
               {/* Action Status */}
-              <div className="mt-8 p-4 bg-white/5 rounded-lg border border-white/10">
+              <div className="mt-8 p-4 bg-white/5 rounded-xl border border-white/10">
                 <h4 className="font-semibold text-gray-300 mb-3">Current Status & Next Steps</h4>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-400">Buyer Approval</span>
-                    <span className={escrowData.buyerApproval ? 'text-green-400' : 'text-gray-400'}>
+                    <span className="text-grey-400">Buyer Approval</span>
+                    <span className={escrowData.buyerApproval ? 'text-green-400' : 'text-grey-400'}>
                       {escrowData.buyerApproval ? 'Approved' : 'Pending'}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-400">Seller Approval</span>
-                    <span className={escrowData.sellerApproval ? 'text-green-400' : 'text-gray-400'}>
+                    <span className="text-grey-400">Seller Approval</span>
+                    <span className={escrowData.sellerApproval ? 'text-green-400' : 'text-grey-400'}>
                       {escrowData.sellerApproval ? 'Approved' : 'Pending'}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-400">Agent Verification</span>
-                    <span className={escrowData.isVerified ? 'text-green-400' : 'text-gray-400'}>
+                    <span className="text-grey-400">Agent Verification</span>
+                    <span className={escrowData.isVerified ? 'text-green-400' : 'text-grey-400'}>
                       {escrowData.isVerified ? 'Verified' : 'Pending'}
                     </span>
                   </div>

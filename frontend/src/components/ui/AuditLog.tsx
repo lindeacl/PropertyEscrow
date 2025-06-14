@@ -155,7 +155,7 @@ const AuditLog: React.FC<AuditLogProps> = ({
 
                   {/* Transaction details */}
                   {showTransactionDetails && entry.transactionHash && (
-                    <div className="mt-3 p-3 bg-background rounded-lg border border-border">
+                    <div className="mt-3 p-3 bg-background rounded-xl border border-border">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-xs font-medium text-text-primary">
                           Transaction Details
@@ -200,7 +200,7 @@ const AuditLog: React.FC<AuditLogProps> = ({
 
                   {/* Additional details */}
                   {entry.details && Object.keys(entry.details).length > 0 && (
-                    <div className="mt-3 p-3 bg-background rounded-lg border border-border">
+                    <div className="mt-3 p-3 bg-background rounded-xl border border-border">
                       <span className="text-xs font-medium text-text-primary block mb-2">
                         Additional Details
                       </span>

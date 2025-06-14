@@ -77,7 +77,7 @@ const DisputeModal: React.FC<DisputeModalProps> = ({
             </div>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-background rounded-lg transition-colors"
+              className="p-2 hover:bg-background rounded-xl transition-colors"
             >
               <X className="h-5 w-5 text-text-secondary" />
             </button>
@@ -91,7 +91,7 @@ const DisputeModal: React.FC<DisputeModalProps> = ({
               <select
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
-                className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-background text-text-primary"
+                className="w-full px-3 py-2 border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-primary bg-background text-text-primary"
                 required
               >
                 <option value="">Select a reason</option>
@@ -111,7 +111,7 @@ const DisputeModal: React.FC<DisputeModalProps> = ({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Please provide a detailed explanation of the dispute, including relevant dates, communications, and specific issues..."
-                className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-background text-text-primary"
+                className="w-full px-3 py-2 border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-primary bg-background text-text-primary"
                 rows={5}
                 required
               />
@@ -124,7 +124,7 @@ const DisputeModal: React.FC<DisputeModalProps> = ({
               <label className="block text-sm font-medium text-text-primary mb-2">
                 Supporting Evidence
               </label>
-              <div className="border-2 border-dashed border-border rounded-lg p-4">
+              <div className="border-2 border-dashed border-border rounded-xl p-4">
                 <div className="text-center">
                   <Upload className="mx-auto h-8 w-8 text-text-secondary mb-2" />
                   <p className="text-sm text-text-secondary mb-2">
@@ -156,7 +156,7 @@ const DisputeModal: React.FC<DisputeModalProps> = ({
                   {evidence.map((file, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between p-2 bg-background rounded-lg"
+                      className="flex items-center justify-between p-2 bg-background rounded-xl"
                     >
                       <div className="flex items-center">
                         <FileText className="h-4 w-4 text-text-secondary mr-2" />
@@ -178,7 +178,7 @@ const DisputeModal: React.FC<DisputeModalProps> = ({
               )}
             </div>
 
-            <div className="bg-accent-50 border border-accent-200 rounded-lg p-4">
+            <div className="bg-accent-50 border border-accent-200 rounded-xl p-4">
               <div className="flex items-start">
                 <AlertTriangle className="h-5 w-5 text-accent-600 mr-2 mt-0.5" />
                 <div className="text-sm">

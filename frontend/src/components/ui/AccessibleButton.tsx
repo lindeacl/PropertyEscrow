@@ -27,7 +27,7 @@ const AccessibleButton: React.FC<AccessibleButtonProps> = ({
   ...props
 }) => {
   const baseStyles = `
-    inline-flex items-center justify-center font-medium rounded-lg
+    inline-flex items-center justify-center font-medium rounded-xl
     transition-all duration-200 ease-in-out
     disabled:opacity-50 disabled:cursor-not-allowed
     ${focusRingStyles.button}

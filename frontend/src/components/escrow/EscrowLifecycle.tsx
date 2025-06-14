@@ -199,7 +199,7 @@ const EscrowLifecycle: React.FC<EscrowLifecycleProps> = ({
                   ? 'bg-green-500 border-green-500 text-white' 
                   : isCurrent 
                     ? 'bg-blue-500 border-blue-500 text-white'
-                    : 'bg-gray-100 border-gray-300 text-gray-400'
+                    : 'bg-gray-100 border-gray-300 text-grey-400'
                 }
               `}>
                 <Icon className="w-5 h-5" />
@@ -226,7 +226,7 @@ const EscrowLifecycle: React.FC<EscrowLifecycleProps> = ({
       </div>
 
       {status >= EscrowStatus.VERIFIED && status < EscrowStatus.RELEASED && (
-        <div className="bg-gray-50 rounded-lg p-4 mb-6">
+        <div className="bg-gray-50 rounded-xl p-4 mb-6">
           <h4 className="font-medium text-gray-800 mb-3">Approval Status</h4>
           <div className="grid grid-cols-3 gap-4">
             <div className="flex items-center space-x-2">
@@ -264,7 +264,7 @@ const EscrowLifecycle: React.FC<EscrowLifecycleProps> = ({
                 onAction(action.id);
               }}
               className={`
-                w-full flex items-center justify-between p-4 rounded-lg border-2 border-transparent
+                w-full flex items-center justify-between p-4 rounded-xl border-2 border-transparent
                 transition-colors ${variantClasses[action.variant]}
               `}
             >

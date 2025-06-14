@@ -97,7 +97,7 @@ const Table: React.FC<TableProps> = ({
     return (
       <div className={`w-full ${className}`}>
         <div className="animate-pulse">
-          <div className="bg-background rounded-lg">
+          <div className="bg-background rounded-xl">
             <div className="px-6 py-4 border-b border-border">
               <div className="flex space-x-4">
                 {columns.map((_, index) => (

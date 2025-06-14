@@ -41,7 +41,7 @@ const Stepper: React.FC<StepperProps> = ({
       case 'current':
         return `${baseClasses} ${sizeClasses} bg-blue-50 border-blue-600 text-blue-600 dark:bg-blue-900/20`;
       default:
-        return `${baseClasses} ${sizeClasses} bg-gray-50 border-gray-300 text-gray-400 dark:bg-gray-800 dark:border-gray-600`;
+        return `${baseClasses} ${sizeClasses} bg-gray-50 border-gray-300 text-grey-400 dark:bg-gray-800 dark:border-gray-600`;
     }
   };
 
@@ -51,7 +51,7 @@ const Stepper: React.FC<StepperProps> = ({
       case 'current':
         return 'text-gray-900 dark:text-white';
       default:
-        return 'text-gray-500 dark:text-gray-400';
+        return 'text-gray-500 dark:text-grey-400';
     }
   };
 
@@ -82,7 +82,7 @@ const Stepper: React.FC<StepperProps> = ({
               {step.title}
             </div>
             {step.description && (
-              <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              <div className="text-xs text-gray-500 dark:text-grey-400 mt-1">
                 {step.description}
               </div>
             )}

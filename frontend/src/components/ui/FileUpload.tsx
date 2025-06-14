@@ -110,7 +110,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
         )}
         
         <div
-          className={`relative border-2 border-dashed rounded-lg p-6 transition-colors ${
+          className={`relative border-2 border-dashed rounded-xl p-6 transition-colors ${
             dragActive
               ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
               : error
@@ -134,9 +134,9 @@ const FileUpload: React.FC<FileUploadProps> = ({
           />
           
           <div className="text-center">
-            <Upload className="mx-auto h-12 w-12 text-gray-400" />
+            <Upload className="mx-auto h-12 w-12 text-grey-400" />
             <div className="mt-4">
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-sm text-gray-600 dark:text-grey-400">
                 Drop files here or{' '}
                 <span className="text-blue-600 dark:text-blue-400 font-medium">
                   browse
@@ -160,7 +160,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
           <p className="mt-1 text-sm text-red-600 dark:text-red-400">{error}</p>
         )}
         {helperText && !error && (
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{helperText}</p>
+          <p className="mt-1 text-sm text-gray-500 dark:text-grey-400">{helperText}</p>
         )}
 
         {preview && selectedFiles.length > 0 && (
@@ -168,7 +168,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
             {selectedFiles.map((file, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg"
+                className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-xl"
               >
                 <div className="flex items-center space-x-3">
                   {getFileIcon(file)}
@@ -176,7 +176,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                     <p className="text-sm font-medium text-gray-900 dark:text-white">
                       {file.name}
                     </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-gray-500 dark:text-grey-400">
                       {formatFileSize(file.size)}
                     </p>
                   </div>
@@ -186,7 +186,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                     e.stopPropagation();
                     removeFile(index);
                   }}
-                  className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+                  className="p-1 text-grey-400 hover:text-red-500 transition-colors"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -228,7 +228,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
         />
         
         {selectedFiles.length > 0 && (
-          <span className="text-sm text-gray-600 dark:text-gray-400">
+          <span className="text-sm text-gray-600 dark:text-grey-400">
             {selectedFiles.length} file{selectedFiles.length !== 1 ? 's' : ''} selected
           </span>
         )}
@@ -238,7 +238,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
         <p className="mt-1 text-sm text-red-600 dark:text-red-400">{error}</p>
       )}
       {helperText && !error && (
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{helperText}</p>
+        <p className="mt-1 text-sm text-gray-500 dark:text-grey-400">{helperText}</p>
       )}
 
       {preview && selectedFiles.length > 0 && (
@@ -253,13 +253,13 @@ const FileUpload: React.FC<FileUploadProps> = ({
                 <span className="text-sm text-gray-900 dark:text-white">
                   {file.name}
                 </span>
-                <span className="text-xs text-gray-500 dark:text-gray-400">
+                <span className="text-xs text-gray-500 dark:text-grey-400">
                   ({formatFileSize(file.size)})
                 </span>
               </div>
               <button
                 onClick={() => removeFile(index)}
-                className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+                className="p-1 text-grey-400 hover:text-red-500 transition-colors"
               >
                 <X className="h-3 w-3" />
               </button>

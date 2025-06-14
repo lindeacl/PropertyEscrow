@@ -127,7 +127,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <div className="relative">
                   <button
                     onClick={() => setProfileOpen(!profileOpen)}
-                    className="flex items-center gap-x-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium text-text-primary hover:bg-background"
+                    className="flex items-center gap-x-2 rounded-xl border border-border bg-surface px-3 py-2 text-sm font-medium text-text-primary hover:bg-background"
                   >
                     <Wallet className="h-4 w-4" />
                     <span className="font-mono">{formatAddress(address!)}</span>

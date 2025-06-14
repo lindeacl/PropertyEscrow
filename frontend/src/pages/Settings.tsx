@@ -172,7 +172,7 @@ const Settings: React.FC = () => {
       case 'rejected':
         return 'text-red-400 bg-red-500/20 border-red-500/40';
       default:
-        return 'text-gray-400 bg-gray-500/20 border-gray-500/40';
+        return 'text-grey-400 bg-gray-500/20 border-gray-500/40';
     }
   };
 
@@ -208,7 +208,7 @@ const Settings: React.FC = () => {
           <div className="flex items-center space-x-4">
             <button
               onClick={() => navigate('/dashboard')}
-              className="bg-white/10 hover:bg-white/20 text-white p-2 rounded-lg transition-colors"
+              className="bg-white/10 hover:bg-white/20 text-white p-2 rounded-xl transition-colors"
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
@@ -234,8 +234,8 @@ const Settings: React.FC = () => {
               onClick={() => setActiveTab(tab.id)}
               className={`pb-4 px-2 text-sm font-medium flex items-center space-x-2 transition-colors ${
                 activeTab === tab.id
-                  ? 'text-blue-400 border-b-2 border-blue-400'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'text-royal-400 border-b-2 border-royal-400'
+                  : 'text-grey-400 hover:text-white'
               }`}
             >
               <tab.icon className="w-4 h-4" />
@@ -262,7 +262,7 @@ const Settings: React.FC = () => {
                       type="text"
                       value={userProfile.displayName}
                       onChange={(e) => setUserProfile(prev => ({ ...prev, displayName: e.target.value }))}
-                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-royal-500"
                     />
                   </div>
                   <div>
@@ -273,7 +273,7 @@ const Settings: React.FC = () => {
                       type="email"
                       value={userProfile.email}
                       onChange={(e) => setUserProfile(prev => ({ ...prev, email: e.target.value }))}
-                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-royal-500"
                     />
                   </div>
                 </div>
@@ -287,17 +287,17 @@ const Settings: React.FC = () => {
                       type="text"
                       value={showWalletAddress ? userProfile.walletAddress : formatAddress(userProfile.walletAddress)}
                       readOnly
-                      className="flex-1 bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white font-mono"
+                      className="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white font-mono"
                     />
                     <button
                       onClick={() => setShowWalletAddress(!showWalletAddress)}
-                      className="bg-white/10 hover:bg-white/20 text-white p-3 rounded-lg transition-colors"
+                      className="bg-white/10 hover:bg-white/20 text-white p-3 rounded-xl transition-colors"
                     >
                       {showWalletAddress ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                     <button
                       onClick={() => copyToClipboard(userProfile.walletAddress)}
-                      className="bg-white/10 hover:bg-white/20 text-white p-3 rounded-lg transition-colors"
+                      className="bg-white/10 hover:bg-white/20 text-white p-3 rounded-xl transition-colors"
                     >
                       <Copy className="w-4 h-4" />
                     </button>
@@ -309,7 +309,7 @@ const Settings: React.FC = () => {
                     <label className="block text-sm font-medium text-gray-300 mb-2">
                       Member Since
                     </label>
-                    <p className="text-white bg-white/10 border border-white/20 rounded-lg px-4 py-3">
+                    <p className="text-white bg-white/10 border border-white/20 rounded-xl px-4 py-3">
                       {userProfile.createdAt.toLocaleDateString()}
                     </p>
                   </div>
@@ -317,7 +317,7 @@ const Settings: React.FC = () => {
                     <label className="block text-sm font-medium text-gray-300 mb-2">
                       Last Active
                     </label>
-                    <p className="text-white bg-white/10 border border-white/20 rounded-lg px-4 py-3">
+                    <p className="text-white bg-white/10 border border-white/20 rounded-xl px-4 py-3">
                       {userProfile.lastActive.toLocaleString()}
                     </p>
                   </div>
@@ -327,7 +327,7 @@ const Settings: React.FC = () => {
                   <button
                     onClick={handleSaveProfile}
                     disabled={loading}
-                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center"
+                    className="bg-royal-500 hover:bg-royal-600 disabled:bg-gray-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors flex items-center"
                   >
                     {loading ? (
                       <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
@@ -351,7 +351,7 @@ const Settings: React.FC = () => {
                 Wallet Management
               </h3>
               <div className="space-y-6">
-                <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10">
+                <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10">
                   <div>
                     <h4 className="font-semibold text-white">Connected Wallet</h4>
                     <p className="text-gray-300 font-mono">{formatAddress(address || '')}</p>
@@ -367,14 +367,14 @@ const Settings: React.FC = () => {
                     <h4 className="font-semibold text-white">Wallet Actions</h4>
                     <button
                       onClick={() => copyToClipboard(address || '')}
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-semibold transition-colors flex items-center justify-center"
+                      className="w-full bg-royal-500 hover:bg-royal-600 text-white py-3 px-4 rounded-xl font-semibold transition-colors flex items-center justify-center"
                     >
                       <Copy className="w-4 h-4 mr-2" />
                       Copy Address
                     </button>
                     <button
                       onClick={disconnectWallet}
-                      className="w-full bg-red-600 hover:bg-red-700 text-white py-3 px-4 rounded-lg font-semibold transition-colors"
+                      className="w-full bg-red-600 hover:bg-red-700 text-white py-3 px-4 rounded-xl font-semibold transition-colors"
                     >
                       Disconnect Wallet
                     </button>
@@ -403,7 +403,7 @@ const Settings: React.FC = () => {
                 KYC & Compliance
               </h3>
               <div className="space-y-6">
-                <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10">
+                <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10">
                   <div>
                     <h4 className="font-semibold text-white">KYC Verification Status</h4>
                     <p className="text-gray-300">Identity verification and compliance level</p>
@@ -420,9 +420,9 @@ const Settings: React.FC = () => {
                       {['basic', 'enhanced', 'institutional'].map((level) => (
                         <div
                           key={level}
-                          className={`p-4 rounded-lg border cursor-pointer transition-colors ${
+                          className={`p-4 rounded-xl border cursor-pointer transition-colors ${
                             userProfile.complianceLevel === level
-                              ? 'bg-blue-500/20 border-blue-500/40 text-blue-400'
+                              ? 'bg-blue-500/20 border-royal-500/40 text-royal-400'
                               : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/10'
                           }`}
                         >
@@ -450,7 +450,7 @@ const Settings: React.FC = () => {
                         { name: 'Source of Funds', status: 'pending', required: false },
                         { name: 'Business Registration', status: 'not_required', required: false }
                       ].map((doc) => (
-                        <div key={doc.name} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                        <div key={doc.name} className="flex items-center justify-between p-3 bg-white/5 rounded-xl">
                           <span className="text-gray-300">{doc.name}</span>
                           <div className="flex items-center space-x-2">
                             {doc.status === 'verified' && (
@@ -462,7 +462,7 @@ const Settings: React.FC = () => {
                             <span className={`text-xs px-2 py-1 rounded ${
                               doc.status === 'verified' ? 'bg-green-500/20 text-green-400' :
                               doc.status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
-                              'bg-gray-500/20 text-gray-400'
+                              'bg-gray-500/20 text-grey-400'
                             }`}>
                               {doc.status.replace('_', ' ')}
                             </span>
@@ -495,10 +495,10 @@ const Settings: React.FC = () => {
                         { key: 'transactionAlerts', label: 'Transaction Alerts', description: 'Real-time transaction confirmations' },
                         { key: 'securityAlerts', label: 'Security Alerts', description: 'Critical security-related notifications' }
                       ].map((item) => (
-                        <div key={item.key} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                        <div key={item.key} className="flex items-center justify-between p-3 bg-white/5 rounded-xl">
                           <div>
                             <h5 className="text-white font-medium">{item.label}</h5>
-                            <p className="text-sm text-gray-400">{item.description}</p>
+                            <p className="text-sm text-grey-400">{item.description}</p>
                           </div>
                           <button
                             onClick={() => setNotifications(prev => ({
@@ -507,7 +507,7 @@ const Settings: React.FC = () => {
                             }))}
                             className={`w-12 h-6 rounded-full transition-colors ${
                               notifications[item.key as keyof NotificationSettings]
-                                ? 'bg-blue-600'
+                                ? 'bg-royal-500'
                                 : 'bg-gray-600'
                             }`}
                           >
@@ -530,10 +530,10 @@ const Settings: React.FC = () => {
                         { key: 'smsAlerts', label: 'SMS Alerts', description: 'Text message notifications for urgent updates' },
                         { key: 'marketingEmails', label: 'Marketing Emails', description: 'Product updates and promotional content' }
                       ].map((item) => (
-                        <div key={item.key} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                        <div key={item.key} className="flex items-center justify-between p-3 bg-white/5 rounded-xl">
                           <div>
                             <h5 className="text-white font-medium">{item.label}</h5>
-                            <p className="text-sm text-gray-400">{item.description}</p>
+                            <p className="text-sm text-grey-400">{item.description}</p>
                           </div>
                           <button
                             onClick={() => setNotifications(prev => ({
@@ -542,7 +542,7 @@ const Settings: React.FC = () => {
                             }))}
                             className={`w-12 h-6 rounded-full transition-colors ${
                               notifications[item.key as keyof NotificationSettings]
-                                ? 'bg-blue-600'
+                                ? 'bg-royal-500'
                                 : 'bg-gray-600'
                             }`}
                           >
@@ -561,7 +561,7 @@ const Settings: React.FC = () => {
                   <button
                     onClick={handleSaveNotifications}
                     disabled={loading}
-                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center"
+                    className="bg-royal-500 hover:bg-royal-600 disabled:bg-gray-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors flex items-center"
                   >
                     {loading ? (
                       <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
@@ -596,9 +596,9 @@ const Settings: React.FC = () => {
                       <button
                         key={themeOption.value}
                         onClick={() => setTheme(themeOption.value as any)}
-                        className={`p-4 rounded-lg border transition-colors ${
+                        className={`p-4 rounded-xl border transition-colors ${
                           theme === themeOption.value
-                            ? 'bg-blue-500/20 border-blue-500/40 text-blue-400'
+                            ? 'bg-blue-500/20 border-royal-500/40 text-royal-400'
                             : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/10'
                         }`}
                       >
@@ -617,12 +617,12 @@ const Settings: React.FC = () => {
                       { key: 'animations', label: 'Animations', description: 'Enable smooth transitions and animations' },
                       { key: 'tooltips', label: 'Tooltips', description: 'Show helpful tooltips throughout the interface' }
                     ].map((option) => (
-                      <div key={option.key} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                      <div key={option.key} className="flex items-center justify-between p-3 bg-white/5 rounded-xl">
                         <div>
                           <h5 className="text-white font-medium">{option.label}</h5>
-                          <p className="text-sm text-gray-400">{option.description}</p>
+                          <p className="text-sm text-grey-400">{option.description}</p>
                         </div>
-                        <button className="w-12 h-6 bg-blue-600 rounded-full">
+                        <button className="w-12 h-6 bg-royal-500 rounded-full">
                           <div className="w-4 h-4 bg-white rounded-full translate-x-7 transition-transform" />
                         </button>
                       </div>
@@ -645,7 +645,7 @@ const Settings: React.FC = () => {
                 </h3>
                 <button
                   onClick={exportActivityLog}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center"
+                  className="bg-royal-500 hover:bg-royal-600 text-white px-4 py-2 rounded-xl flex items-center"
                 >
                   <Download className="w-4 h-4 mr-2" />
                   Export Log

@@ -46,7 +46,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <div className="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-surface dark:bg-surface-dark border-r border-border dark:border-border-dark">
           <div className="flex items-center flex-shrink-0 px-4">
             <div className="flex items-center">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center">
                 <span className="text-white font-bold text-lg">E</span>
               </div>
               <span className="ml-3 text-h2 font-bold text-text-primary dark:text-text-primary-dark">
@@ -119,7 +119,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
             <div className="flex-shrink-0 flex items-center px-4">
               <div className="flex items-center">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center">
                   <span className="text-white font-bold text-lg">E</span>
                 </div>
                 <span className="ml-3 text-h2 font-bold text-text-primary dark:text-text-primary-dark">

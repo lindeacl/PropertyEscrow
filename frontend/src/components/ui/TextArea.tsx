@@ -21,7 +21,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(({
   rows = 3,
   ...props
 }, ref) => {
-  const baseClasses = 'px-3 py-2 border rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseClasses = 'px-3 py-2 border rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed';
   
   const variantClasses = {
     default: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white',
@@ -57,7 +57,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(({
         <p className="mt-1 text-sm text-red-600 dark:text-red-400">{error}</p>
       )}
       {helperText && !error && (
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{helperText}</p>
+        <p className="mt-1 text-sm text-gray-500 dark:text-grey-400">{helperText}</p>
       )}
     </div>
   );

@@ -230,12 +230,12 @@ const CreateEscrow: React.FC = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 text-white flex items-center justify-center">
         <div className="text-center">
-          <Building className="w-16 h-16 text-blue-400 mx-auto mb-4" />
+          <Building className="w-16 h-16 text-royal-400 mx-auto mb-4" />
           <h2 className="text-2xl font-bold mb-4">Access Restricted</h2>
           <p className="text-gray-300 mb-6">Please connect your wallet to create escrow</p>
           <button
             onClick={connectWallet}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+            className="bg-royal-500 hover:bg-royal-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors"
           >
             Connect Wallet
           </button>
@@ -273,8 +273,8 @@ const CreateEscrow: React.FC = () => {
                 <div
                   className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-colors ${
                     step <= currentStep
-                      ? 'bg-blue-600 border-blue-600 text-white'
-                      : 'border-gray-400 text-gray-400'
+                      ? 'bg-royal-500 border-blue-600 text-white'
+                      : 'border-grey-400 text-grey-400'
                   }`}
                 >
                   {step < currentStep ? (
@@ -286,7 +286,7 @@ const CreateEscrow: React.FC = () => {
                 {step < 5 && (
                   <div
                     className={`w-16 h-1 transition-colors ${
-                      step < currentStep ? 'bg-blue-600' : 'bg-gray-400'
+                      step < currentStep ? 'bg-royal-500' : 'bg-grey-400'
                     }`}
                   />
                 )}
@@ -311,7 +311,7 @@ const CreateEscrow: React.FC = () => {
                     type="text"
                     value={formData.propertyId}
                     onChange={(e) => handleInputChange('propertyId', e.target.value)}
-                    className={`w-full px-4 py-3 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
+                    className={`w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
                       errors.propertyId ? 'border-red-500' : 'border-white/20'
                     }`}
                     placeholder="e.g., PROP-2024-001"
@@ -325,7 +325,7 @@ const CreateEscrow: React.FC = () => {
                     type="number"
                     value={formData.salePrice}
                     onChange={(e) => handleInputChange('salePrice', e.target.value)}
-                    className={`w-full px-4 py-3 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
+                    className={`w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
                       errors.salePrice ? 'border-red-500' : 'border-white/20'
                     }`}
                     placeholder="750000"
@@ -339,7 +339,7 @@ const CreateEscrow: React.FC = () => {
                     type="text"
                     value={formData.propertyAddress}
                     onChange={(e) => handleInputChange('propertyAddress', e.target.value)}
-                    className={`w-full px-4 py-3 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
+                    className={`w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
                       errors.propertyAddress ? 'border-red-500' : 'border-white/20'
                     }`}
                     placeholder="123 Blockchain Ave, Web3 City, State 12345"
@@ -353,7 +353,7 @@ const CreateEscrow: React.FC = () => {
                     value={formData.propertyDescription}
                     onChange={(e) => handleInputChange('propertyDescription', e.target.value)}
                     rows={4}
-                    className={`w-full px-4 py-3 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
+                    className={`w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
                       errors.propertyDescription ? 'border-red-500' : 'border-white/20'
                     }`}
                     placeholder="Detailed description of the property, including key features, condition, and any relevant information..."
@@ -379,7 +379,7 @@ const CreateEscrow: React.FC = () => {
                     type="text"
                     value={formData.buyer}
                     onChange={(e) => handleInputChange('buyer', e.target.value)}
-                    className={`w-full px-4 py-3 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
+                    className={`w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
                       errors.buyer ? 'border-red-500' : 'border-white/20'
                     }`}
                     placeholder="0x..."
@@ -393,7 +393,7 @@ const CreateEscrow: React.FC = () => {
                     type="text"
                     value={formData.seller}
                     onChange={(e) => handleInputChange('seller', e.target.value)}
-                    className={`w-full px-4 py-3 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
+                    className={`w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
                       errors.seller ? 'border-red-500' : 'border-white/20'
                     }`}
                     placeholder="0x..."
@@ -407,7 +407,7 @@ const CreateEscrow: React.FC = () => {
                     type="text"
                     value={formData.agent}
                     onChange={(e) => handleInputChange('agent', e.target.value)}
-                    className={`w-full px-4 py-3 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
+                    className={`w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
                       errors.agent ? 'border-red-500' : 'border-white/20'
                     }`}
                     placeholder="0x..."
@@ -421,7 +421,7 @@ const CreateEscrow: React.FC = () => {
                     type="text"
                     value={formData.arbiter}
                     onChange={(e) => handleInputChange('arbiter', e.target.value)}
-                    className={`w-full px-4 py-3 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
+                    className={`w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
                       errors.arbiter ? 'border-red-500' : 'border-white/20'
                     }`}
                     placeholder="0x..."
@@ -468,7 +468,7 @@ const CreateEscrow: React.FC = () => {
                     type="number"
                     value={formData.depositAmount}
                     onChange={(e) => handleInputChange('depositAmount', e.target.value)}
-                    className={`w-full px-4 py-3 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
+                    className={`w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
                       errors.depositAmount ? 'border-red-500' : 'border-white/20'
                     }`}
                     placeholder="75000"
@@ -481,7 +481,7 @@ const CreateEscrow: React.FC = () => {
                   <select
                     value={formData.tokenAddress}
                     onChange={(e) => handleInputChange('tokenAddress', e.target.value)}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:border-white/40 focus:outline-none"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:border-white/40 focus:outline-none"
                   >
                     <option value="0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174">USDC (Polygon)</option>
                     <option value="0xc2132D05D31c914a87C6611C10748AEb04B58e8F">USDT (Polygon)</option>
@@ -498,7 +498,7 @@ const CreateEscrow: React.FC = () => {
                     max="10"
                     value={formData.agentFee}
                     onChange={(e) => handleInputChange('agentFee', parseFloat(e.target.value))}
-                    className={`w-full px-4 py-3 bg-white/10 border rounded-lg text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
+                    className={`w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-gray-400 focus:border-white/40 focus:outline-none ${
                       errors.agentFee ? 'border-red-500' : 'border-white/20'
                     }`}
                   />
@@ -512,14 +512,14 @@ const CreateEscrow: React.FC = () => {
                     step="0.1"
                     value={formData.platformFee}
                     onChange={(e) => handleInputChange('platformFee', parseFloat(e.target.value))}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white bg-gray-600 cursor-not-allowed"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white bg-gray-600 cursor-not-allowed"
                     disabled
                   />
-                  <p className="text-gray-400 text-sm mt-1">Platform fee is fixed</p>
+                  <p className="text-grey-400 text-sm mt-1">Platform fee is fixed</p>
                 </div>
               </div>
 
-              <div className="mt-6 p-4 bg-yellow-500/20 border border-yellow-500/40 rounded-lg">
+              <div className="mt-6 p-4 bg-yellow-500/20 border border-yellow-500/40 rounded-xl">
                 <h3 className="font-semibold mb-2">Fee Breakdown</h3>
                 <div className="text-sm text-gray-300 space-y-1">
                   <div className="flex justify-between">
@@ -558,7 +558,7 @@ const CreateEscrow: React.FC = () => {
                     type="date"
                     value={formData.depositDeadline}
                     onChange={(e) => handleInputChange('depositDeadline', e.target.value)}
-                    className={`w-full px-4 py-3 bg-white/10 border rounded-lg text-white focus:border-white/40 focus:outline-none ${
+                    className={`w-full px-4 py-3 bg-white/10 border rounded-xl text-white focus:border-white/40 focus:outline-none ${
                       errors.depositDeadline ? 'border-red-500' : 'border-white/20'
                     }`}
                   />
@@ -571,7 +571,7 @@ const CreateEscrow: React.FC = () => {
                     type="date"
                     value={formData.verificationDeadline}
                     onChange={(e) => handleInputChange('verificationDeadline', e.target.value)}
-                    className={`w-full px-4 py-3 bg-white/10 border rounded-lg text-white focus:border-white/40 focus:outline-none ${
+                    className={`w-full px-4 py-3 bg-white/10 border rounded-xl text-white focus:border-white/40 focus:outline-none ${
                       errors.verificationDeadline ? 'border-red-500' : 'border-white/20'
                     }`}
                   />
@@ -584,10 +584,10 @@ const CreateEscrow: React.FC = () => {
                     type="text"
                     value={formData.documentHash}
                     onChange={(e) => handleInputChange('documentHash', e.target.value)}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:border-white/40 focus:outline-none"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:border-white/40 focus:outline-none"
                     placeholder="0x... (IPFS hash or document fingerprint)"
                   />
-                  <p className="text-gray-400 text-sm mt-1">Optional: Hash of property documents for verification</p>
+                  <p className="text-grey-400 text-sm mt-1">Optional: Hash of property documents for verification</p>
                 </div>
 
                 <div className="md:col-span-2">
@@ -603,7 +603,7 @@ const CreateEscrow: React.FC = () => {
                 </div>
               </div>
 
-              <div className="mt-6 p-4 bg-red-500/20 border border-red-500/40 rounded-lg">
+              <div className="mt-6 p-4 bg-red-500/20 border border-red-500/40 rounded-xl">
                 <h3 className="font-semibold mb-2 flex items-center space-x-2">
                   <AlertTriangle className="w-5 h-5" />
                   <span>Important Notes</span>
@@ -626,7 +626,7 @@ const CreateEscrow: React.FC = () => {
               <p className="text-gray-300 mb-6">
                 Your property escrow has been deployed to the blockchain. All participants will be notified.
               </p>
-              <div className="bg-green-500/20 border border-green-500/40 rounded-lg p-4 mb-6">
+              <div className="bg-green-500/20 border border-green-500/40 rounded-xl p-4 mb-6">
                 <p className="text-sm">
                   You will be redirected to the escrow details page in a few seconds...
                 </p>
@@ -646,7 +646,7 @@ const CreateEscrow: React.FC = () => {
               <button
                 onClick={prevStep}
                 disabled={currentStep === 1}
-                className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-800 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center space-x-2"
+                className="bg-gray-600 hover:bg-grey-700 disabled:bg-gray-800 disabled:cursor-not-allowed text-white px-6 py-3 rounded-xl font-semibold transition-colors flex items-center space-x-2"
               >
                 <ArrowLeft className="w-5 h-5" />
                 <span>Previous</span>
@@ -656,7 +656,7 @@ const CreateEscrow: React.FC = () => {
                 <button
                   onClick={handleSubmit}
                   disabled={loading}
-                  className="bg-green-600 hover:bg-green-700 disabled:bg-green-800 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center space-x-2"
+                  className="bg-green-600 hover:bg-green-700 disabled:bg-green-800 disabled:cursor-not-allowed text-white px-6 py-3 rounded-xl font-semibold transition-colors flex items-center space-x-2"
                 >
                   {loading ? (
                     <>

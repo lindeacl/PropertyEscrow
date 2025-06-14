@@ -64,10 +64,10 @@ export const Navigation: React.FC<NavigationProps> = ({ isCollapsed, onToggleCol
           )}
           <button
             onClick={onToggleCollapse}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             aria-label={isCollapsed ? 'Expand navigation' : 'Collapse navigation'}
           >
-            <svg className="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-gray-600 dark:text-grey-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isCollapsed ? "M13 5l7 7-7 7M5 5l7 7-7 7" : "M11 19l-7-7 7-7M19 19l-7-7 7-7"} />
             </svg>
           </button>
@@ -80,14 +80,14 @@ export const Navigation: React.FC<NavigationProps> = ({ isCollapsed, onToggleCol
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center px-4 py-3 mx-2 rounded-lg transition-colors ${
+                className={`flex items-center px-4 py-3 mx-2 rounded-xl transition-colors ${
                   isActive
                     ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                 }`}
                 title={isCollapsed ? item.label : undefined}
               >
-                <span className={`${isActive ? 'text-blue-600 dark:text-blue-400' : 'text-gray-500 dark:text-gray-400'}`}>
+                <span className={`${isActive ? 'text-blue-600 dark:text-blue-400' : 'text-gray-500 dark:text-grey-400'}`}>
                   {item.icon}
                 </span>
                 {!isCollapsed && (
@@ -111,7 +111,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isCollapsed, onToggleCol
                 className={`flex flex-col items-center p-2 min-w-0 flex-1 ${
                   isActive
                     ? 'text-blue-600 dark:text-blue-400'
-                    : 'text-gray-500 dark:text-gray-400'
+                    : 'text-gray-500 dark:text-grey-400'
                 }`}
               >
                 {item.icon}

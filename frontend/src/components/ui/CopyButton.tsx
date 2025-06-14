@@ -80,7 +80,7 @@ const CopyButton: React.FC<CopyButtonProps> = ({
     <button
       onClick={handleCopy}
       className={`
-        inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-border
+        inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-border
         bg-background hover:bg-gray-50 transition-colors
         text-sm text-text-primary
         ${className}

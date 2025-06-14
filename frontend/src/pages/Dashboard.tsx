@@ -120,7 +120,7 @@ const Dashboard: React.FC = () => {
   const getStatusColor = (status: EscrowStatus) => {
     switch (status) {
       case EscrowStatus.CREATED:
-        return 'text-blue-400 bg-blue-500/20 border-blue-500/40';
+        return 'text-royal-400 bg-blue-500/20 border-royal-500/40';
       case EscrowStatus.DEPOSITED:
         return 'text-yellow-400 bg-yellow-500/20 border-yellow-500/40';
       case EscrowStatus.VERIFIED:
@@ -130,9 +130,9 @@ const Dashboard: React.FC = () => {
       case EscrowStatus.DISPUTED:
         return 'text-red-400 bg-red-500/20 border-red-500/40';
       case EscrowStatus.REFUNDED:
-        return 'text-gray-400 bg-gray-500/20 border-gray-500/40';
+        return 'text-grey-400 bg-gray-500/20 border-gray-500/40';
       default:
-        return 'text-gray-400 bg-gray-500/20 border-gray-500/40';
+        return 'text-grey-400 bg-gray-500/20 border-gray-500/40';
     }
   };
 
@@ -182,12 +182,12 @@ const Dashboard: React.FC = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 text-white flex items-center justify-center">
         <div className="text-center">
-          <Building className="w-16 h-16 text-blue-400 mx-auto mb-4" />
+          <Building className="w-16 h-16 text-royal-400 mx-auto mb-4" />
           <h2 className="text-2xl font-bold mb-4">Access Restricted</h2>
           <p className="text-gray-300 mb-6">Please connect your wallet to access the dashboard</p>
           <button
             onClick={connectWallet}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+            className="bg-royal-500 hover:bg-royal-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors"
           >
             Connect Wallet
           </button>
@@ -212,7 +212,7 @@ const Dashboard: React.FC = () => {
               </span>
               <button
                 onClick={handleCreateEscrow}
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center space-x-2"
+                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors flex items-center space-x-2"
               >
                 <Plus className="w-5 h-5" />
                 <span>New Escrow</span>
@@ -225,9 +225,9 @@ const Dashboard: React.FC = () => {
       <div className="container mx-auto px-4 py-8">
         {/* Statistics Cards */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-8">
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
             <div className="flex items-center space-x-3">
-              <Building className="w-8 h-8 text-blue-400" />
+              <Building className="w-8 h-8 text-royal-400" />
               <div>
                 <div className="text-2xl font-bold">{dashboardStats.totalEscrows}</div>
                 <div className="text-sm text-gray-300">Total Escrows</div>
@@ -235,7 +235,7 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
             <div className="flex items-center space-x-3">
               <Activity className="w-8 h-8 text-yellow-400" />
               <div>
@@ -245,7 +245,7 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
             <div className="flex items-center space-x-3">
               <CheckCircle className="w-8 h-8 text-green-400" />
               <div>
@@ -255,7 +255,7 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
             <div className="flex items-center space-x-3">
               <DollarSign className="w-8 h-8 text-green-400" />
               <div>
@@ -265,7 +265,7 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
             <div className="flex items-center space-x-3">
               <AlertTriangle className="w-8 h-8 text-orange-400" />
               <div>
@@ -275,7 +275,7 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
             <div className="flex items-center space-x-3">
               <Clock className="w-8 h-8 text-purple-400" />
               <div>
@@ -291,9 +291,9 @@ const Dashboard: React.FC = () => {
           <div className="flex space-x-2">
             <button
               onClick={() => setFilter('all')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-xl font-medium transition-colors ${
                 filter === 'all' 
-                  ? 'bg-blue-600 text-white' 
+                  ? 'bg-royal-500 text-white' 
                   : 'bg-white/10 text-gray-300 hover:bg-white/20'
               }`}
             >
@@ -301,9 +301,9 @@ const Dashboard: React.FC = () => {
             </button>
             <button
               onClick={() => setFilter('active')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-xl font-medium transition-colors ${
                 filter === 'active' 
-                  ? 'bg-blue-600 text-white' 
+                  ? 'bg-royal-500 text-white' 
                   : 'bg-white/10 text-gray-300 hover:bg-white/20'
               }`}
             >
@@ -311,9 +311,9 @@ const Dashboard: React.FC = () => {
             </button>
             <button
               onClick={() => setFilter('completed')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-xl font-medium transition-colors ${
                 filter === 'completed' 
-                  ? 'bg-blue-600 text-white' 
+                  ? 'bg-royal-500 text-white' 
                   : 'bg-white/10 text-gray-300 hover:bg-white/20'
               }`}
             >
@@ -321,9 +321,9 @@ const Dashboard: React.FC = () => {
             </button>
             <button
               onClick={() => setFilter('disputed')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-xl font-medium transition-colors ${
                 filter === 'disputed' 
-                  ? 'bg-blue-600 text-white' 
+                  ? 'bg-royal-500 text-white' 
                   : 'bg-white/10 text-gray-300 hover:bg-white/20'
               }`}
             >
@@ -333,13 +333,13 @@ const Dashboard: React.FC = () => {
           
           <div className="flex-1 max-w-md">
             <div className="relative">
-              <Search className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <Search className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-grey-400" />
               <input
                 type="text"
                 placeholder="Search by Property ID or Address..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:border-white/40 focus:outline-none"
+                className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:border-white/40 focus:outline-none"
               />
             </div>
           </div>
@@ -365,20 +365,20 @@ const Dashboard: React.FC = () => {
                   
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                     <div>
-                      <span className="text-gray-400">Sale Price:</span>
+                      <span className="text-grey-400">Sale Price:</span>
                       <div className="font-semibold text-green-400">${escrow.salePrice}</div>
                     </div>
                     <div>
-                      <span className="text-gray-400">Created:</span>
+                      <span className="text-grey-400">Created:</span>
                       <div className="font-semibold">{escrow.createdAt.toLocaleDateString()}</div>
                     </div>
                     <div>
-                      <span className="text-gray-400">Progress:</span>
+                      <span className="text-grey-400">Progress:</span>
                       <div className="font-semibold">{escrow.progress}%</div>
                     </div>
                     <div>
-                      <span className="text-gray-400">Next Action:</span>
-                      <div className="font-semibold text-blue-400">{escrow.nextAction}</div>
+                      <span className="text-grey-400">Next Action:</span>
+                      <div className="font-semibold text-royal-400">{escrow.nextAction}</div>
                     </div>
                   </div>
                 </div>
@@ -389,7 +389,7 @@ const Dashboard: React.FC = () => {
                       <span>Progress</span>
                       <span>{escrow.progress}%</span>
                     </div>
-                    <div className="w-full bg-gray-700 rounded-full h-2">
+                    <div className="w-full bg-grey-700 rounded-full h-2">
                       <div 
                         className="bg-gradient-to-r from-blue-500 to-green-500 h-2 rounded-full transition-all duration-300"
                         style={{ width: `${escrow.progress}%` }}
@@ -399,7 +399,7 @@ const Dashboard: React.FC = () => {
 
                   <button
                     onClick={() => handleViewEscrow(escrow.id)}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2"
+                    className="bg-royal-500 hover:bg-royal-600 text-white px-4 py-2 rounded-xl font-medium transition-colors flex items-center space-x-2"
                   >
                     <Eye className="w-4 h-4" />
                     <span>View</span>
@@ -412,9 +412,9 @@ const Dashboard: React.FC = () => {
 
         {filteredEscrows.length === 0 && (
           <div className="text-center py-12">
-            <Building className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+            <Building className="w-16 h-16 text-grey-400 mx-auto mb-4" />
             <h3 className="text-xl font-semibold mb-2">No escrows found</h3>
-            <p className="text-gray-400 mb-6">
+            <p className="text-grey-400 mb-6">
               {searchTerm 
                 ? `No escrows match "${searchTerm}"`
                 : filter === 'all' 
@@ -425,7 +425,7 @@ const Dashboard: React.FC = () => {
             {filter === 'all' && !searchTerm && (
               <button
                 onClick={handleCreateEscrow}
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors inline-flex items-center space-x-2"
+                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors inline-flex items-center space-x-2"
               >
                 <Plus className="w-5 h-5" />
                 <span>Create First Escrow</span>

@@ -17,7 +17,7 @@ const Card: React.FC<CardProps> = ({
   padding = 'md',
   variant = 'default'
 }) => {
-  const baseClasses = 'rounded-lg transition-colors';
+  const baseClasses = 'rounded-xl transition-colors';
   
   const variantClasses = {
     default: 'bg-white dark:bg-grey-800 border border-grey-200 dark:border-grey-700',

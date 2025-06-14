@@ -190,14 +190,14 @@ const PropertyEscrowPlatform: React.FC = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <Building className="w-8 h-8 text-blue-400" />
+              <Building className="w-8 h-8 text-royal-400" />
               <span className="text-2xl font-bold">PropertyEscrow</span>
             </div>
             <div className="flex items-center space-x-6">
               <button
                 onClick={() => setActiveTab('overview')}
                 className={`text-sm font-medium transition-colors ${
-                  activeTab === 'overview' ? 'text-blue-400' : 'text-gray-300 hover:text-white'
+                  activeTab === 'overview' ? 'text-royal-400' : 'text-gray-300 hover:text-white'
                 }`}
               >
                 Overview
@@ -205,7 +205,7 @@ const PropertyEscrowPlatform: React.FC = () => {
               <button
                 onClick={() => setActiveTab('demo')}
                 className={`text-sm font-medium transition-colors ${
-                  activeTab === 'demo' ? 'text-blue-400' : 'text-gray-300 hover:text-white'
+                  activeTab === 'demo' ? 'text-royal-400' : 'text-gray-300 hover:text-white'
                 }`}
               >
                 Live Demo
@@ -213,7 +213,7 @@ const PropertyEscrowPlatform: React.FC = () => {
               <button
                 onClick={() => setActiveTab('features')}
                 className={`text-sm font-medium transition-colors ${
-                  activeTab === 'features' ? 'text-blue-400' : 'text-gray-300 hover:text-white'
+                  activeTab === 'features' ? 'text-royal-400' : 'text-gray-300 hover:text-white'
                 }`}
               >
                 Features
@@ -222,7 +222,7 @@ const PropertyEscrowPlatform: React.FC = () => {
                 <button
                   onClick={handleConnectWallet}
                   disabled={loading}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors disabled:opacity-50"
+                  className="bg-royal-500 hover:bg-royal-600 text-white px-6 py-2 rounded-xl font-semibold transition-colors disabled:opacity-50"
                 >
                   {loading ? 'Connecting...' : 'Connect Wallet'}
                 </button>
@@ -233,7 +233,7 @@ const PropertyEscrowPlatform: React.FC = () => {
                   </span>
                   <button
                     onClick={() => navigate('/dashboard')}
-                    className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors"
+                    className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-xl font-semibold transition-colors"
                   >
                     Dashboard
                   </button>
@@ -258,27 +258,27 @@ const PropertyEscrowPlatform: React.FC = () => {
             {/* Platform Stats */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-6xl mx-auto mb-12" role="region" aria-labelledby="platform-stats">
               <h2 id="platform-stats" className="sr-only">Platform Statistics</h2>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 bg-contrast-overlay">
-                <div className="text-3xl font-bold text-blue-400" aria-label="{platformStats.totalEscrows} total escrows">{platformStats.totalEscrows}</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 bg-contrast-overlay">
+                <div className="text-3xl font-bold text-royal-400" aria-label="{platformStats.totalEscrows} total escrows">{platformStats.totalEscrows}</div>
                 <div className="text-sm text-contrast-gray">Total Escrows</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 bg-contrast-overlay">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 bg-contrast-overlay">
                 <div className="text-3xl font-bold text-green-400" aria-label="${platformStats.totalVolume} volume processed">${platformStats.totalVolume}</div>
                 <div className="text-sm text-contrast-gray">Volume Processed</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 bg-contrast-overlay">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 bg-contrast-overlay">
                 <div className="text-3xl font-bold text-purple-400" aria-label="{platformStats.activeEscrows} active deals">{platformStats.activeEscrows}</div>
                 <div className="text-sm text-contrast-gray">Active Deals</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 bg-contrast-overlay">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 bg-contrast-overlay">
                 <div className="text-3xl font-bold text-yellow-400" aria-label="{platformStats.completedEscrows} completed escrows">{platformStats.completedEscrows}</div>
                 <div className="text-sm text-contrast-gray">Completed</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 bg-contrast-overlay">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 bg-contrast-overlay">
                 <div className="text-3xl font-bold text-emerald-400" aria-label="{platformStats.totalUsers} active users">{platformStats.totalUsers}</div>
                 <div className="text-sm text-contrast-gray">Active Users</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 bg-contrast-overlay">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 bg-contrast-overlay">
                 <div className="text-2xl font-bold text-red-400" aria-label="Average transaction time {platformStats.averageTransactionTime}">{platformStats.averageTransactionTime}</div>
                 <div className="text-sm text-contrast-gray">Avg. Time</div>
               </div>
@@ -318,7 +318,7 @@ const PropertyEscrowPlatform: React.FC = () => {
                     <p className="text-gray-300 mb-4">{feature.description}</p>
                     <ul className="space-y-2">
                       {feature.benefits.map((benefit, idx) => (
-                        <li key={idx} className="text-sm text-gray-400 flex items-start space-x-2">
+                        <li key={idx} className="text-sm text-grey-400 flex items-start space-x-2">
                           <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
                           <span>{benefit}</span>
                         </li>
@@ -341,11 +341,11 @@ const PropertyEscrowPlatform: React.FC = () => {
                   <div className="flex justify-between items-center">
                     <div>
                       <div className="text-2xl font-bold text-green-400">{useCase.volume}</div>
-                      <div className="text-sm text-gray-400">Volume</div>
+                      <div className="text-sm text-grey-400">Volume</div>
                     </div>
                     <div>
-                      <div className="text-2xl font-bold text-blue-400">{useCase.transactions}</div>
-                      <div className="text-sm text-gray-400">Deals</div>
+                      <div className="text-2xl font-bold text-royal-400">{useCase.transactions}</div>
+                      <div className="text-sm text-grey-400">Deals</div>
                     </div>
                   </div>
                 </div>
@@ -367,8 +367,8 @@ const PropertyEscrowPlatform: React.FC = () => {
                   <p className="text-gray-300 mb-4 italic">"{testimonial.content}"</p>
                   <div>
                     <div className="font-semibold">{testimonial.name}</div>
-                    <div className="text-sm text-gray-400">{testimonial.role}</div>
-                    <div className="text-sm text-blue-400">{testimonial.company}</div>
+                    <div className="text-sm text-grey-400">{testimonial.role}</div>
+                    <div className="text-sm text-royal-400">{testimonial.company}</div>
                   </div>
                 </div>
               ))}
@@ -408,7 +408,7 @@ const PropertyEscrowPlatform: React.FC = () => {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-300">Current Status:</span>
-                      <span className="font-semibold text-blue-400">{demoEscrow.status}</span>
+                      <span className="font-semibold text-royal-400">{demoEscrow.status}</span>
                     </div>
                   </div>
                 </div>
@@ -421,7 +421,7 @@ const PropertyEscrowPlatform: React.FC = () => {
                         <span>Completion</span>
                         <span>{demoEscrow.progress}%</span>
                       </div>
-                      <div className="w-full bg-gray-700 rounded-full h-3">
+                      <div className="w-full bg-grey-700 rounded-full h-3">
                         <div 
                           className="bg-gradient-to-r from-blue-500 to-green-500 h-3 rounded-full transition-all duration-500"
                           style={{ width: `${demoEscrow.progress}%` }}
@@ -453,7 +453,7 @@ const PropertyEscrowPlatform: React.FC = () => {
               <button
                 onClick={() => handleDemoTransaction('deposit')}
                 disabled={loading || demoEscrow.progress >= 45}
-                className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white p-6 rounded-xl font-semibold transition-colors flex flex-col items-center space-y-3"
+                className="bg-royal-500 hover:bg-royal-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white p-6 rounded-xl font-semibold transition-colors flex flex-col items-center space-y-3"
               >
                 <DollarSign className="w-8 h-8" />
                 <span>Deposit Funds</span>
@@ -483,10 +483,10 @@ const PropertyEscrowPlatform: React.FC = () => {
 
             {!isConnected && (
               <div className="mt-8 text-center">
-                <p className="text-gray-400 mb-4">Connect your wallet to interact with the demo</p>
+                <p className="text-grey-400 mb-4">Connect your wallet to interact with the demo</p>
                 <button
                   onClick={handleConnectWallet}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
+                  className="bg-royal-500 hover:bg-royal-600 text-white px-8 py-3 rounded-xl font-semibold transition-colors"
                 >
                   Connect Wallet for Demo
                 </button>
@@ -509,7 +509,7 @@ const PropertyEscrowPlatform: React.FC = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {/* Security Features */}
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-              <Shield className="w-12 h-12 text-blue-400 mb-4" />
+              <Shield className="w-12 h-12 text-royal-400 mb-4" />
               <h3 className="text-xl font-semibold mb-4">Security & Compliance</h3>
               <ul className="space-y-2 text-gray-300">
                 <li className="flex items-start space-x-2">
@@ -585,7 +585,7 @@ const PropertyEscrowPlatform: React.FC = () => {
             <h2 className="text-3xl font-bold text-center mb-8">Technical Architecture</h2>
             <div className="grid md:grid-cols-3 gap-8">
               <div>
-                <h3 className="text-xl font-semibold mb-4 text-blue-400">Blockchain Layer</h3>
+                <h3 className="text-xl font-semibold mb-4 text-royal-400">Blockchain Layer</h3>
                 <ul className="space-y-2 text-gray-300">
                   <li>• Polygon Mainnet (Chain ID: 137)</li>
                   <li>• Solidity 0.8.22+ smart contracts</li>
@@ -621,13 +621,13 @@ const PropertyEscrowPlatform: React.FC = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-3 mb-4">
-              <Building className="w-6 h-6 text-blue-400" />
+              <Building className="w-6 h-6 text-royal-400" />
               <span className="text-xl font-bold">PropertyEscrow</span>
             </div>
-            <p className="text-gray-400 mb-4">
+            <p className="text-grey-400 mb-4">
               Revolutionizing property transactions with blockchain technology
             </p>
-            <div className="flex justify-center space-x-6 text-sm text-gray-400">
+            <div className="flex justify-center space-x-6 text-sm text-grey-400">
               <span>© 2024 PropertyEscrow Platform</span>
               <span>•</span>
               <span>Powered by Polygon</span>
