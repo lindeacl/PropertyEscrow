@@ -1,15 +1,28 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.22;
 
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import {Pausable} from "@openzeppelin/contracts/security/Pausable.sol";
+import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 // SafeMath not needed in Solidity 0.8+ (built-in overflow protection)
 
-import "../interfaces/IPropertyEscrow.sol";
-import "../libraries/EscrowStructs.sol";
+import {IPropertyEscrow} from "../interfaces/IPropertyEscrow.sol";
+import {EscrowStructs} from "../libraries/EscrowStructs.sol";
+
+// Custom errors for gas efficiency
+error InvalidAddress(string param);
+error InvalidAmount(string param);
+error InvalidDeadline(string param);
+error InvalidEscrowState(uint256 escrowId, EscrowStructs.EscrowState current, EscrowStructs.EscrowState required);
+error UnauthorizedAccess(address caller, string role);
+error DeadlinePassed(uint256 deadline, uint256 currentTime);
+error AlreadyApproved(address participant);
+error TokenNotWhitelisted(address token);
+error ReleaseFundsConditionsNotMet(uint256 escrowId);
+error InvalidEscrowId(uint256 escrowId);
+error FeeTooHigh(uint256 fee, uint256 maxFee);
 
 /**
  * @title PropertyEscrow
@@ -42,14 +55,13 @@ contract PropertyEscrow is IPropertyEscrow, ReentrancyGuard, Pausable, AccessCon
     /// @dev Checks if caller is buyer, seller, agent, arbiter, or has admin role
     modifier onlyEscrowParticipant(uint256 escrowId) {
         EscrowStructs.Escrow memory escrow = escrows[escrowId];
-        require(
-            msg.sender == escrow.buyer ||
+        if (!(msg.sender == escrow.buyer ||
             msg.sender == escrow.seller ||
             msg.sender == escrow.agent ||
             msg.sender == escrow.arbiter ||
-            hasRole(ADMIN_ROLE, msg.sender),
-            "Not authorized for this escrow"
-        );
+            hasRole(ADMIN_ROLE, msg.sender))) {
+            revert UnauthorizedAccess(msg.sender, "escrow participant");
+        }
         _;
     }
 
@@ -57,7 +69,9 @@ contract PropertyEscrow is IPropertyEscrow, ReentrancyGuard, Pausable, AccessCon
     /// @param escrowId The ID of the escrow to validate
     /// @dev Checks if escrowId is less than the current counter (valid range)
     modifier onlyValidEscrow(uint256 escrowId) {
-        require(escrowId < escrowCounter, "Invalid escrow ID");
+        if (escrowId >= escrowCounter) {
+            revert InvalidEscrowId(escrowId);
+        }
         _;
     }
 
@@ -66,7 +80,9 @@ contract PropertyEscrow is IPropertyEscrow, ReentrancyGuard, Pausable, AccessCon
     /// @param requiredState The required state for the escrow
     /// @dev Used to enforce state machine transitions
     modifier onlyInState(uint256 escrowId, EscrowStructs.EscrowState requiredState) {
-        require(escrows[escrowId].state == requiredState, "Invalid escrow state");
+        if (escrows[escrowId].state != requiredState) {
+            revert InvalidEscrowState(escrowId, escrows[escrowId].state, requiredState);
+        }
         _;
     }
 
@@ -75,8 +91,12 @@ contract PropertyEscrow is IPropertyEscrow, ReentrancyGuard, Pausable, AccessCon
     /// @param _platformFeePercentage Platform fee in basis points (100 = 1%)
     /// @dev Sets up initial roles and validates parameters
     constructor(address _platformWallet, uint256 _platformFeePercentage) {
-        require(_platformWallet != address(0), "Invalid platform wallet");
-        require(_platformFeePercentage <= MAX_PLATFORM_FEE, "Platform fee too high");
+        if (_platformWallet == address(0)) {
+            revert InvalidAddress("platformWallet");
+        }
+        if (_platformFeePercentage > MAX_PLATFORM_FEE) {
+            revert FeeTooHigh(_platformFeePercentage, MAX_PLATFORM_FEE);
+        }
 
         platformWallet = _platformWallet;
         platformFeePercentage = _platformFeePercentage;
