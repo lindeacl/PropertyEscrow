@@ -9,7 +9,13 @@ import {
   AlertTriangle,
   DollarSign,
   Activity,
-  Search
+  Search,
+  Shield,
+  Zap,
+  Users,
+  Globe,
+  TrendingUp,
+  Star
 } from 'lucide-react';
 import { useWallet } from '../contexts/WalletContext';
 import { EscrowContractService } from '../services/EscrowContractService';

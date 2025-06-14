@@ -1,0 +1,105 @@
+1. Single UI on Port 5000
+Ensure there is only ONE React frontend app in the repo.
+
+The UI must start on port 5000.
+
+In .env and/or package.json, set:
+
+ini
+Copy
+Edit
+PORT=5000
+Remove any config or references to other ports (3002, etc.).
+
+2. Remove All Legacy/Demo Code
+Delete any and all files not part of the main user experience:
+
+Remove: App-minimal.tsx, App-simple.tsx, DemoMode, ConnectionTest, old dashboards, demo/test pages, unused images, old logos, unused CSS/themes.
+
+Only keep:
+
+App.tsx
+
+Dashboard.tsx
+
+CreateEscrow.tsx
+
+EscrowDetails.tsx
+
+Settings.tsx (or /profile)
+
+Directly imported components and required utilities.
+
+3. Professional, Uniform Styling
+Use only one styling system (preferably Tailwind CSS).
+
+Apply the enterprise brand color palette throughout:
+
+Royal Blue #2962FF
+
+Sun Gold #FFCA28
+
+Neutrals: greys/white backgrounds
+
+Status chips: green/red
+
+Use one modern sans-serif font everywhere (Inter, Roboto, or Segoe UI).
+
+All:
+
+Buttons: prominent, rounded, primary/secondary, hover/focus effect.
+
+Cards: shadow, rounded corners, uniform padding.
+
+Inputs: full width, labeled, helper/error text as needed.
+
+Remove ALL references to old, unused, or conflicting CSS frameworks/styles.
+
+4. Simplify User Experience
+App should ONLY have these four main pages:
+
+/dashboard – All escrows, create button, status chips.
+
+/create-escrow – Single (multi-step if needed) form for all roles.
+
+/escrow/:id – Full timeline, all user actions in one panel, tx log.
+
+/settings (or /profile) – Wallet, KYC, theme, notifications.
+
+Feedback: Use a shared toast/snackbar for all success and errors.
+No modals for simple feedback, no demo/test language or popups.
+
+User actions: Everything is accessible and labeled for screen readers.
+
+5. Responsiveness & Accessibility
+All pages must be responsive:
+
+Works well on desktop and mobile.
+
+Add/fix ARIA labels, test all buttons/inputs for keyboard navigation.
+
+Run axe or Lighthouse; fix accessibility warnings.
+
+6. Documentation and Handoff
+Update README.md to show:
+
+Only port 5000, one UI, setup steps.
+
+List only the four valid routes, with screenshots.
+
+How to change theme/colors.
+
+Remove ALL references to previous UIs, old ports, demos, or legacy code.
+
+Commit with message:
+
+yaml
+Copy
+Edit
+chore: unify UI, enforce professional styling, simplify UX, confirm port 5000
+Push, and prepare screenshots or screen recordings for final sign-off.
+
+Do NOT mark complete until every item is checked and confirmed.
+Show screenshots/video proof to business owners for go-live.
+
+Let me know if you want a sample Tailwind config, color palette code, or button/card component example!

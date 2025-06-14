@@ -60,12 +60,11 @@ The platform features a single, unified frontend running on port 5000 with consi
 
 ## Application Routes
 
-The unified frontend provides these four core routes:
+The unified frontend provides exactly four core routes:
 
-- `/` - Landing page with platform overview and wallet connection
-- `/dashboard` - User dashboard with escrow management and filtering  
+- `/` - Dashboard with platform overview, wallet connection, and escrow management
 - `/create` - Create new escrow transaction with multi-step form
-- `/escrow/:id` - View specific escrow details with role-based actions
+- `/escrow/:id` - View specific escrow details with role-based actions  
 - `/settings` - User settings, profile management, and notifications
 
 All pages are fully responsive and accessible with ARIA labels and keyboard navigation support.

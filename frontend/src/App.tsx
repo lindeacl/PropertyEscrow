@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { WalletProvider } from './contexts/WalletContext';
 import { ToastProvider } from './components/ui/ToastManager';
-import Home from './pages/Home';
+
 import Dashboard from './pages/Dashboard';
 import CreateEscrow from './pages/CreateEscrow';
 import EscrowDetails from './pages/EscrowDetails';
@@ -21,8 +21,7 @@ const App: React.FC = () => {
         <WalletProvider>
           <Router>
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/" element={<Dashboard />} />
               <Route path="/create" element={<CreateEscrow />} />
               <Route path="/escrow/:id" element={<EscrowDetails />} />
               <Route path="/settings" element={<Settings />} />
