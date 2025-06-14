@@ -1,6 +1,5 @@
 import { ethers } from 'ethers';
 import { getProvider } from './provider';
-import { ConnectionDebugger } from './debugConnection';
 import ConnectionManager from './connectionManager';
 
 export interface BlockchainConnection {
@@ -16,7 +15,7 @@ export const initializeBlockchainConnection = async (): Promise<BlockchainConnec
   const state = connectionManager.getState();
   
   if (state.isConnected && state.provider) {
-    ConnectionDebugger.log('Using existing connection manager state');
+    console.log('Using existing connection manager state');
     return {
       provider: state.provider,
       isConnected: true,
@@ -24,7 +23,7 @@ export const initializeBlockchainConnection = async (): Promise<BlockchainConnec
     };
   }
 
-  ConnectionDebugger.log('Initializing connection through manager');
+  console.log('Initializing connection through manager');
 
   try {
     const success = await connectionManager.initialize();
@@ -38,17 +37,17 @@ export const initializeBlockchainConnection = async (): Promise<BlockchainConnec
       };
       
       cachedConnection = connection;
-      ConnectionDebugger.log('Connection manager initialization successful');
+      console.log('Connection manager initialization successful');
       return connection;
     } else {
       throw new Error('Connection manager initialization failed');
     }
   } catch (error) {
-    ConnectionDebugger.error('Connection manager failed', error);
+    console.error('Connection manager failed', error);
     
     // Fallback to direct provider method
     try {
-      ConnectionDebugger.log('Attempting fallback provider connection');
+      console.log('Attempting fallback provider connection');
       const provider = await getProvider();
       
       if (provider) {
@@ -63,7 +62,7 @@ export const initializeBlockchainConnection = async (): Promise<BlockchainConnec
         return connection;
       }
     } catch (fallbackError) {
-      ConnectionDebugger.error('Fallback provider also failed', fallbackError);
+      console.error('Fallback provider also failed', fallbackError);
     }
     
     // Return safe offline state
