@@ -14,7 +14,7 @@ import {
 import { useWallet } from '../contexts/WalletContext';
 import { EscrowContractService, CreateEscrowParams } from '../services/EscrowContractService';
 import logger from '../utils/logger';
-import toast from 'react-hot-toast';
+import { useToastHelpers } from '../components/ui/ToastManager';
 
 interface FormData {
   // Property Information
@@ -47,6 +47,7 @@ interface FormData {
 const CreateEscrow: React.FC = () => {
   const { isConnected, address, signer, provider, connectWallet } = useWallet();
   const navigate = useNavigate();
+  const { success, error, warning } = useToastHelpers();
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [contractService, setContractService] = useState<EscrowContractService | null>(null);
@@ -76,7 +77,7 @@ const CreateEscrow: React.FC = () => {
     logger.uiAction('Create Escrow page loaded');
     
     if (!isConnected) {
-      toast.error('Please connect your wallet to create escrow');
+      error('Please connect your wallet to create escrow');
       navigate('/');
       return;
     }
@@ -172,7 +173,7 @@ const CreateEscrow: React.FC = () => {
 
   const handleSubmit = async () => {
     if (!contractService) {
-      toast.error('Contract service not initialized');
+      error('Contract service not initialized');
       return;
     }
 
@@ -206,7 +207,7 @@ const CreateEscrow: React.FC = () => {
 
       const result = await contractService.createEscrow(params);
       
-      toast.success('Escrow created successfully!');
+      success('Escrow created successfully!');
       logger.uiAction('Escrow created successfully', result);
       
       setCurrentStep(5);
@@ -217,7 +218,7 @@ const CreateEscrow: React.FC = () => {
 
     } catch (error) {
       logger.error('Failed to create escrow', error as Error);
-      toast.error('Failed to create escrow. Please try again.');
+      error('Failed to create escrow. Please try again.');
     } finally {
       setLoading(false);
     }

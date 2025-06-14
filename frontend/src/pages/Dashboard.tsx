@@ -15,7 +15,7 @@ import { useWallet } from '../contexts/WalletContext';
 import { EscrowContractService } from '../services/EscrowContractService';
 import { EscrowStatus } from '../types';
 import logger from '../utils/logger';
-import toast from 'react-hot-toast';
+import { useToastHelpers } from '../components/ui/ToastManager';
 
 interface EscrowSummary {
   id: string;
