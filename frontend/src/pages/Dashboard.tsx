@@ -34,6 +34,7 @@ interface EscrowSummary {
 const Dashboard: React.FC = () => {
   const { isConnected, address, signer, provider, connectWallet } = useWallet();
   const navigate = useNavigate();
+  const { success, error, warning } = useToastHelpers();
   const [filter, setFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   
@@ -52,7 +53,7 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     logger.uiAction('Dashboard loaded');
     if (!isConnected) {
-      toast.error('Please connect your wallet to access dashboard');
+      error('Please connect your wallet to access dashboard');
       navigate('/');
       return;
     }
@@ -85,10 +86,10 @@ const Dashboard: React.FC = () => {
         pendingActions: escrowData.filter(e => e.nextAction !== 'Transaction completed').length,
         averageTime: '0 days'
       });
-    } catch (error) {
-      console.error('Failed to load escrow data:', error);
-      logger.error('Failed to load escrow data', error as Error);
-      toast.error('Failed to load escrow data');
+    } catch (err) {
+      console.error('Failed to load escrow data:', err);
+      logger.error('Failed to load escrow data', err as Error);
+      error('Failed to load escrow data');
     }
   };
 

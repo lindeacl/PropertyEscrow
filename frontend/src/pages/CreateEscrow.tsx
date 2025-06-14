@@ -47,7 +47,7 @@ interface FormData {
 const CreateEscrow: React.FC = () => {
   const { isConnected, address, signer, provider, connectWallet } = useWallet();
   const navigate = useNavigate();
-  const { success, error, warning } = useToastHelpers();
+  const { success, error: showError } = useToastHelpers();
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [contractService, setContractService] = useState<EscrowContractService | null>(null);
@@ -77,7 +77,7 @@ const CreateEscrow: React.FC = () => {
     logger.uiAction('Create Escrow page loaded');
     
     if (!isConnected) {
-      error('Please connect your wallet to create escrow');
+      showError('Please connect your wallet to create escrow');
       navigate('/');
       return;
     }
@@ -173,7 +173,7 @@ const CreateEscrow: React.FC = () => {
 
   const handleSubmit = async () => {
     if (!contractService) {
-      error('Contract service not initialized');
+      showError('Contract service not initialized');
       return;
     }
 
@@ -216,9 +216,9 @@ const CreateEscrow: React.FC = () => {
         navigate(`/escrow/${result.escrowId}`);
       }, 3000);
 
-    } catch (error) {
-      logger.error('Failed to create escrow', error as Error);
-      error('Failed to create escrow. Please try again.');
+    } catch (err) {
+      logger.error('Failed to create escrow', err as Error);
+      showError('Failed to create escrow. Please try again.');
     } finally {
       setLoading(false);
     }
