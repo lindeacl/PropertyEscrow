@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useWallet } from '../contexts/WalletContext';
 import { Wallet, AlertCircle, CheckCircle, Settings } from 'lucide-react';
-import toast from 'react-hot-toast';
+import { useToastHelpers } from './ui/ToastManager';
 
 const WalletConnection: React.FC = () => {
   const { isConnected, address, chainId, connectWallet } = useWallet();
+  const { success, error } = useToastHelpers();
   const [isConnecting, setIsConnecting] = useState(false);
 
   const handleConnect = async () => {

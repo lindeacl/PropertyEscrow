@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Copy, Check } from 'lucide-react';
-import toast from 'react-hot-toast';
+import { useToastHelpers } from './ToastManager';
 
 interface CopyButtonProps {
   text: string;

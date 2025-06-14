@@ -132,7 +132,7 @@ const Settings: React.FC = () => {
       await new Promise(resolve => setTimeout(resolve, 1000));
       success('Profile updated successfully');
       logger.uiAction('Profile settings saved');
-    } catch (error) {
+    } catch (err) {
       error('Failed to update profile');
     } finally {
       setLoading(false);
@@ -144,10 +144,10 @@ const Settings: React.FC = () => {
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      toast.success('Notification preferences updated');
+      success('Notification preferences updated');
       logger.uiAction('Notification settings saved');
-    } catch (error) {
-      toast.error('Failed to update notifications');
+    } catch (err) {
+      error('Failed to update notifications');
     } finally {
       setLoading(false);
     }
@@ -155,7 +155,7 @@ const Settings: React.FC = () => {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
-    toast.success('Copied to clipboard');
+    success('Copied to clipboard');
   };
 
   const formatAddress = (address: string) => {
@@ -196,7 +196,7 @@ const Settings: React.FC = () => {
     a.download = 'activity-log.csv';
     a.click();
     
-    toast.success('Activity log exported');
+    success('Activity log exported');
   };
 
   return (
