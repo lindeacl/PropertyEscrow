@@ -41,6 +41,7 @@ const Dashboard: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [contractService, setContractService] = useState<EscrowContractService | null>(null);
   
   const [dashboardStats, setDashboardStats] = useState({
     totalEscrows: 8,
@@ -51,55 +52,70 @@ const Dashboard: React.FC = () => {
     averageTime: '4.2 days'
   });
 
-  const [escrows, setEscrows] = useState<EscrowSummary[]>([
-    {
-      id: 'ESC-001',
-      propertyId: 'PROP-2024-001',
-      address: '123 Blockchain Ave, Web3 City',
-      salePrice: '750,000',
-      status: EscrowStatus.DEPOSITED,
-      buyer: '0x742d35Cc6aB4C24C26d4c85b53B4c85b53B4c85',
-      seller: '0x123abc456def789ghi012jkl345mno678pqr901',
-      agent: '0x456def789abc123ghi456jkl789mno012pqr345',
-      createdAt: new Date('2024-06-01'),
-      progress: 60,
-      nextAction: 'Await property verification'
-    },
-    {
-      id: 'ESC-002',
-      propertyId: 'PROP-2024-002',
-      address: '456 Smart Contract St, DeFi District',
-      salePrice: '920,000',
-      status: EscrowStatus.VERIFIED,
-      buyer: '0x789ghi012jkl345mno678pqr901stu234vwx567',
-      seller: '0x012jkl345mno678pqr901stu234vwx567yza890',
-      agent: '0x345mno678pqr901stu234vwx567yza890bcd123',
-      createdAt: new Date('2024-05-28'),
-      progress: 85,
-      nextAction: 'Ready for approval'
-    },
-    {
-      id: 'ESC-003',
-      propertyId: 'PROP-2024-003',
-      address: '789 Ethereum Blvd, Polygon Plaza',
-      salePrice: '1,200,000',
-      status: EscrowStatus.RELEASED,
-      buyer: '0x678pqr901stu234vwx567yza890bcd123efg456',
-      seller: '0x901stu234vwx567yza890bcd123efg456hij789',
-      agent: '0x234vwx567yza890bcd123efg456hij789klm012',
-      createdAt: new Date('2024-05-15'),
-      progress: 100,
-      nextAction: 'Transaction completed'
-    }
-  ]);
+  const [escrows, setEscrows] = useState<EscrowSummary[]>([]);
+  const [userRole, setUserRole] = useState<{ isBuyer: boolean; isSeller: boolean; isAgent: boolean; isArbiter: boolean }>({
+    isBuyer: false,
+    isSeller: false,
+    isAgent: false,
+    isArbiter: false
+  });
 
   useEffect(() => {
     logger.uiAction('Dashboard loaded');
     if (!isConnected) {
       toast.error('Please connect your wallet to access dashboard');
       navigate('/');
+      return;
     }
-  }, [isConnected, navigate]);
+
+    // Initialize contract service and load escrow data
+    if (signer && provider) {
+      const service = new EscrowContractService(provider, signer);
+      setContractService(service);
+      loadEscrowData(service);
+    }
+
+    // Determine user role based on connected address
+    if (address) {
+      determineUserRole(address);
+    }
+  }, [isConnected, navigate, signer, provider, address]);
+
+  const loadEscrowData = async (service: EscrowContractService) => {
+    setLoading(true);
+    try {
+      // Load escrows from blockchain - this would be actual contract calls in production
+      // For now, using representative data structure
+      const escrowData: EscrowSummary[] = [];
+      setEscrows(escrowData);
+      
+      // Update dashboard stats based on loaded data
+      setDashboardStats({
+        totalEscrows: escrowData.length,
+        activeDeals: escrowData.filter(e => [EscrowStatus.CREATED, EscrowStatus.DEPOSITED, EscrowStatus.VERIFIED].includes(e.status)).length,
+        completedDeals: escrowData.filter(e => e.status === EscrowStatus.RELEASED).length,
+        totalValue: '0',
+        pendingActions: escrowData.filter(e => e.nextAction !== 'Transaction completed').length,
+        averageTime: '0 days'
+      });
+    } catch (error) {
+      console.error('Failed to load escrow data:', error);
+      toast.error('Failed to load escrow data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const determineUserRole = (walletAddress: string) => {
+    // In production, this would check the blockchain for user roles
+    // For now, setting default role as potential buyer/seller
+    setUserRole({
+      isBuyer: true,
+      isSeller: true,
+      isAgent: false,
+      isArbiter: false
+    });
+  };
 
   const getStatusColor = (status: EscrowStatus) => {
     switch (status) {
