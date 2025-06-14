@@ -17,8 +17,7 @@ import {
   Gavel,
   RefreshCw,
   ExternalLink,
-  Copy,
-  Wallet
+  Copy
 } from 'lucide-react';
 import { useWallet } from '../contexts/WalletContext';
 import { EscrowContractService } from '../services/EscrowContractService';
@@ -50,13 +49,13 @@ const EscrowDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { isConnected, address, signer, provider } = useWallet();
-  const [loading, setLoading] = useState(false);
+
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [contractService, setContractService] = useState<EscrowContractService | null>(null);
   const [activeTab, setActiveTab] = useState('overview');
 
   // Mock escrow data - in production this would be fetched from the blockchain
-  const [escrowData, setEscrowData] = useState<EscrowData | null>({
+  const [escrowData] = useState<EscrowData | null>({
     escrowId: parseInt(id || '1'),
     buyer: '0x742d35Cc6aB4C24C26d4c85b53B4c85b53B4c85',
     seller: '0x123abc456def789ghi012jkl345mno678pqr901',
@@ -81,7 +80,7 @@ const EscrowDetails: React.FC = () => {
     isArbiter: false
   });
 
-  const [timeline, setTimeline] = useState<TimelineEvent[]>([
+  const [timeline] = useState<TimelineEvent[]>([
     {
       id: '1',
       type: 'creation',
@@ -109,7 +108,7 @@ const EscrowDetails: React.FC = () => {
     }
   ]);
 
-  const [documents, setDocuments] = useState<DocumentInfo[]>([
+  const [documents] = useState<DocumentInfo[]>([
     {
       id: '1',
       name: 'Purchase Agreement.pdf',
