@@ -1,5 +1,6 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
+require("@nomicfoundation/hardhat-chai-matchers");
 
 describe("PropertyEscrow - Comprehensive Coverage Tests", function () {
   let propertyEscrow;
@@ -38,9 +39,9 @@ describe("PropertyEscrow - Comprehensive Coverage Tests", function () {
   describe("Contract Deployment", function () {
     it("Should deploy with correct initial values", async function () {
       expect(await propertyEscrow.platformWallet()).to.equal(platformWallet.address);
-      expect(await propertyEscrow.platformFeePercentage()).to.equal(250);
-      expect(await propertyEscrow.MAX_PLATFORM_FEE()).to.equal(500);
-      expect(await propertyEscrow.BASIS_POINTS()).to.equal(10000);
+      expect(await propertyEscrow.platformFeePercentage()).to.equal(250n);
+      expect(await propertyEscrow.MAX_PLATFORM_FEE()).to.equal(500n);
+      expect(await propertyEscrow.BASIS_POINTS()).to.equal(10000n);
     });
 
     it("Should assign correct roles", async function () {
