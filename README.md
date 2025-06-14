@@ -62,9 +62,9 @@ The platform features a single, unified frontend running on port 5000 with consi
 
 The unified frontend provides exactly four core routes:
 
-- `/` - Dashboard with platform overview, wallet connection, and escrow management
-- `/create` - Create new escrow transaction with multi-step form
-- `/escrow/:id` - View specific escrow details with role-based actions  
+- `/dashboard` - Dashboard with platform overview, wallet connection, and escrow management
+- `/create-escrow` - Create new escrow transaction with multi-step form  
+- `/escrow/:id` - View specific escrow details with role-based actions
 - `/settings` - User settings, profile management, and notifications
 
 All pages are fully responsive and accessible with ARIA labels and keyboard navigation support.

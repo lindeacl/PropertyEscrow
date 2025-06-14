@@ -21,10 +21,11 @@ const App: React.FC = () => {
         <WalletProvider>
           <Router>
             <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/create" element={<CreateEscrow />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/create-escrow" element={<CreateEscrow />} />
               <Route path="/escrow/:id" element={<EscrowDetails />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/" element={<Dashboard />} />
             </Routes>
           </Router>
         </WalletProvider>
