@@ -34,10 +34,8 @@ interface EscrowSummary {
 const Dashboard: React.FC = () => {
   const { isConnected, address, signer, provider, connectWallet } = useWallet();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const [contractService, setContractService] = useState<EscrowContractService | null>(null);
   
   const [dashboardStats, setDashboardStats] = useState({
     totalEscrows: 8,
@@ -49,12 +47,7 @@ const Dashboard: React.FC = () => {
   });
 
   const [escrows, setEscrows] = useState<EscrowSummary[]>([]);
-  const [userRole, setUserRole] = useState<{ isBuyer: boolean; isSeller: boolean; isAgent: boolean; isArbiter: boolean }>({
-    isBuyer: false,
-    isSeller: false,
-    isAgent: false,
-    isArbiter: false
-  });
+
 
   useEffect(() => {
     logger.uiAction('Dashboard loaded');
@@ -67,7 +60,6 @@ const Dashboard: React.FC = () => {
     // Initialize contract service and load escrow data
     if (signer && provider) {
       const service = new EscrowContractService(provider, signer);
-      setContractService(service);
       loadEscrowData(service);
     }
 
@@ -78,7 +70,6 @@ const Dashboard: React.FC = () => {
   }, [isConnected, navigate, signer, provider, address]);
 
   const loadEscrowData = async (service: EscrowContractService) => {
-    setLoading(true);
     try {
       // Load escrows from blockchain - this would be actual contract calls in production
       // For now, using representative data structure
@@ -97,8 +88,9 @@ const Dashboard: React.FC = () => {
     } catch (error) {
       console.error('Failed to load escrow data:', error);
       toast.error('Failed to load escrow data');
-    } finally {
-      setLoading(false);
+    } catch (error) {
+      logger.error('Failed to load escrow data', error);
+      toast.error('Failed to load escrow data');
     }
   };
 
