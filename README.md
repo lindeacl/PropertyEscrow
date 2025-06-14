@@ -45,21 +45,21 @@ REACT_APP_ALCHEMY_RPC_URL=https://polygon-mainnet.g.alchemy.com/v2/YOUR_API_KEY_
 python3 -m http.server 5000 --bind 0.0.0.0
 ```
 
-**React Development Server (Port 3000):**
+**React Development Server (Port 5000):**
 ```bash
 cd frontend && npm start
 ```
 
 5. **Access the application**
 - Production Landing Page: http://localhost:5000
-- React Development Server: http://localhost:3000
+- React Development Server: http://localhost:5000
 
 ## Port Configuration
 
 | Service | Port | Purpose |
 |---------|------|---------|
 | PropertyEscrow Server | 5000 | Professional landing page with enhanced styling |
-| React Development | 3000 | Frontend development server |
+| React Development | 5000 | Frontend development server |
 | Smart Contract Tests | Manual | Run via `npx hardhat test` when needed |
 
 ## 📱 User Interface Flows
@@ -87,7 +87,7 @@ The platform provides four streamlined user experiences:
 - **Navigation**: Settings icon in top navigation
 
 **Port Configuration:**
-- Frontend development: Port 3000 (React app)
+- Frontend development: Port 5000 (React app)
 - Production landing: Port 5000 (Static server)
 
 ### MetaMask Setup

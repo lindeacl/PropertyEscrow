@@ -2,11 +2,11 @@
 
 ## Two UI Codebases Identified
 
-### UI Codebase #1: React Application (PORT 3000)
+### UI Codebase #1: React Application (PORT 5000)
 
 **Location**: `./frontend/`
 - **Framework**: React 18 with TypeScript
-- **Port Configuration**: PORT=3000 (from `frontend/.env`)
+- **Port Configuration**: PORT=5000 (from `frontend/.env`)
 - **Package Name**: "escrow-frontend" (from `frontend/package.json`)
 - **Status**: Complete functional application with 4 main UI flows
 - **Type**: Full application with blockchain integration
@@ -33,7 +33,7 @@ frontend/
 │   ├── services/          # Contract integration
 │   └── utils/             # Utilities
 ├── package.json           # React app configuration
-├── .env                   # PORT=3000, HOST=0.0.0.0
+├── .env                   # PORT=5000, HOST=0.0.0.0
 └── build/                 # Production build assets
 ```
 
@@ -46,12 +46,12 @@ frontend/
 ## Port Analysis
 
 ### Current Port Configuration
-- **PORT 3000**: Main React frontend (`frontend/.env`)
+- **PORT 5000**: Main React frontend (`frontend/.env`)
 - **PORT 5000**: Python HTTP server (PropertyEscrow Server workflow)
 
 ## Detailed Analysis
 
-### React Application (PORT 3000) - Complete Application
+### React Application (PORT 5000) - Complete Application
 **Location**: `./frontend/`
 - **Completeness**: Fully developed with enterprise features
 - **Integration**: Deep contract integration with ContractEventListener
@@ -88,11 +88,11 @@ Both UIs serve different purposes but have some overlap:
 - **Purpose**: Landing page (PORT 5000) is marketing, React app (PORT 3000) is functional
 
 ### Integration Level
-- **React App (PORT 3000)**: Deep smart contract integration, real transaction handling
+- **React App (PORT 5000)**: Deep smart contract integration, real transaction handling
 - **Landing Page (PORT 5000)**: Basic wallet connection, primarily presentational
 
 ### Completeness Assessment
-- **React App (PORT 3000)**: ✅ Complete functional application
+- **React App (PORT 5000)**: ✅ Complete functional application
 - **Landing Page (PORT 5000)**: ✅ Complete marketing presentation
 
 ## Recommendation

@@ -101,12 +101,12 @@ cp frontend/.env.example frontend/.env.local
 REACT_APP_ALCHEMY_RPC_URL=https://polygon-mainnet.g.alchemy.com/v2/YOUR_API_KEY
 
 # 5. Start Applications
-cd frontend && npm start  # React app on port 3000
+cd frontend && npm start  # React app on port 5000
 python3 -m http.server 5000  # Landing page on port 5000
 ```
 
 ### Access Points
-- **Development Interface**: http://localhost:3000
+- **Development Interface**: http://localhost:5000
 - **Production Landing**: http://localhost:5000
 
 ## 📊 Quality Assurance Results
