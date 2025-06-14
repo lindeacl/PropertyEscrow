@@ -154,7 +154,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         window.ethereum.removeListener('chainChanged', handleChainChanged);
       }
     };
-  }, []);
+  }, [disconnectWallet]);
 
   return (
     <WalletContext.Provider

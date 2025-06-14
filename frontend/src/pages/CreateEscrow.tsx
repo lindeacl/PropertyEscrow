@@ -4,15 +4,12 @@ import {
   Building, 
   Users, 
   DollarSign, 
-  FileText, 
   Calendar,
   Shield,
   ArrowRight,
   ArrowLeft,
   CheckCircle,
   AlertTriangle,
-  Upload,
-  MapPin
 } from 'lucide-react';
 import { useWallet } from '../contexts/WalletContext';
 import { EscrowContractService, CreateEscrowParams } from '../services/EscrowContractService';

@@ -7,12 +7,8 @@ import {
   Clock, 
   CheckCircle, 
   AlertTriangle,
-  TrendingUp,
-  Users,
   DollarSign,
   Activity,
-  ArrowUpRight,
-  Filter,
   Search
 } from 'lucide-react';
 import { useWallet } from '../contexts/WalletContext';

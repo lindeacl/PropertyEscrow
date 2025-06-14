@@ -11,13 +11,11 @@ import {
   ArrowLeft,
   CheckCircle,
   AlertTriangle,
-  FileText,
   Activity,
   Settings as SettingsIcon,
   Eye,
   EyeOff,
   Copy,
-  ExternalLink,
   Save,
   RefreshCw,
   Download

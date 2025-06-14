@@ -1,0 +1,117 @@
+Compiled with warnings.
+
+[eslint] 
+src/components/ui/Toast.tsx
+  Line 49:6:  React Hook useEffect has a missing dependency: 'handleClose'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+src/contexts/WalletContext.tsx
+  Line 157:6:  React Hook useEffect has a missing dependency: 'disconnectWallet'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+src/pages/CreateEscrow.tsx
+  Line 7:3:   'FileText' is defined but never used  @typescript-eslint/no-unused-vars
+  Line 14:3:  'Upload' is defined but never used    @typescript-eslint/no-unused-vars
+  Line 15:3:  'MapPin' is defined but never used    @typescript-eslint/no-unused-vars
+
+src/pages/Dashboard.tsx
+  Line 10:3:   'TrendingUp' is defined but never used                @typescript-eslint/no-unused-vars
+  Line 11:3:   'Users' is defined but never used                     @typescript-eslint/no-unused-vars
+  Line 14:3:   'ArrowUpRight' is defined but never used              @typescript-eslint/no-unused-vars
+  Line 15:3:   'Filter' is defined but never used                    @typescript-eslint/no-unused-vars
+  Line 41:10:  'loading' is assigned a value but never used          @typescript-eslint/no-unused-vars
+  Line 44:10:  'contractService' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  Line 56:10:  'userRole' is assigned a value but never used         @typescript-eslint/no-unused-vars
+
+src/pages/EscrowDetails.tsx
+  Line 8:3:     'Calendar' is defined but never used                @typescript-eslint/no-unused-vars
+  Line 9:3:     'Shield' is defined but never used                  @typescript-eslint/no-unused-vars
+  Line 12:3:    'AlertTriangle' is defined but never used           @typescript-eslint/no-unused-vars
+  Line 24:3:    'MapPin' is defined but never used                  @typescript-eslint/no-unused-vars
+  Line 25:3:    'User' is defined but never used                    @typescript-eslint/no-unused-vars
+  Line 26:3:    'Wallet' is defined but never used                  @typescript-eslint/no-unused-vars
+  Line 58:10:   'loading' is assigned a value but never used        @typescript-eslint/no-unused-vars
+  Line 58:19:   'setLoading' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  Line 64:22:   'setEscrowData' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  Line 89:20:   'setTimeline' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  Line 117:21:  'setDocuments' is assigned a value but never used   @typescript-eslint/no-unused-vars
+
+src/pages/PropertyEscrowPlatform.tsx
+  Line 7:3:     'Lock' is defined but never used                       @typescript-eslint/no-unused-vars
+  Line 8:3:     'FileText' is defined but never used                   @typescript-eslint/no-unused-vars
+  Line 11:3:    'AlertTriangle' is defined but never used              @typescript-eslint/no-unused-vars
+  Line 12:3:    'Activity' is defined but never used                   @typescript-eslint/no-unused-vars
+  Line 16:3:    'Gavel' is defined but never used                      @typescript-eslint/no-unused-vars
+  Line 19:3:    'Award' is defined but never used                      @typescript-eslint/no-unused-vars
+  Line 21:3:    'Heart' is defined but never used                      @typescript-eslint/no-unused-vars
+  Line 22:3:    'Target' is defined but never used                     @typescript-eslint/no-unused-vars
+  Line 23:3:    'BarChart3' is defined but never used                  @typescript-eslint/no-unused-vars
+  Line 35:10:   'contractService' is assigned a value but never used   @typescript-eslint/no-unused-vars
+  Line 36:25:   'setPlatformStats' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  Line 266:79:  Unexpected template string expression                  no-template-curly-in-string
+
+src/pages/Settings.tsx
+  Line 14:3:   'FileText' is defined but never used                 @typescript-eslint/no-unused-vars
+  Line 20:3:   'ExternalLink' is defined but never used             @typescript-eslint/no-unused-vars
+  Line 61:33:  'connectWallet' is assigned a value but never used   @typescript-eslint/no-unused-vars
+  Line 88:23:  'setActivityLog' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/components/ui/Toast.tsx
+  Line 49:6:  React Hook useEffect has a missing dependency: 'handleClose'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+src/contexts/WalletContext.tsx
+  Line 157:6:  React Hook useEffect has a missing dependency: 'disconnectWallet'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+src/pages/CreateEscrow.tsx
+  Line 7:3:   'FileText' is defined but never used  @typescript-eslint/no-unused-vars
+  Line 14:3:  'Upload' is defined but never used    @typescript-eslint/no-unused-vars
+  Line 15:3:  'MapPin' is defined but never used    @typescript-eslint/no-unused-vars
+
+src/pages/Dashboard.tsx
+  Line 10:3:   'TrendingUp' is defined but never used                @typescript-eslint/no-unused-vars
+  Line 11:3:   'Users' is defined but never used                     @typescript-eslint/no-unused-vars
+  Line 14:3:   'ArrowUpRight' is defined but never used              @typescript-eslint/no-unused-vars
+  Line 15:3:   'Filter' is defined but never used                    @typescript-eslint/no-unused-vars
+  Line 41:10:  'loading' is assigned a value but never used          @typescript-eslint/no-unused-vars
+  Line 44:10:  'contractService' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  Line 56:10:  'userRole' is assigned a value but never used         @typescript-eslint/no-unused-vars
+
+src/pages/EscrowDetails.tsx
+  Line 8:3:     'Calendar' is defined but never used                @typescript-eslint/no-unused-vars
+  Line 9:3:     'Shield' is defined but never used                  @typescript-eslint/no-unused-vars
+  Line 12:3:    'AlertTriangle' is defined but never used           @typescript-eslint/no-unused-vars
+  Line 24:3:    'MapPin' is defined but never used                  @typescript-eslint/no-unused-vars
+  Line 25:3:    'User' is defined but never used                    @typescript-eslint/no-unused-vars
+  Line 26:3:    'Wallet' is defined but never used                  @typescript-eslint/no-unused-vars
+  Line 58:10:   'loading' is assigned a value but never used        @typescript-eslint/no-unused-vars
+  Line 58:19:   'setLoading' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  Line 64:22:   'setEscrowData' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  Line 89:20:   'setTimeline' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  Line 117:21:  'setDocuments' is assigned a value but never used   @typescript-eslint/no-unused-vars
+
+src/pages/PropertyEscrowPlatform.tsx
+  Line 7:3:     'Lock' is defined but never used                       @typescript-eslint/no-unused-vars
+  Line 8:3:     'FileText' is defined but never used                   @typescript-eslint/no-unused-vars
+  Line 11:3:    'AlertTriangle' is defined but never used              @typescript-eslint/no-unused-vars
+  Line 12:3:    'Activity' is defined but never used                   @typescript-eslint/no-unused-vars
+  Line 16:3:    'Gavel' is defined but never used                      @typescript-eslint/no-unused-vars
+  Line 19:3:    'Award' is defined but never used                      @typescript-eslint/no-unused-vars
+  Line 21:3:    'Heart' is defined but never used                      @typescript-eslint/no-unused-vars
+  Line 22:3:    'Target' is defined but never used                     @typescript-eslint/no-unused-vars
+  Line 23:3:    'BarChart3' is defined but never used                  @typescript-eslint/no-unused-vars
+  Line 35:10:   'contractService' is assigned a value but never used   @typescript-eslint/no-unused-vars
+  Line 36:25:   'setPlatformStats' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  Line 266:79:  Unexpected template string expression                  no-template-curly-in-string
+
+src/pages/Settings.tsx
+  Line 14:3:   'FileText' is defined but never used                 @typescript-eslint/no-unused-vars
+  Line 20:3:   'ExternalLink' is defined but never used             @typescript-eslint/no-unused-vars
+  Line 61:33:  'connectWallet' is assigned a value but never used   @typescript-eslint/no-unused-vars
+  Line 88:23:  'setActivityLog' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+webpack compiled with 1 warning
+Files successfully emitted, waiting for typecheck results...
+Issues checking in progress...
+No issues found.

@@ -4,22 +4,14 @@ import {
   Shield, 
   CheckCircle, 
   Users, 
-  Lock,
-  FileText,
   DollarSign,
   Globe,
-  AlertTriangle,
-  Activity,
   TrendingUp,
   Building,
   Clock,
-  Gavel,
   ArrowRight,
   Star,
-  Award,
   Zap,
-  Heart,
-  Target,
   BarChart3
 } from 'lucide-react';
 import { useWallet } from '../contexts/WalletContext';

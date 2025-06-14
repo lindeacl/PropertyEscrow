@@ -5,11 +5,8 @@ import {
   Users, 
   DollarSign, 
   FileText, 
-  Calendar,
-  Shield,
   ArrowLeft,
   CheckCircle,
-  AlertTriangle,
   Clock,
   Upload,
   Download,
@@ -21,8 +18,6 @@ import {
   RefreshCw,
   ExternalLink,
   Copy,
-  MapPin,
-  User,
   Wallet
 } from 'lucide-react';
 import { useWallet } from '../contexts/WalletContext';
