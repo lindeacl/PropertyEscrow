@@ -214,7 +214,7 @@ const CreateEscrow: React.FC = () => {
       
       setTimeout(() => {
         navigate(`/escrow/${result.escrowId}`);
-      }, 3000);
+      }, 2000);
 
     } catch (err) {
       logger.error('Failed to create escrow', err as Error);

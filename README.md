@@ -43,8 +43,16 @@ REACT_APP_ALCHEMY_RPC_URL=https://polygon-mainnet.g.alchemy.com/v2/YOUR_API_KEY_
 cd frontend && npm start
 ```
 
-5. **Access the application**
-- Unified Frontend: http://localhost:5000
+The application will be available at: **http://localhost:5000**
+
+## Professional Styling
+
+The platform features:
+- **Royal Blue (#2962FF)** - Primary brand color for buttons and highlights
+- **Sun Gold (#FFCA28)** - Accent color for success states and highlights  
+- **Grey Scale** - Neutral backgrounds and text with proper contrast
+- **Inter Font** - Modern, readable typography throughout
+- **Unified Components** - Consistent buttons, cards, inputs, and feedback systems
 
 ## Application Architecture
 
@@ -52,13 +60,15 @@ The platform features a single, unified frontend running on port 5000 with consi
 
 ## Application Routes
 
-The unified frontend provides the following routes:
+The unified frontend provides these four core routes:
 
 - `/` - Landing page with platform overview and wallet connection
-- `/dashboard` - User dashboard with escrow management and filtering
-- `/create` - Create new escrow transaction with form validation
+- `/dashboard` - User dashboard with escrow management and filtering  
+- `/create` - Create new escrow transaction with multi-step form
 - `/escrow/:id` - View specific escrow details with role-based actions
 - `/settings` - User settings, profile management, and notifications
+
+All pages are fully responsive and accessible with ARIA labels and keyboard navigation support.
 
 ## User Roles & Access
 
