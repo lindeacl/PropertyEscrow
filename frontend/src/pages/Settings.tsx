@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import { useWallet } from '../contexts/WalletContext';
 import logger from '../utils/logger';
-import toast from 'react-hot-toast';
+import { useToastHelpers } from '../components/ui/ToastManager';
 
 interface UserProfile {
   displayName: string;
@@ -57,6 +57,7 @@ interface ActivityLog {
 const Settings: React.FC = () => {
   const navigate = useNavigate();
   const { isConnected, address, disconnectWallet } = useWallet();
+  const { success, error } = useToastHelpers();
   const [activeTab, setActiveTab] = useState('profile');
   const [loading, setLoading] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('dark');
@@ -112,7 +113,7 @@ const Settings: React.FC = () => {
 
   useEffect(() => {
     if (!isConnected) {
-      toast.error('Please connect your wallet to access settings');
+      error('Please connect your wallet to access settings');
       navigate('/');
       return;
     }
@@ -129,10 +130,10 @@ const Settings: React.FC = () => {
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      toast.success('Profile updated successfully');
+      success('Profile updated successfully');
       logger.uiAction('Profile settings saved');
     } catch (error) {
-      toast.error('Failed to update profile');
+      error('Failed to update profile');
     } finally {
       setLoading(false);
     }

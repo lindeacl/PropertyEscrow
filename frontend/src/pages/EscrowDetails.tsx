@@ -49,6 +49,7 @@ const EscrowDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { isConnected, address, signer, provider } = useWallet();
+  const { success, error } = useToastHelpers();
 
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [contractService, setContractService] = useState<EscrowContractService | null>(null);
@@ -131,7 +132,7 @@ const EscrowDetails: React.FC = () => {
 
   useEffect(() => {
     if (!isConnected) {
-      toast.error('Please connect your wallet to view escrow details');
+      error('Please connect your wallet to view escrow details');
       navigate('/');
       return;
     }
@@ -157,7 +158,7 @@ const EscrowDetails: React.FC = () => {
 
   const handleAction = async (action: string) => {
     if (!contractService || !escrowData) {
-      toast.error('Contract service not available');
+      error('Contract service not available');
       return;
     }
 
@@ -166,30 +167,30 @@ const EscrowDetails: React.FC = () => {
       switch (action) {
         case 'deposit':
           // Handle buyer deposit
-          toast.success('Deposit functionality will be implemented');
+          success('Deposit functionality will be implemented');
           break;
         case 'verify':
           // Handle agent verification
-          toast.success('Verification functionality will be implemented');
+          success('Verification functionality will be implemented');
           break;
         case 'approve':
           // Handle participant approval
-          toast.success('Approval functionality will be implemented');
+          success('Approval functionality will be implemented');
           break;
         case 'dispute':
           // Handle dispute initiation
-          toast.success('Dispute functionality will be implemented');
+          success('Dispute functionality will be implemented');
           break;
         case 'release':
           // Handle fund release
-          toast.success('Release functionality will be implemented');
+          success('Release functionality will be implemented');
           break;
         default:
-          toast.error('Unknown action');
+          error('Unknown action');
       }
-    } catch (error) {
-      console.error('Action failed:', error);
-      toast.error('Action failed. Please try again.');
+    } catch (err) {
+      console.error('Action failed:', err);
+      error('Action failed. Please try again.');
     } finally {
       setActionLoading(null);
     }
@@ -197,7 +198,7 @@ const EscrowDetails: React.FC = () => {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
-    toast.success('Copied to clipboard');
+    success('Copied to clipboard');
   };
 
   const formatAddress = (address: string) => {
