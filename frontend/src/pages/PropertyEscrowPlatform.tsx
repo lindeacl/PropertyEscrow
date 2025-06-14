@@ -21,6 +21,7 @@ import { useToastHelpers } from '../components/ui/ToastManager';
 const PropertyEscrowPlatform: React.FC = () => {
   const { isConnected, connectWallet, address, signer, provider } = useWallet();
   const navigate = useNavigate();
+  const { success, error } = useToastHelpers();
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
   const [platformStats] = useState({
@@ -57,11 +58,11 @@ const PropertyEscrowPlatform: React.FC = () => {
       setLoading(true);
       logger.walletConnectAttempt('MetaMask');
       await connectWallet();
-      toast.success('Wallet connected successfully');
+      success('Wallet connected successfully');
       logger.walletConnected(address || 'unknown', 'Polygon Mainnet');
-    } catch (error) {
-      logger.error('Wallet connection failed', error as Error);
-      toast.error('Failed to connect wallet');
+    } catch (err) {
+      logger.error('Wallet connection failed', err as Error);
+      error('Failed to connect wallet');
     } finally {
       setLoading(false);
     }
@@ -69,7 +70,7 @@ const PropertyEscrowPlatform: React.FC = () => {
 
   const handleDemoTransaction = async (action: string) => {
     if (!isConnected) {
-      toast.error('Please connect your wallet to try the demo');
+      error('Please connect your wallet to try the demo');
       return;
     }
 
@@ -83,19 +84,19 @@ const PropertyEscrowPlatform: React.FC = () => {
       switch (action) {
         case 'deposit':
           setDemoEscrow(prev => ({ ...prev, progress: 45, status: 'Funds Deposited' }));
-          toast.success('Demo: Funds deposited successfully');
+          success('Demo: Funds deposited successfully');
           break;
         case 'verify':
           setDemoEscrow(prev => ({ ...prev, progress: 75, status: 'Property Verified' }));
-          toast.success('Demo: Property verification completed');
+          success('Demo: Property verification completed');
           break;
         case 'release':
           setDemoEscrow(prev => ({ ...prev, progress: 100, status: 'Completed' }));
-          toast.success('Demo: Funds released to seller');
+          success('Demo: Funds released to seller');
           break;
       }
-    } catch (error) {
-      toast.error('Demo transaction failed');
+    } catch (err) {
+      error('Demo transaction failed');
     } finally {
       setLoading(false);
     }

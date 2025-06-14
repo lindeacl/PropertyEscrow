@@ -24,18 +24,19 @@ const CopyButton: React.FC<CopyButtonProps> = ({
   className = ''
 }) => {
   const [copied, setCopied] = useState(false);
+  const { success, error } = useToastHelpers();
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
-      toast.success(label ? `${label} copied to clipboard` : 'Copied to clipboard');
+      success(label ? `${label} copied to clipboard` : 'Copied to clipboard');
       
       setTimeout(() => {
         setCopied(false);
       }, 2000);
     } catch (err) {
-      toast.error('Failed to copy to clipboard');
+      error('Failed to copy to clipboard');
     }
   };
 

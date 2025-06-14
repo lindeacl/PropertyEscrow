@@ -12,17 +12,17 @@ const WalletConnection: React.FC = () => {
     setIsConnecting(true);
     try {
       await connectWallet();
-      toast.success('Wallet connected successfully');
+      success('Wallet connected successfully');
     } catch (error: any) {
       console.error('Connection failed:', error);
       
       if (error.message.includes('MetaMask is not installed')) {
-        toast.error('Please install MetaMask to connect your wallet');
+        error('Please install MetaMask to connect your wallet');
       } else if (error.message.includes('Parse error') || error.message.includes('JSON')) {
-        toast.error('Please add the local network to MetaMask first');
+        error('Please add the local network to MetaMask first');
         showNetworkInstructions();
       } else {
-        toast.error('Failed to connect wallet. Please try again.');
+        error('Failed to connect wallet. Please try again.');
       }
     } finally {
       setIsConnecting(false);
