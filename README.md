@@ -25,14 +25,15 @@ npm install
 cd frontend && npm install
 ```
 
-3. **Configure Alchemy**
-Create a `.env` file in the frontend directory:
+3. **Configure Environment**
+Create environment files:
 ```bash
-cd frontend
-cp .env .env.local
+# Copy example files
+cp .env.example .env
+cd frontend && cp .env.example .env.local
 ```
 
-Edit `.env.local` and set your Alchemy RPC URL:
+Edit `frontend/.env.local` and set your Alchemy RPC URL:
 ```
 REACT_APP_ALCHEMY_RPC_URL=https://polygon-mainnet.g.alchemy.com/v2/YOUR_API_KEY_HERE
 ```
@@ -61,10 +62,33 @@ cd frontend && npm start
 | React Development | 3000 | Frontend development server |
 | Smart Contract Tests | Manual | Run via `npx hardhat test` when needed |
 
-**Port Configuration Files:**
-- Frontend port: Set in `frontend/.env` (PORT=3000)
-- Package.json scripts: No PORT variables (use .env only)
-- Production server: Port 5000 (PropertyEscrow landing page)
+## 📱 User Interface Flows
+
+The platform provides four streamlined user experiences:
+
+### 1. Dashboard Flow
+- **Purpose**: Central hub for all escrow activities
+- **Features**: Status overview, pending actions, transaction history
+- **Navigation**: Primary landing page after wallet connection
+
+### 2. Create Escrow Flow  
+- **Purpose**: Guided escrow creation process
+- **Features**: Property input, participant assignment, fee configuration
+- **Navigation**: Accessible from dashboard "Create New Escrow" button
+
+### 3. Escrow Details Flow
+- **Purpose**: Individual transaction management
+- **Features**: Status tracking, document verification, fund operations
+- **Navigation**: Click any escrow from dashboard list
+
+### 4. Settings Flow
+- **Purpose**: Platform and user configuration
+- **Features**: Wallet management, preferences, security settings
+- **Navigation**: Settings icon in top navigation
+
+**Port Configuration:**
+- Frontend development: Port 3000 (React app)
+- Production landing: Port 5000 (Static server)
 
 ### MetaMask Setup
 
@@ -82,21 +106,52 @@ cd frontend && npm start
 
 ### Smart Contracts
 
-- **EscrowFactory**: Creates and manages property escrow contracts
-- **PropertyEscrow**: Individual escrow instances with multi-party support
+- **PropertyEscrow**: Core escrow contract with multi-party support and role-based access control
 - **MockERC20**: Test token for development and testing
+- **EscrowStructs**: Shared data structures and enums
 
-### Frontend Structure
+### Frontend Application - Four Main UI Flows
+
+The platform features a streamlined interface with four core user flows:
+
+#### 1. **Dashboard** (`/dashboard`)
+- Overview of all escrow transactions
+- Real-time status updates and notifications
+- Quick access to active escrows and pending actions
+- Transaction history and audit trail
+
+#### 2. **Create Escrow** (`/create-escrow`)
+- Step-by-step escrow creation wizard
+- Property details input and document upload
+- Participant role assignment (buyer, seller, agent, arbiter)
+- Deposit amount and fee configuration
+
+#### 3. **Escrow Details** (`/escrow/:id`)
+- Individual escrow transaction management
+- Status tracking and milestone completion
+- Document verification and approval workflow
+- Fund deposit, release, and dispute handling
+
+#### 4. **Settings** (`/settings`)
+- Wallet connection and network management
+- User preferences and accessibility options
+- Platform configuration and fee settings
+- Security and notification preferences
+
+### Technical Architecture
 
 ```
 frontend/
 ├── src/
-│   ├── components/     # Reusable UI components
-│   ├── pages/          # Route-based page components
-│   ├── contexts/       # React contexts (Wallet, Theme)
-│   ├── hooks/          # Custom React hooks
-│   ├── utils/          # Utility functions and helpers
-│   └── __tests__/      # Test files
+│   ├── pages/              # Four main UI flows
+│   │   ├── Dashboard.tsx          # Flow 1: Transaction overview
+│   │   ├── CreateEscrow.tsx       # Flow 2: Escrow creation
+│   │   ├── EscrowDetails.tsx      # Flow 3: Transaction management
+│   │   └── Settings.tsx           # Flow 4: User preferences
+│   ├── components/         # Reusable UI components
+│   ├── contexts/          # Wallet and Theme contexts
+│   ├── services/          # Contract interaction services
+│   └── utils/             # Utilities and helpers
 ```
 
 ## 🔧 Development

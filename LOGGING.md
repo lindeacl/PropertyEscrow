@@ -24,12 +24,141 @@ The centralized logging utility provides structured logging with the following c
 - **NETWORK**: Network changes and provider events
 - **EVENT**: Smart contract event emissions
 
+## Smart Contract Events Documentation
+
+All contract events are automatically captured and logged by the `ContractEventListener` service:
+
+### PropertyEscrow Contract Events
+
+#### 1. EscrowCreated
+```solidity
+event EscrowCreated(uint256 indexed escrowId, address indexed buyer, address indexed seller, uint256 depositAmount);
+```
+**Triggers**: When a new escrow is successfully created
+**Frontend Action**: Toast notification "Escrow created successfully"
+**Logging**: `logger.uiAction('Contract Event: EscrowCreated', eventData)`
+
+#### 2. FundsDeposited
+```solidity
+event FundsDeposited(uint256 indexed escrowId, address indexed depositor, uint256 amount);
+```
+**Triggers**: When buyer deposits funds into escrow
+**Frontend Action**: Dashboard update + Toast "Funds deposited successfully"
+**Logging**: `logger.uiAction('Contract Event: FundsDeposited', eventData)`
+
+#### 3. VerificationCompleted
+```solidity
+event VerificationCompleted(uint256 indexed escrowId, address indexed verifier);
+```
+**Triggers**: When agent completes property verification
+**Frontend Action**: Status update + Toast "Property verification completed"
+**Logging**: `logger.uiAction('Contract Event: VerificationCompleted', eventData)`
+
+#### 4. ApprovalGiven
+```solidity
+event ApprovalGiven(uint256 indexed escrowId, address indexed approver, uint8 role);
+```
+**Triggers**: When participant gives approval for fund release
+**Frontend Action**: Progress indicator update + Toast "Approval recorded"
+**Logging**: `logger.uiAction('Contract Event: ApprovalGiven', eventData)`
+
+#### 5. FundsReleased
+```solidity
+event FundsReleased(uint256 indexed escrowId, address indexed seller, uint256 amount);
+```
+**Triggers**: When escrow funds are released to seller
+**Frontend Action**: Transaction completion + Toast "Funds released successfully"
+**Logging**: `logger.uiAction('Contract Event: FundsReleased', eventData)`
+
+#### 6. DisputeRaised
+```solidity
+event DisputeRaised(uint256 indexed escrowId, address indexed initiator, string reason);
+```
+**Triggers**: When a dispute is initiated
+**Frontend Action**: Dispute status update + Toast "Dispute initiated"
+**Logging**: `logger.uiAction('Contract Event: DisputeRaised', eventData)`
+
+## User-Facing Error Messages & Toast Notifications
+
+### Contract Interaction Errors
+
+#### Custom Contract Errors
+```javascript
+// InvalidAddress error
+"Invalid address provided. Please check and try again."
+
+// InvalidEscrowState error
+"Cannot perform this action in current escrow state."
+
+// UnauthorizedAccess error
+"You don't have permission to perform this action."
+
+// DeadlinePassed error
+"The deadline for this action has passed."
+
+// AlreadyApproved error
+"You have already given approval for this escrow."
+
+// InsufficientBalance error
+"Insufficient token balance to complete this transaction."
+```
+
+#### Wallet Connection Errors
+```javascript
+// MetaMask not installed
+"MetaMask wallet not detected. Please install MetaMask to continue."
+
+// Wrong network
+"Please switch to Polygon network to use this platform."
+
+// Connection rejected
+"Wallet connection was rejected. Please try again."
+
+// Account changed
+"Wallet account changed. Please refresh the page."
+```
+
+#### Transaction Errors
+```javascript
+// User rejected transaction
+"Transaction was cancelled by user."
+
+// Insufficient gas
+"Insufficient gas to complete transaction. Please try again."
+
+// Transaction failed
+"Transaction failed. Please check your wallet and try again."
+
+// Network error
+"Network error occurred. Please check your connection."
+```
+
+### Success Notifications
+
+#### Escrow Operations
+```javascript
+// Escrow creation
+"Escrow created successfully! Property ID: {propertyId}"
+
+// Fund deposit
+"Funds deposited successfully. Amount: {amount} {token}"
+
+// Verification completion
+"Property verification completed by agent."
+
+// Approval given
+"Your approval has been recorded."
+
+// Funds released
+"Funds released successfully to seller."
+```
+
 ### Error Boundary Implementation
 
-The `ErrorBoundary` component (`frontend/src/components/ErrorBoundary.tsx`) catches and logs all React component errors with:
+The `ErrorBoundary` component catches all React component errors with:
 
 - Full error stack traces
-- Component stack information
+- Component stack information  
 - Automatic error reporting
 - User-friendly error display
 - Development-only detailed error information
@@ -39,15 +168,18 @@ The `ErrorBoundary` component (`frontend/src/components/ErrorBoundary.tsx`) catc
 ### Wallet Operations
 ```javascript
 // Wallet connection attempt
-logger.walletConnectAttempt('MetaMask');
+logger.uiAction('Wallet connection attempted', { provider: 'MetaMask' });
 
 // Successful wallet connection
-logger.walletConnected('0x742d...4c85', 'Polygon Mainnet');
+logger.uiAction('Wallet connected successfully', { 
+  address: '0x742d...4c85', 
+  network: 'Polygon Mainnet' 
+});
 
 // Wallet disconnection
-logger.walletDisconnected('0x742d...4c85');
+logger.uiAction('Wallet disconnected', { address: '0x742d...4c85' });
 
-// Wallet errors
+// Wallet connection errors
 logger.walletError(error, 'Connection process');
 ```
 
