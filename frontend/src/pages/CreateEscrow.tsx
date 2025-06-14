@@ -300,7 +300,7 @@ const CreateEscrow: React.FC = () => {
           {currentStep === 1 && (
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20">
               <h2 className="text-2xl font-bold mb-6 flex items-center space-x-3">
-                <Building className="w-8 h-8 text-blue-400" />
+                <Building className="w-8 h-8 text-royal-400" />
                 <span>Property Information</span>
               </h2>
               
@@ -430,7 +430,7 @@ const CreateEscrow: React.FC = () => {
                 </div>
               </div>
 
-              <div className="mt-6 p-4 bg-blue-500/20 border border-blue-500/40 rounded-lg">
+              <div className="mt-6 p-4 bg-royal-500/20 border border-royal-500/40 rounded-xl">
                 <h3 className="font-semibold mb-2 flex items-center space-x-2">
                   <Shield className="w-5 h-5" />
                   <span>Role Descriptions</span>
@@ -596,7 +596,7 @@ const CreateEscrow: React.FC = () => {
                       type="checkbox"
                       checked={formData.propertyVerified}
                       onChange={(e) => handleInputChange('propertyVerified', e.target.checked)}
-                      className="w-4 h-4 text-blue-600 bg-white/10 border-white/20 rounded focus:ring-blue-500"
+                      className="w-4 h-4 text-royal-500 bg-white/10 border-white/20 rounded focus:ring-royal-500"
                     />
                     <span className="text-sm">Property has been pre-verified</span>
                   </label>
@@ -633,7 +633,7 @@ const CreateEscrow: React.FC = () => {
               </div>
               <button
                 onClick={() => navigate('/dashboard')}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                className="bg-royal-500 hover:bg-royal-600 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 hover:scale-105 shadow-lg"
               >
                 Go to Dashboard
               </button>
@@ -673,7 +673,7 @@ const CreateEscrow: React.FC = () => {
               ) : (
                 <button
                   onClick={nextStep}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center space-x-2"
+                  className="bg-royal-500 hover:bg-royal-600 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 hover:scale-105 shadow-lg flex items-center space-x-2"
                 >
                   <span>Next</span>
                   <ArrowRight className="w-5 h-5" />

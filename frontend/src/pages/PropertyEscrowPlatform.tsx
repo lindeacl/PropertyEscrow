@@ -288,7 +288,7 @@ const PropertyEscrowPlatform: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button
                 onClick={() => setActiveTab('demo')}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+                className="bg-royal-500 hover:bg-royal-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200 flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-royal-500 focus:ring-offset-2 min-h-[44px] hover:scale-105 shadow-lg"
                 aria-label="Try the live demo of PropertyEscrow platform"
               >
                 <span>Try Live Demo</span>
@@ -296,7 +296,7 @@ const PropertyEscrowPlatform: React.FC = () => {
               </button>
               <button
                 onClick={() => isConnected ? navigate('/create-escrow') : handleConnectWallet()}
-                className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 min-h-[44px]"
+                className="bg-gold-500 hover:bg-gold-600 text-grey-900 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200 flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2 min-h-[44px] hover:scale-105 shadow-lg"
                 aria-label={isConnected ? "Start creating a new escrow transaction" : "Connect wallet to start transaction"}
               >
                 <Building className="w-5 h-5" aria-hidden="true" />
@@ -313,7 +313,7 @@ const PropertyEscrowPlatform: React.FC = () => {
                 const Icon = feature.icon;
                 return (
                   <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:border-white/40 transition-colors">
-                    <Icon className="w-12 h-12 text-blue-400 mb-4" />
+                    <Icon className="w-12 h-12 text-royal-400 mb-4" />
                     <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
                     <p className="text-gray-300 mb-4">{feature.description}</p>
                     <ul className="space-y-2">

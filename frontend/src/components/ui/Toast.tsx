@@ -64,7 +64,7 @@ const Toast: React.FC<ToastProps> = ({
       case 'warning':
         return <AlertCircle className="w-5 h-5 flex-shrink-0 text-yellow-400" aria-hidden={true} />;
       case 'info':
-        return <Info className="w-5 h-5 flex-shrink-0 text-blue-400" aria-hidden={true} />;
+        return <Info className="w-5 h-5 flex-shrink-0 text-royal-400" aria-hidden={true} />;
     }
   };
 
@@ -78,7 +78,7 @@ const Toast: React.FC<ToastProps> = ({
       case 'warning':
         return `${baseClasses} bg-yellow-500/10 border-yellow-500/30 text-yellow-100`;
       case 'info':
-        return `${baseClasses} bg-blue-500/10 border-blue-500/30 text-blue-100`;
+        return `${baseClasses} bg-royal-500/10 border-royal-500/30 text-royal-100`;
     }
   };
 

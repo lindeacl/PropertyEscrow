@@ -36,36 +36,36 @@ const StatusChip: React.FC<StatusChipProps> = ({
         icon: Clock,
         label: 'Pending',
         colors: {
-          default: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300',
-          solid: 'bg-yellow-500 text-white',
-          outline: 'border border-yellow-500 text-yellow-600 bg-transparent dark:text-yellow-400'
+          default: 'bg-grey-100 text-grey-700 dark:bg-grey-800/50 dark:text-grey-300',
+          solid: 'bg-grey-500 text-white',
+          outline: 'border border-grey-500 text-grey-600 bg-transparent dark:text-grey-400'
         }
       },
       active: {
         icon: Clock,
         label: 'Active',
         colors: {
-          default: 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300',
-          solid: 'bg-blue-500 text-white',
-          outline: 'border border-blue-500 text-blue-600 bg-transparent dark:text-blue-400'
+          default: 'bg-royal-100 text-royal-800 dark:bg-royal-900/20 dark:text-royal-300',
+          solid: 'bg-royal-500 text-white',
+          outline: 'border border-royal-500 text-royal-600 bg-transparent dark:text-royal-400'
         }
       },
       funded: {
         icon: CheckCircle,
         label: 'Funded',
         colors: {
-          default: 'bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-300',
-          solid: 'bg-purple-500 text-white',
-          outline: 'border border-purple-500 text-purple-600 bg-transparent dark:text-purple-400'
+          default: 'bg-royal-100 text-royal-800 dark:bg-royal-900/20 dark:text-royal-300',
+          solid: 'bg-royal-500 text-white',
+          outline: 'border border-royal-500 text-royal-600 bg-transparent dark:text-royal-400'
         }
       },
       verified: {
         icon: CheckCircle,
         label: 'Verified',
         colors: {
-          default: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/20 dark:text-indigo-300',
-          solid: 'bg-indigo-500 text-white',
-          outline: 'border border-indigo-500 text-indigo-600 bg-transparent dark:text-indigo-400'
+          default: 'bg-gold-100 text-gold-800 dark:bg-gold-900/20 dark:text-gold-300',
+          solid: 'bg-gold-500 text-grey-900',
+          outline: 'border border-gold-500 text-gold-600 bg-transparent dark:text-gold-400'
         }
       },
       completed: {
@@ -99,9 +99,9 @@ const StatusChip: React.FC<StatusChipProps> = ({
         icon: X,
         label: 'Cancelled',
         colors: {
-          default: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200',
-          solid: 'bg-gray-500 text-white',
-          outline: 'border border-gray-500 text-gray-600 bg-transparent dark:text-gray-400'
+          default: 'bg-grey-100 text-grey-800 dark:bg-grey-700 dark:text-grey-200',
+          solid: 'bg-grey-500 text-white',
+          outline: 'border border-grey-500 text-grey-600 bg-transparent dark:text-grey-400'
         }
       }
     };
