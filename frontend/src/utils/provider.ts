@@ -1,5 +1,4 @@
 import { ethers } from 'ethers';
-import { RobustProvider } from './robustProvider';
 
 let cachedProvider: ethers.Provider | null = null;
 let connectionMode: 'metamask' | 'alchemy' | 'offline' = 'offline';
@@ -9,27 +8,25 @@ export const getProvider = async () => {
     return cachedProvider;
   }
 
-  console.log('Initializing Alchemy provider connection...');
+  console.log('Initializing provider connection...');
   
   try {
-    const provider = await RobustProvider.getProvider();
-    
-    if (provider) {
-      cachedProvider = provider;
-      
-      // Detect connection type based on provider
-      if (provider instanceof ethers.BrowserProvider) {
-        connectionMode = 'metamask';
-        console.log('Connected via MetaMask wallet');
-      } else {
-        connectionMode = 'alchemy';
-        console.log('Connected to Alchemy blockchain network');
-      }
-      
+    // Try wallet first
+    const walletProvider = await getWalletProvider();
+    if (walletProvider) {
+      cachedProvider = walletProvider;
+      connectionMode = 'metamask';
+      console.log('Connected via MetaMask wallet');
       return cachedProvider;
-    } else {
-      throw new Error('All provider connection strategies failed');
     }
+    
+    // Fallback to Alchemy
+    const alchemyProvider = await connectToAlchemyNetwork();
+    if (alchemyProvider) {
+      return alchemyProvider;
+    }
+    
+    throw new Error('All provider connection strategies failed');
   } catch (error) {
     console.error('Provider initialization failed:', error);
     connectionMode = 'offline';
