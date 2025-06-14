@@ -2,6 +2,33 @@
  * Accessibility utilities for enhanced user experience
  */
 
+// Focus ring styles for consistent focus indicators
+export const focusRingStyles = {
+  default: 'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-transparent',
+  inset: 'focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500',
+  white: 'focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-900',
+  button: 'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
+  modal: 'focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500',
+  base: 'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1'
+};
+
+// Touch target sizes for mobile accessibility
+export const touchTargets = {
+  minimum: 'min-h-[44px] min-w-[44px]', // 44px minimum for iOS
+  recommended: 'min-h-[48px] min-w-[48px]', // 48dp recommended for Android
+  comfortable: 'min-h-[48px] min-w-[48px]', // Comfortable touch target
+  large: 'min-h-[56px] min-w-[56px]'
+};
+
+// Responsive breakpoints
+export const breakpoints = {
+  sm: '640px',
+  md: '768px',
+  lg: '1024px',
+  xl: '1280px',
+  '2xl': '1536px'
+};
+
 // Focus management utilities
 export const focusManagement = {
   // Trap focus within a container
@@ -57,6 +84,23 @@ export const focusManagement = {
 
 // Keyboard navigation utilities
 export const keyboardNavigation = {
+  // Trap focus within a container
+  trapFocus: (container: HTMLElement) => {
+    return focusManagement.trapFocus(container);
+  },
+
+  // Handle escape key
+  handleEscape: (callback: () => void) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        callback();
+      }
+    };
+    
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  },
+
   // Handle arrow key navigation for lists/grids
   handleArrowNavigation: (
     event: KeyboardEvent, 
