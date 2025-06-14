@@ -20,9 +20,9 @@ const Card: React.FC<CardProps> = ({
   const baseClasses = 'rounded-lg transition-colors';
   
   const variantClasses = {
-    default: 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700',
-    outlined: 'bg-transparent border-2 border-gray-200 dark:border-gray-700',
-    elevated: 'bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700'
+    default: 'bg-white dark:bg-grey-800 border border-grey-200 dark:border-grey-700',
+    outlined: 'bg-transparent border-2 border-grey-200 dark:border-grey-700',
+    elevated: 'bg-white dark:bg-grey-800 shadow-lg border border-grey-200 dark:border-grey-700 hover:shadow-xl transition-shadow'
   };
 
   const paddingClasses = {
@@ -37,12 +37,12 @@ const Card: React.FC<CardProps> = ({
       {(title || subtitle) && (
         <div className={`${padding !== 'none' ? 'mb-4' : 'mb-0'}`}>
           {title && (
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            <h3 className="text-lg font-semibold text-grey-900 dark:text-white">
               {title}
             </h3>
           )}
           {subtitle && (
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            <p className="text-sm text-grey-600 dark:text-grey-400 mt-1">
               {subtitle}
             </p>
           )}

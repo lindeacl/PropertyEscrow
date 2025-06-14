@@ -22,12 +22,12 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
   disabled,
   ...props
 }, ref) => {
-  const baseClasses = 'px-3 py-2 border rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseClasses = 'px-4 py-3 border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-royal-500 focus:border-royal-500 disabled:opacity-50 disabled:cursor-not-allowed';
   
   const variantClasses = {
-    default: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white',
-    filled: 'border-transparent bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white',
-    outlined: 'border-2 border-gray-300 dark:border-gray-600 bg-transparent text-gray-900 dark:text-white'
+    default: 'border-grey-300 dark:border-grey-600 bg-white dark:bg-grey-800 text-grey-900 dark:text-white',
+    filled: 'border-transparent bg-grey-100 dark:bg-grey-700 text-grey-900 dark:text-white',
+    outlined: 'border-2 border-grey-300 dark:border-grey-600 bg-transparent text-grey-900 dark:text-white'
   };
 
   const errorClasses = error ? 'border-red-500 focus:ring-red-500' : '';
@@ -37,14 +37,14 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
   return (
     <div className={`${fullWidth ? 'w-full' : ''}`}>
       {label && (
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label className="block text-sm font-medium text-grey-700 dark:text-grey-300 mb-2">
           {label}
         </label>
       )}
       <div className="relative">
         {leftIcon && (
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <div className="text-gray-400 dark:text-gray-500">
+            <div className="text-grey-400 dark:text-grey-500">
               {leftIcon}
             </div>
           </div>
@@ -57,7 +57,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
         />
         {rightIcon && (
           <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-            <div className="text-gray-400 dark:text-gray-500">
+            <div className="text-grey-400 dark:text-grey-500">
               {rightIcon}
             </div>
           </div>
@@ -67,7 +67,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
         <p className="mt-1 text-sm text-red-600 dark:text-red-400">{error}</p>
       )}
       {helperText && !error && (
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{helperText}</p>
+        <p className="mt-1 text-sm text-grey-500 dark:text-grey-400">{helperText}</p>
       )}
     </div>
   );

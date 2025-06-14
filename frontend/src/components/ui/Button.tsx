@@ -21,11 +21,11 @@ const Button: React.FC<ButtonProps> = ({
   const baseClasses = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
   
   const variantClasses = {
-    primary: 'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 focus:ring-blue-500 shadow-sm hover:shadow-md',
-    secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 active:bg-gray-300 focus:ring-gray-500 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600 dark:active:bg-gray-500 shadow-sm',
-    danger: 'bg-red-600 text-white hover:bg-red-700 active:bg-red-800 focus:ring-red-500 shadow-sm hover:shadow-md',
-    ghost: 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 active:bg-gray-200 focus:ring-gray-500 dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-gray-700 dark:active:bg-gray-600',
-    outline: 'border-2 border-blue-600 text-blue-600 hover:bg-blue-50 active:bg-blue-100 focus:ring-blue-500 dark:border-blue-500 dark:text-blue-500 dark:hover:bg-blue-900/20'
+    primary: 'bg-royal-500 text-white hover:bg-royal-600 active:bg-royal-700 focus:ring-royal-500 shadow-sm hover:shadow-md hover:scale-105',
+    secondary: 'bg-grey-100 text-grey-900 hover:bg-grey-200 active:bg-grey-300 focus:ring-grey-500 dark:bg-grey-700 dark:text-grey-100 dark:hover:bg-grey-600 dark:active:bg-grey-500 shadow-sm',
+    danger: 'bg-red-600 text-white hover:bg-red-700 active:bg-red-800 focus:ring-red-500 shadow-sm hover:shadow-md hover:scale-105',
+    ghost: 'text-grey-600 hover:text-grey-900 hover:bg-grey-100 active:bg-grey-200 focus:ring-grey-500 dark:text-grey-400 dark:hover:text-grey-100 dark:hover:bg-grey-700 dark:active:bg-grey-600',
+    outline: 'border-2 border-royal-500 text-royal-500 hover:bg-royal-50 active:bg-royal-100 focus:ring-royal-500 dark:border-royal-400 dark:text-royal-400 dark:hover:bg-royal-900/20'
   };
 
   const sizeClasses = {

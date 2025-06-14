@@ -1,491 +1,119 @@
-/* Simple CSS Reset and Base Styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #f8fafc;
-  color: #1e293b;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-/* Button Styles */
-.btn-primary {
-  background-color: #2962ff;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 12px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-primary:hover {
-  background-color: #1e3a8a;
-  transform: scale(1.05);
-}
-
-.btn-secondary {
-  background-color: transparent;
-  color: #2962ff;
-  border: 2px solid #2962ff;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-secondary:hover {
-  background-color: #2962ff;
-  color: white;
-}
-
-/* Card Styles */
-.card {
-  background-color: white;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e2e8f0;
-}
-
-/* Input Styles */
-.input {
-  width: 100%;
-  padding: 12px 16px;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  font-size: 16px;
-  transition: all 0.2s;
-}
-
-.input:focus {
-  outline: none;
-  border-color: #2962ff;
-  box-shadow: 0 0 0 3px rgba(41, 98, 255, 0.1);
-}
-
-/* Grid Layout */
-.grid {
-  display: grid;
-  gap: 24px;
-}
-
-.grid-cols-1 {
-  grid-template-columns: 1fr;
-}
-
-.grid-cols-2 {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.grid-cols-3 {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-/* Utility Classes */
-.flex {
-  display: flex;
-}
-
-.items-center {
-  align-items: center;
-}
-
-.justify-between {
-  justify-content: space-between;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.text-success {
-  color: #16a34a;
-}
-
-.text-danger {
-  color: #dc2626;
-}
-
-.text-warning {
-  color: #ca8a04;
-}
-
-.bg-success {
-  background-color: #dcfce7;
-}
-
-.bg-danger {
-  background-color: #fef2f2;
-}
-
-.bg-warning {
-  background-color: #fefce8;
-}
-
-.mb-4 {
-  margin-bottom: 16px;
-}
-
-.mt-4 {
-  margin-top: 16px;
-}
-
-.p-4 {
-  padding: 16px;
-}
-
-.rounded-lg {
-  border-radius: 8px;
-}
-
-/* Navigation */
-.nav {
-  background-color: white;
-  border-bottom: 1px solid #e2e8f0;
-  padding: 16px 0;
-}
-
-.nav-link {
-  color: #64748b;
-  text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  transition: all 0.2s;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-}
-
-.nav-link:hover,
-.nav-link.active {
-  color: #2962ff;
-  background-color: #eff6ff;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .container {
-    padding: 12px;
-  }
-  
-  .grid-cols-3 {
-    grid-template-columns: 1fr;
-  }
-  
-  .grid-cols-2 {
-    grid-template-columns: 1fr;
-  }
-  
-  .btn-primary,
-  .btn-secondary {
-    min-height: 44px;
-    font-size: 16px;
-    padding: 12px 20px;
-  }
-  
-  .card {
-    padding: 16px;
-    margin-bottom: 16px;
-  }
-  
-  .input {
-    font-size: 16px;
-    min-height: 44px;
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: 8px;
-  }
-  
-  .card {
-    padding: 12px;
-  }
-  
-  .grid {
-    gap: 12px;
-  }
-}
-
-/* Touch Interface Optimization */
-@media (hover: none) and (pointer: coarse) {
-  .btn-primary:hover,
-  .btn-secondary:hover {
-    transform: none;
-  }
-  
-  .nav-link:hover {
-    background-color: transparent;
-  }
-}
-
-/* High Contrast Mode Support */
-@media (prefers-contrast: high) {
-  .btn-primary {
-    border: 2px solid #000;
-  }
-  
-  .input {
-    border: 2px solid #000;
-  }
-  
-  .card {
-    border: 2px solid #000;
-  }
-}
-
-/* Reduced Motion Support */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #1e293b;
-    color: #f1f5f9;
-  }
-  
-  .card {
-    background-color: #334155;
-    border-color: #475569;
-  }
-  
-  .input {
-    background-color: #334155;
-    border-color: #475569;
-    color: #f1f5f9;
-  }
-  
-  .nav {
-    background-color: #334155;
-    border-color: #475569;
-  }
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Mono:wght@400;500&display=swap');
 
-:root {
-  /* Light mode colors */
-  --background: #F4F6FB;
-  --surface: #FFFFFF;
-  --border: #E0E5ED;
-  --text-primary: #1A2233;
-  --text-secondary: #707A94;
-  --primary: #2962FF;
-  --accent: #FFCA28;
-  --success: #43A047;
-  --danger: #E53935;
+/* Brand Theme Variables - Royal Blue, Gold, Grey */
+@layer base {
+  :root {
+    /* Royal Blue - Primary Brand Color */
+    --royal-50: 239 246 255;
+    --royal-100: 219 234 254;
+    --royal-200: 191 219 254;
+    --royal-300: 147 197 253;
+    --royal-400: 96 165 250;
+    --royal-500: 41 98 255;
+    --royal-600: 29 78 216;
+    --royal-700: 30 64 175;
+    --royal-800: 30 58 138;
+    --royal-900: 26 46 107;
+
+    /* Gold - Accent Brand Color */
+    --gold-50: 255 251 235;
+    --gold-100: 254 243 199;
+    --gold-200: 253 230 138;
+    --gold-300: 252 211 77;
+    --gold-400: 251 191 36;
+    --gold-500: 255 202 40;
+    --gold-600: 217 119 6;
+    --gold-700: 180 83 9;
+    --gold-800: 146 64 14;
+    --gold-900: 120 53 15;
+
+    /* Grey Scale - Neutral Colors */
+    --grey-50: 248 250 252;
+    --grey-100: 241 245 249;
+    --grey-200: 226 232 240;
+    --grey-300: 203 213 225;
+    --grey-400: 148 163 184;
+    --grey-500: 100 116 139;
+    --grey-600: 71 85 105;
+    --grey-700: 51 65 85;
+    --grey-800: 30 41 59;
+    --grey-900: 15 23 42;
+  }
 }
 
-.dark {
-  /* Dark mode colors */
-  --background: #0F1419;
-  --surface: #1A2233;
-  --border: #2A3441;
-  --text-primary: #F4F6FB;
-  --text-secondary: #9CA3AF;
-  --primary: #2962FF;
-  --accent: #FFCA28;
-  --success: #43A047;
-  --danger: #E53935;
-}
+/* Brand Component Styles */
+@layer components {
+  /* Primary Button - Royal Blue */
+  .btn-royal {
+    @apply bg-royal-500 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:bg-royal-600 hover:scale-105 transition-all duration-200 border-none cursor-pointer;
+  }
 
-html {
-  font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
-}
+  /* Secondary Button - Royal Blue Outline */
+  .btn-royal-outline {
+    @apply border-2 border-royal-500 text-royal-500 bg-transparent font-semibold px-6 py-3 rounded-xl hover:bg-royal-500 hover:text-white transition-all duration-200 cursor-pointer;
+  }
 
-body {
-  background-color: var(--background);
-  color: var(--text-primary);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  /* Gold Accent Button */
+  .btn-gold {
+    @apply bg-gold-500 text-grey-900 font-semibold px-6 py-3 rounded-xl shadow-lg hover:bg-gold-600 hover:scale-105 transition-all duration-200 border-none cursor-pointer;
+  }
 
-/* Enhanced Button Styles */
-.btn-primary {
-  background-color: var(--primary);
-  color: white;
-  font-weight: bold;
-  padding: 12px 24px;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-  transition: all 0.2s ease;
-  border: none;
-  cursor: pointer;
-}
+  /* Success Button */
+  .btn-success {
+    @apply bg-green-500 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:bg-green-600 hover:scale-105 transition-all duration-200 border-none cursor-pointer;
+  }
 
-.btn-primary:hover {
-  transform: scale(1.05);
-}
+  /* Danger Button */
+  .btn-danger {
+    @apply bg-red-500 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:bg-red-600 hover:scale-105 transition-all duration-200 border-none cursor-pointer;
+  }
 
-.btn-secondary {
-  border: 2px solid var(--primary);
-  color: var(--primary);
-  background: transparent;
-  font-weight: bold;
-  padding: 12px 24px;
-  border-radius: 12px;
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
+  /* Disabled Button */
+  .btn-disabled {
+    @apply bg-grey-300 text-grey-500 font-semibold px-6 py-3 rounded-xl cursor-not-allowed border-none;
+  }
 
-.btn-secondary:hover {
-  background-color: var(--primary);
-  color: white;
-}
+  /* Brand Card */
+  .card-brand {
+    @apply bg-white border border-grey-200 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-200;
+  }
 
-.btn-success {
-  background-color: var(--success);
-  color: white;
-  font-weight: bold;
-  padding: 12px 24px;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-  transition: all 0.2s ease;
-  border: none;
-  cursor: pointer;
-}
+  /* Brand Input */
+  .input-brand {
+    @apply w-full px-4 py-3 border border-grey-300 rounded-xl bg-white text-grey-900 placeholder-grey-400 focus:outline-none focus:ring-2 focus:ring-royal-500 focus:border-royal-500 transition-all duration-200;
+  }
 
-.btn-success:hover {
-  transform: scale(1.05);
-}
+  /* Brand Modal */
+  .modal-brand {
+    @apply bg-white rounded-2xl p-8 shadow-2xl max-w-lg mx-auto;
+  }
 
-.btn-danger {
-  background-color: var(--danger);
-  color: white;
-  font-weight: bold;
-  padding: 12px 24px;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-  transition: all 0.2s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-danger:hover {
-  transform: scale(1.05);
-}
-
-.btn-disabled {
-  background-color: var(--border);
-  color: var(--text-secondary);
-  cursor: not-allowed;
-  padding: 12px 24px;
-  border-radius: 12px;
-  border: none;
-}
-
-/* Enhanced Card Styles */
-.card {
-  background-color: var(--surface);
-  border-radius: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-  border: 1px solid var(--border);
-  padding: 24px;
-}
-
-/* Enhanced Input Styles */
-.input-field {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background-color: var(--surface);
-  color: var(--text-primary);
-  transition: all 0.2s ease;
-}
-
-.input-field:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(41, 98, 255, 0.1);
-}
-
-/* Status Badge Styles */
-.status-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.status-created {
-  background-color: var(--background);
-  color: var(--primary);
-}
-
-.status-funded {
-  background-color: #dbeafe;
-  color: #1e40af;
-}
-
-.status-verified {
-  background-color: #fef3c7;
-  color: #92400e;
-}
-
-.status-approved {
-  background-color: #fef3c7;
-  color: #92400e;
-}
-
-.status-completed {
-  background-color: #dcfce7;
-  color: #166534;
-}
-
-.status-cancelled {
-  background-color: var(--border);
-  color: var(--text-secondary);
-}
-
-.status-disputed {
-  background-color: #fef2f2;
-  color: #991b1b;
-}
-
-.status-resolved {
-  background-color: #dcfce7;
-  color: #166534;
-}
-
-/* Utility Classes */
-.text-gradient {
-  background: linear-gradient(to right, #2563eb, #1e40af);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.shadow-glow {
-  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.1), 0 10px 15px -3px rgba(59, 130, 246, 0.1), 0 4px 6px -2px rgba(59, 130, 246, 0.05);
-}
-
-.backdrop-blur-modal {
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  /* Status Badges with Brand Colors */
+  .badge-created {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-grey-100 text-grey-700;
+  }
+  
+  .badge-funded {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-royal-100 text-royal-700;
+  }
+  
+  .badge-verified {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gold-100 text-gold-800;
+  }
+  
+  .badge-completed {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700;
+  }
+  
+  .badge-cancelled {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-grey-200 text-grey-600;
+  }
+  
+  .badge-disputed {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700;
+  }
 }

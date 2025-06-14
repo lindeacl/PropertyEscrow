@@ -70,20 +70,20 @@ const Modal: React.FC<ModalProps> = ({
         
         <div 
           ref={modalRef}
-          className={`relative w-full ${sizeClasses[size]} transform rounded-lg bg-white dark:bg-gray-800 shadow-xl transition-all ${className}`}
+          className={`relative w-full ${sizeClasses[size]} transform rounded-2xl bg-white dark:bg-grey-800 shadow-2xl transition-all ${className}`}
         >
           {/* Header */}
           {(title || showCloseButton) && (
-            <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-between p-6 border-b border-grey-200 dark:border-grey-700">
               {title && (
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                <h3 className="text-lg font-semibold text-grey-900 dark:text-white">
                   {title}
                 </h3>
               )}
               {showCloseButton && (
                 <button
                   onClick={onClose}
-                  className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                  className="p-1 text-grey-400 hover:text-royal-500 dark:hover:text-royal-400 transition-colors rounded-lg hover:bg-grey-100 dark:hover:bg-grey-700"
                   aria-label="Close modal"
                 >
                   <X className="h-5 w-5" />
@@ -99,7 +99,7 @@ const Modal: React.FC<ModalProps> = ({
 
           {/* Footer */}
           {footer && (
-            <div className="flex items-center justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-end space-x-3 p-6 border-t border-grey-200 dark:border-grey-700">
               {footer}
             </div>
           )}
@@ -154,7 +154,7 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
         </>
       }
     >
-      <p className="text-gray-600 dark:text-gray-300">{message}</p>
+      <p className="text-grey-600 dark:text-grey-300">{message}</p>
     </Modal>
   );
 };
