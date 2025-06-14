@@ -56,7 +56,7 @@ interface ActivityLog {
 
 const Settings: React.FC = () => {
   const navigate = useNavigate();
-  const { isConnected, address, balance, connectWallet, disconnectWallet } = useWallet();
+  const { isConnected, address, disconnectWallet } = useWallet();
   const [activeTab, setActiveTab] = useState('profile');
   const [loading, setLoading] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('dark');
@@ -83,7 +83,7 @@ const Settings: React.FC = () => {
     smsAlerts: false
   });
 
-  const [activityLog, setActivityLog] = useState<ActivityLog[]>([
+  const [activityLog] = useState<ActivityLog[]>([
     {
       id: '1',
       action: 'Wallet Connected',
