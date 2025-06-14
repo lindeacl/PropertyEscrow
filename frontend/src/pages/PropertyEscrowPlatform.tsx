@@ -24,7 +24,6 @@ const PropertyEscrowPlatform: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
-  const [contractService, setContractService] = useState<EscrowContractService | null>(null);
   const [platformStats, setPlatformStats] = useState({
     totalEscrows: 127,
     totalVolume: '24.8M',
@@ -50,7 +49,7 @@ const PropertyEscrowPlatform: React.FC = () => {
     
     if (provider && signer) {
       const service = new EscrowContractService(provider, signer);
-      setContractService(service);
+      logger.info('Contract service initialized', service);
     }
   }, [provider, signer]);
 
@@ -271,7 +270,7 @@ const PropertyEscrowPlatform: React.FC = () => {
                 <div className="text-sm text-contrast-gray">Active Users</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 bg-contrast-overlay">
-                <div className="text-2xl font-bold text-red-400" aria-label="Average transaction time {platformStats.averageTransactionTime}">{platformStats.averageTransactionTime}</div>
+                <div className="text-2xl font-bold text-red-400" aria-label={`Average transaction time ${platformStats.averageTransactionTime}`}>{platformStats.averageTransactionTime}</div>
                 <div className="text-sm text-contrast-gray">Avg. Time</div>
               </div>
             </div>

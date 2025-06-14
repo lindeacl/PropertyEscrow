@@ -87,22 +87,15 @@ const Dashboard: React.FC = () => {
       });
     } catch (error) {
       console.error('Failed to load escrow data:', error);
-      toast.error('Failed to load escrow data');
-    } catch (error) {
-      logger.error('Failed to load escrow data', error);
+      logger.error('Failed to load escrow data', error as Error);
       toast.error('Failed to load escrow data');
     }
   };
 
   const determineUserRole = (walletAddress: string) => {
     // In production, this would check the blockchain for user roles
-    // For now, setting default role as potential buyer/seller
-    setUserRole({
-      isBuyer: true,
-      isSeller: true,
-      isAgent: false,
-      isArbiter: false
-    });
+    // For now, logging user role determination
+    logger.info('Determining user role for address:', walletAddress);
   };
 
   const getStatusColor = (status: EscrowStatus) => {
