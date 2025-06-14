@@ -37,6 +37,9 @@ contract PropertyEscrow is IPropertyEscrow, ReentrancyGuard, Pausable, AccessCon
     uint256 public constant MAX_PLATFORM_FEE = 500; // 5% maximum
     uint256 public constant BASIS_POINTS = 10000;
 
+    /// @notice Restricts access to escrow participants and admins only
+    /// @param escrowId The ID of the escrow to check authorization for
+    /// @dev Checks if caller is buyer, seller, agent, arbiter, or has admin role
     modifier onlyEscrowParticipant(uint256 escrowId) {
         EscrowStructs.Escrow memory escrow = escrows[escrowId];
         require(
@@ -50,16 +53,27 @@ contract PropertyEscrow is IPropertyEscrow, ReentrancyGuard, Pausable, AccessCon
         _;
     }
 
+    /// @notice Ensures the escrow ID exists in the system
+    /// @param escrowId The ID of the escrow to validate
+    /// @dev Checks if escrowId is less than the current counter (valid range)
     modifier onlyValidEscrow(uint256 escrowId) {
         require(escrowId < escrowCounter, "Invalid escrow ID");
         _;
     }
 
+    /// @notice Restricts function access based on escrow state
+    /// @param escrowId The ID of the escrow to check
+    /// @param requiredState The required state for the escrow
+    /// @dev Used to enforce state machine transitions
     modifier onlyInState(uint256 escrowId, EscrowStructs.EscrowState requiredState) {
         require(escrows[escrowId].state == requiredState, "Invalid escrow state");
         _;
     }
 
+    /// @notice Initializes the PropertyEscrow contract
+    /// @param _platformWallet Address to receive platform fees
+    /// @param _platformFeePercentage Platform fee in basis points (100 = 1%)
+    /// @dev Sets up initial roles and validates parameters
     constructor(address _platformWallet, uint256 _platformFeePercentage) {
         require(_platformWallet != address(0), "Invalid platform wallet");
         require(_platformFeePercentage <= MAX_PLATFORM_FEE, "Platform fee too high");
@@ -71,11 +85,10 @@ contract PropertyEscrow is IPropertyEscrow, ReentrancyGuard, Pausable, AccessCon
         _grantRole(ADMIN_ROLE, msg.sender);
     }
 
-    /**
-     * @dev Creates a new escrow for property sale
-     * @param params The escrow creation parameters
-     * @return The ID of the created escrow
-     */
+    /// @notice Creates a new escrow for a property sale transaction
+    /// @param params The parameters for creating the escrow including buyer, seller, amounts, and deadlines
+    /// @return The unique ID of the created escrow
+    /// @dev Validates all parameters, creates escrow storage, and emits EscrowCreated event
     function createEscrow(
         EscrowStructs.CreateEscrowParams calldata params
     ) external override nonReentrant whenNotPaused returns (uint256) {
@@ -114,10 +127,9 @@ contract PropertyEscrow is IPropertyEscrow, ReentrancyGuard, Pausable, AccessCon
         return escrowId;
     }
 
-    /**
-     * @dev Allows buyer to deposit funds into escrow
-     * @param escrowId The ID of the escrow
-     */
+    /// @notice Allows the buyer to deposit funds into the escrow contract
+    /// @param escrowId The unique identifier of the escrow transaction
+    /// @dev Transfers tokens from buyer to contract, updates state to Deposited, validates deadline
     function depositFunds(uint256 escrowId) 
         external 
         override 
@@ -143,10 +155,9 @@ contract PropertyEscrow is IPropertyEscrow, ReentrancyGuard, Pausable, AccessCon
         emit FundsDeposited(escrowId, msg.sender, escrow.depositAmount);
     }
 
-    /**
-     * @dev Completes verification process (called by agent or admin)
-     * @param escrowId The ID of the escrow
-     */
+    /// @notice Completes the property verification process
+    /// @param escrowId The unique identifier of the escrow transaction
+    /// @dev Only callable by agent, arbiter, or admin. Updates state to Verified and emits event
     function completeVerification(uint256 escrowId)
         external
         override
@@ -169,10 +180,9 @@ contract PropertyEscrow is IPropertyEscrow, ReentrancyGuard, Pausable, AccessCon
         emit VerificationCompleted(escrowId, msg.sender);
     }
 
-    /**
-     * @dev Allows participants to give their approval for fund release
-     * @param escrowId The ID of the escrow
-     */
+    /// @notice Allows escrow participants to approve fund release
+    /// @param escrowId The unique identifier of the escrow transaction
+    /// @dev Only buyer, seller, or agent can approve. Each can only approve once
     function giveApproval(uint256 escrowId)
         external
         override
@@ -203,9 +213,8 @@ contract PropertyEscrow is IPropertyEscrow, ReentrancyGuard, Pausable, AccessCon
         emit ApprovalGiven(escrowId, msg.sender, role);
     }
 
-    /**
-     * @dev Convenience function to approve release for escrow 0
-     */
+    /// @notice Convenience function to approve release for the first escrow (ID 0)
+    /// @dev Legacy function for backward compatibility, delegates to escrow 0
     function approveRelease() external {
         // Duplicate the logic from giveApproval for escrow 0
         EscrowStructs.Escrow storage escrow = escrows[0];
@@ -230,10 +239,9 @@ contract PropertyEscrow is IPropertyEscrow, ReentrancyGuard, Pausable, AccessCon
         emit ApprovalGiven(0, msg.sender, role);
     }
 
-    /**
-     * @dev Releases funds to seller when all conditions are met
-     * @param escrowId The ID of the escrow
-     */
+    /// @notice Releases escrowed funds to the seller when all conditions are met
+    /// @param escrowId The unique identifier of the escrow transaction
+    /// @dev Distributes funds to seller, agent, and platform after validating approvals
     function releaseFunds(uint256 escrowId)
         external
         override
