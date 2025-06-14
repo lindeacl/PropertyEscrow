@@ -1,6 +1,6 @@
-# PropertyEscrow Platform
+# Property Escrow Platform
 
-A blockchain-powered property escrow platform that simplifies complex real estate transactions through advanced smart contract infrastructure and user-friendly design.
+An advanced blockchain-powered property escrow platform that leverages Polygon network technology to simplify and secure real estate transactions through a comprehensive, unified digital interface.
 
 ## 🚀 Quick Start
 
@@ -38,57 +38,38 @@ Edit `frontend/.env.local` and set your Alchemy RPC URL:
 REACT_APP_ALCHEMY_RPC_URL=https://polygon-mainnet.g.alchemy.com/v2/YOUR_API_KEY_HERE
 ```
 
-4. **Start services**
-
-**Production Landing Page (Port 5000):**
-```bash
-python3 -m http.server 5000 --bind 0.0.0.0
-```
-
-**React Development Server (Port 5000):**
+4. **Start the application**
 ```bash
 cd frontend && npm start
 ```
 
 5. **Access the application**
-- Production Landing Page: http://localhost:5000
-- React Development Server: http://localhost:5000
+- Unified Frontend: http://localhost:5000
 
-## Port Configuration
+## Application Architecture
 
-| Service | Port | Purpose |
-|---------|------|---------|
-| PropertyEscrow Server | 5000 | Professional landing page with enhanced styling |
-| React Development | 5000 | Frontend development server |
-| Smart Contract Tests | Manual | Run via `npx hardhat test` when needed |
+The platform features a single, unified frontend running on port 5000 with consistent styling and shared feedback systems across all user flows.
 
-## 📱 User Interface Flows
+## Application Routes
 
-The platform provides four streamlined user experiences:
+The unified frontend provides the following routes:
 
-### 1. Dashboard Flow
-- **Purpose**: Central hub for all escrow activities
-- **Features**: Status overview, pending actions, transaction history
-- **Navigation**: Primary landing page after wallet connection
+- `/` - Landing page with platform overview and wallet connection
+- `/dashboard` - User dashboard with escrow management and filtering
+- `/create` - Create new escrow transaction with form validation
+- `/escrow/:id` - View specific escrow details with role-based actions
+- `/settings` - User settings, profile management, and notifications
 
-### 2. Create Escrow Flow  
-- **Purpose**: Guided escrow creation process
-- **Features**: Property input, participant assignment, fee configuration
-- **Navigation**: Accessible from dashboard "Create New Escrow" button
+## User Roles & Access
 
-### 3. Escrow Details Flow
-- **Purpose**: Individual transaction management
-- **Features**: Status tracking, document verification, fund operations
-- **Navigation**: Click any escrow from dashboard list
+The platform supports role-based access with conditional rendering:
 
-### 4. Settings Flow
-- **Purpose**: Platform and user configuration
-- **Features**: Wallet management, preferences, security settings
-- **Navigation**: Settings icon in top navigation
+- **Buyer**: Create escrows, deposit funds, approve transactions
+- **Seller**: View escrows, approve transactions, receive funds
+- **Agent**: Verify properties, facilitate transactions
+- **Arbiter**: Resolve disputes, manage escalated cases
 
-**Port Configuration:**
-- Frontend development: Port 5000 (React app)
-- Production landing: Port 5000 (Static server)
+All roles are handled through conditional rendering within the same interface - no separate pages required.
 
 ### MetaMask Setup
 
@@ -110,33 +91,16 @@ The platform provides four streamlined user experiences:
 - **MockERC20**: Test token for development and testing
 - **EscrowStructs**: Shared data structures and enums
 
-### Frontend Application - Four Main UI Flows
+### Unified Frontend Architecture
 
-The platform features a streamlined interface with four core user flows:
+The platform features a single, cohesive interface with consistent styling and shared feedback systems:
 
-#### 1. **Dashboard** (`/dashboard`)
-- Overview of all escrow transactions
-- Real-time status updates and notifications
-- Quick access to active escrows and pending actions
-- Transaction history and audit trail
-
-#### 2. **Create Escrow** (`/create-escrow`)
-- Step-by-step escrow creation wizard
-- Property details input and document upload
-- Participant role assignment (buyer, seller, agent, arbiter)
-- Deposit amount and fee configuration
-
-#### 3. **Escrow Details** (`/escrow/:id`)
-- Individual escrow transaction management
-- Status tracking and milestone completion
-- Document verification and approval workflow
-- Fund deposit, release, and dispute handling
-
-#### 4. **Settings** (`/settings`)
-- Wallet connection and network management
-- User preferences and accessibility options
-- Platform configuration and fee settings
-- Security and notification preferences
+#### Core Features
+- **Unified Toast System**: Consistent feedback across all components
+- **Role-Based Conditional Rendering**: Dynamic UI based on user permissions
+- **Royal Blue, Gold, Grey Brand Colors**: Consistent styling throughout
+- **Single Port Configuration**: All services run on port 5000
+- **Responsive Design**: Mobile-first approach with accessibility features
 
 ### Technical Architecture
 
