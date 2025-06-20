@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../components/ui/accordion';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../components/ui/carousel';
 import { 
   Shield, 
   Eye, 
@@ -18,7 +20,7 @@ import {
 
 const LandingPage = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 scroll-smooth">
       {/* Header */}
       <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -28,6 +30,14 @@ const LandingPage = () => {
             </div>
             <span className="text-xl font-bold text-gray-900">Property Escrow</span>
           </div>
+          
+          <nav className="hidden md:flex items-center space-x-8">
+            <a href="#about" className="text-gray-600 hover:text-gray-900 transition-colors">About</a>
+            <a href="#how-it-works" className="text-gray-600 hover:text-gray-900 transition-colors">How It Works</a>
+            <a href="#faq" className="text-gray-600 hover:text-gray-900 transition-colors">FAQ</a>
+            <a href="#contact" className="text-gray-600 hover:text-gray-900 transition-colors">Contact</a>
+          </nav>
+          
           <div className="flex items-center space-x-4">
             <Link to="/login">
               <Button variant="ghost" className="text-gray-600 hover:text-gray-900">
@@ -36,7 +46,7 @@ const LandingPage = () => {
             </Link>
             <Link to="/register">
               <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                Register
+                Get Started
               </Button>
             </Link>
           </div>
@@ -50,11 +60,11 @@ const LandingPage = () => {
             Powered by Blockchain Technology
           </Badge>
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            The Future of Property
+            The Future of Secure Property
             <span className="text-blue-600 block">Transactions</span>
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-            Secure. Transparent. Powered by Blockchain. Experience the next generation of property escrow with tamper-proof security and instant digital contracts.
+            Instant, tamper-proof escrow powered by blockchain. Trust every deal.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link to="/register">
@@ -98,7 +108,7 @@ const LandingPage = () => {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 bg-white">
+      <section id="how-it-works" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
@@ -154,7 +164,7 @@ const LandingPage = () => {
       </section>
 
       {/* Why Property Escrow */}
-      <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-50">
+      <section id="about" className="py-20 bg-gradient-to-br from-blue-50 to-indigo-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Why Property Escrow?</h2>
@@ -199,77 +209,180 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section id="faq" className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Everything you need to know about blockchain-powered property escrow
+            </p>
+          </div>
+          
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-1">
+                <AccordionTrigger className="text-left">What is blockchain escrow?</AccordionTrigger>
+                <AccordionContent>
+                  Blockchain escrow uses smart contracts to automatically hold and release funds when predetermined conditions are met. Unlike traditional escrow, it's tamper-proof, transparent, and doesn't require a third-party intermediary to manually process transactions.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="item-2">
+                <AccordionTrigger className="text-left">Is my money safe in blockchain escrow?</AccordionTrigger>
+                <AccordionContent>
+                  Yes, your funds are secured by smart contracts on the Polygon blockchain, which is immutable and transparent. The escrow automatically releases funds only when all parties approve and conditions are met, eliminating the risk of fraud or human error.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="item-3">
+                <AccordionTrigger className="text-left">How long does settlement take?</AccordionTrigger>
+                <AccordionContent>
+                  Once all parties approve the transaction, funds are released instantly through smart contracts. The entire process typically takes minutes rather than days or weeks with traditional escrow services.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="item-4">
+                <AccordionTrigger className="text-left">What are the fees?</AccordionTrigger>
+                <AccordionContent>
+                  Our blockchain escrow fees are significantly lower than traditional services, typically 0.5-1% of the transaction value. You only pay minimal gas fees for blockchain transactions, which are usually under $1 on Polygon.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="item-5">
+                <AccordionTrigger className="text-left">Do I need to understand blockchain technology?</AccordionTrigger>
+                <AccordionContent>
+                  Not at all! Our platform handles all the technical complexity behind the scenes. You simply upload documents, approve transactions, and track progress through our user-friendly interface, just like any other escrow service.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="item-6">
+                <AccordionTrigger className="text-left">What happens if there's a dispute?</AccordionTrigger>
+                <AccordionContent>
+                  Our platform includes built-in dispute resolution with admin oversight capabilities. If parties can't reach agreement, our certified escrow professionals can review the case and make binding decisions, with all actions recorded transparently on the blockchain.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
+      {/* Trusted By Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-8">Trusted by Leading Real Estate Professionals</h2>
+          <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                <Home className="w-5 h-5 text-blue-600" />
+              </div>
+              <span className="text-lg font-medium text-gray-600">RE/MAX Partners</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                <Shield className="w-5 h-5 text-green-600" />
+              </div>
+              <span className="text-lg font-medium text-gray-600">Century 21 Elite</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                <Users className="w-5 h-5 text-purple-600" />
+              </div>
+              <span className="text-lg font-medium text-gray-600">Coldwell Banker Pro</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                <CheckCircle className="w-5 h-5 text-orange-600" />
+              </div>
+              <span className="text-lg font-medium text-gray-600">Keller Williams Tech</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Social Proof */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-12">Trusted by Property Professionals</h2>
           
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-16">
-            <Card className="border-0 shadow-lg">
-              <CardContent className="p-6">
-                <div className="flex items-center mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                  ))}
-                </div>
-                <p className="text-gray-600 mb-4">
-                  "Property Escrow transformed our real estate transactions. The blockchain security gives our clients complete peace of mind."
-                </p>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                    <Users className="w-5 h-5 text-blue-600" />
-                  </div>
-                  <div className="text-left">
-                    <p className="font-semibold text-gray-900">Sarah Johnson</p>
-                    <p className="text-sm text-gray-600">Real Estate Agent</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+          <div className="max-w-4xl mx-auto mb-16">
+            <Carousel className="w-full">
+              <CarouselContent>
+                <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                  <Card className="border-0 shadow-lg h-full">
+                    <CardContent className="p-6">
+                      <div className="flex items-center mb-4">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                        ))}
+                      </div>
+                      <p className="text-gray-600 mb-4">
+                        "Property Escrow transformed our real estate transactions. The blockchain security gives our clients complete peace of mind."
+                      </p>
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                          <Users className="w-5 h-5 text-blue-600" />
+                        </div>
+                        <div className="text-left">
+                          <p className="font-semibold text-gray-900">Sarah Johnson</p>
+                          <p className="text-sm text-gray-600">Real Estate Agent</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
 
-            <Card className="border-0 shadow-lg">
-              <CardContent className="p-6">
-                <div className="flex items-center mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                  ))}
-                </div>
-                <p className="text-gray-600 mb-4">
-                  "The transparency and security of blockchain escrow made our property purchase stress-free. Highly recommended!"
-                </p>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
-                    <Users className="w-5 h-5 text-green-600" />
-                  </div>
-                  <div className="text-left">
-                    <p className="font-semibold text-gray-900">Michael Chen</p>
-                    <p className="text-sm text-gray-600">Property Buyer</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                  <Card className="border-0 shadow-lg h-full">
+                    <CardContent className="p-6">
+                      <div className="flex items-center mb-4">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                        ))}
+                      </div>
+                      <p className="text-gray-600 mb-4">
+                        "The transparency and security of blockchain escrow made our property purchase stress-free. Highly recommended!"
+                      </p>
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                          <Users className="w-5 h-5 text-green-600" />
+                        </div>
+                        <div className="text-left">
+                          <p className="font-semibold text-gray-900">Michael Chen</p>
+                          <p className="text-sm text-gray-600">Property Buyer</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
 
-            <Card className="border-0 shadow-lg">
-              <CardContent className="p-6">
-                <div className="flex items-center mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                  ))}
-                </div>
-                <p className="text-gray-600 mb-4">
-                  "As a legal professional, I appreciate the immutable record-keeping and automated compliance features."
-                </p>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-3">
-                    <Users className="w-5 h-5 text-purple-600" />
-                  </div>
-                  <div className="text-left">
-                    <p className="font-semibold text-gray-900">Emily Rodriguez</p>
-                    <p className="text-sm text-gray-600">Escrow Attorney</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                  <Card className="border-0 shadow-lg h-full">
+                    <CardContent className="p-6">
+                      <div className="flex items-center mb-4">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                        ))}
+                      </div>
+                      <p className="text-gray-600 mb-4">
+                        "As a legal professional, I appreciate the immutable record-keeping and automated compliance features."
+                      </p>
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                          <Users className="w-5 h-5 text-purple-600" />
+                        </div>
+                        <div className="text-left">
+                          <p className="font-semibold text-gray-900">Emily Rodriguez</p>
+                          <p className="text-sm text-gray-600">Escrow Attorney</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
           </div>
 
           {/* Security Badges */}
@@ -314,7 +427,7 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer id="contact" className="bg-gray-900 text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
