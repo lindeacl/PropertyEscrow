@@ -245,7 +245,7 @@ const LandingPage = () => {
               <AccordionItem value="item-4">
                 <AccordionTrigger className="text-left">What are the fees?</AccordionTrigger>
                 <AccordionContent>
-                  Our blockchain escrow fees are significantly lower than traditional services, typically 0.5-1% of the transaction value. You only pay minimal gas fees for blockchain transactions, which are usually under $1 on Polygon.
+                  Our blockchain escrow fees are significantly lower than traditional services, typically 0.5-1% of the transaction value. You only pay minimal gas fees for blockchain transactions, which are usually under R 18 on Polygon.
                 </AccordionContent>
               </AccordionItem>
               

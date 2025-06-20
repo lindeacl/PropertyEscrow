@@ -13,7 +13,7 @@ import {
   Plus, 
   Search, 
   MapPin, 
-  DollarSign,
+  Banknote,
   Eye,
   AlertCircle,
   CheckCircle
@@ -231,7 +231,7 @@ const Properties: React.FC = () => {
             </p>
             <div className="flex justify-between items-center">
               <div className="flex items-center text-lg font-semibold text-green-600">
-                <DollarSign className="w-4 h-4 mr-1" />
+                <Banknote className="w-4 h-4 mr-1" />
                 1.5 ETH
               </div>
               <Button variant="outline" size="sm">
@@ -260,7 +260,7 @@ const Properties: React.FC = () => {
             </p>
             <div className="flex justify-between items-center">
               <div className="flex items-center text-lg font-semibold text-green-600">
-                <DollarSign className="w-4 h-4 mr-1" />
+                <Banknote className="w-4 h-4 mr-1" />
                 2.8 ETH
               </div>
               <Button variant="outline" size="sm">
@@ -289,7 +289,7 @@ const Properties: React.FC = () => {
             </p>
             <div className="flex justify-between items-center">
               <div className="flex items-center text-lg font-semibold text-green-600">
-                <DollarSign className="w-4 h-4 mr-1" />
+                <Banknote className="w-4 h-4 mr-1" />
                 0.9 ETH
               </div>
               <Button variant="outline" size="sm">

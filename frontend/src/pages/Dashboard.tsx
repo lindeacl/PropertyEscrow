@@ -12,7 +12,7 @@ import {
   TrendingUp, 
   CheckCircle,
   AlertCircle,
-  DollarSign,
+  Banknote,
   User
 } from 'lucide-react';
 
@@ -202,7 +202,7 @@ const Dashboard: React.FC = () => {
                       ) : transaction.transaction_type.includes('ESCROW') ? (
                         <FileText className="h-8 w-8 text-green-600" />
                       ) : (
-                        <DollarSign className="h-8 w-8 text-purple-600" />
+                        <Banknote className="h-8 w-8 text-purple-600" />
                       )}
                     </div>
                     <div>

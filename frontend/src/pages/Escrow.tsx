@@ -15,7 +15,7 @@ import {
   Clock, 
   CheckCircle, 
   AlertCircle,
-  DollarSign,
+  Banknote,
   Calendar,
   User,
   Building
@@ -253,14 +253,14 @@ const Escrow: React.FC = () => {
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="flex items-center space-x-2">
-                  <DollarSign className="w-4 h-4 text-green-600" />
+                  <Banknote className="w-4 h-4 text-green-600" />
                   <div>
                     <p className="text-sm font-medium">Purchase Price</p>
                     <p className="text-sm text-gray-600">1.5 ETH</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <DollarSign className="w-4 h-4 text-blue-600" />
+                  <Banknote className="w-4 h-4 text-blue-600" />
                   <div>
                     <p className="text-sm font-medium">Earnest Money</p>
                     <p className="text-sm text-gray-600">0.15 ETH</p>
