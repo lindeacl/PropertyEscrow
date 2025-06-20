@@ -1,0 +1,197 @@
+from web3 import Web3
+from web3.middleware import ExtraDataToPOAMiddleware
+import json
+import os
+from typing import Dict, Any, Optional
+from dotenv import load_dotenv
+
+backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+env_path = os.path.join(backend_dir, '.env')
+load_dotenv(env_path, override=True)
+
+class BlockchainService:
+    def __init__(self):
+        self.rpc_url = os.getenv("POLYGON_RPC_URL")
+        self.private_key = os.getenv("PRIVATE_KEY")
+        self.contract_address = os.getenv("CONTRACT_ADDRESS")
+        
+        self.w3 = None
+        self.account = None
+        self.contract = None
+        self.connected = False
+        
+        if self.rpc_url:
+            try:
+                self.w3 = Web3(Web3.HTTPProvider(self.rpc_url))
+                
+                if self.w3.is_connected():
+                    self.connected = True
+                    self.w3.middleware_onion.inject(ExtraDataToPOAMiddleware, layer=0)
+                    
+                    if self.private_key:
+                        self.account = self.w3.eth.account.from_key(self.private_key)
+                    
+                    if self.contract_address:
+                        self.load_contract()
+                else:
+                    print("Warning: Could not connect to Polygon network")
+            except Exception as e:
+                print(f"Warning: Blockchain initialization failed: {e}")
+        else:
+            print("Warning: POLYGON_RPC_URL not set - blockchain features disabled")
+    
+    def load_contract(self):
+        try:
+            app_dir = os.path.dirname(os.path.abspath(__file__))
+            abi_path = os.path.join(app_dir, "PropertyEscrow.json")
+            
+            if not os.path.exists(abi_path):
+                project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+                abi_path = os.path.join(project_root, "artifacts", "contracts", "PropertyEscrow.sol", "PropertyEscrow.json")
+            
+            if os.path.exists(abi_path):
+                with open(abi_path, "r") as f:
+                    contract_json = json.load(f)
+                    contract_abi = contract_json["abi"]
+                
+                self.contract = self.w3.eth.contract(
+                    address=self.contract_address,
+                    abi=contract_abi
+                )
+                print(f"Contract loaded successfully at {self.contract_address}")
+            else:
+                print(f"Warning: Contract ABI not found at {abi_path}")
+        except Exception as e:
+            print(f"Warning: Could not load contract: {e}")
+    
+    def get_balance(self, address: str) -> float:
+        if not self.connected or not self.w3:
+            raise ValueError("Blockchain not connected")
+        balance_wei = self.w3.eth.get_balance(address)
+        return self.w3.from_wei(balance_wei, 'ether')
+    
+    def send_transaction(self, transaction_data: Dict[str, Any]) -> str:
+        if not self.connected or not self.w3 or not self.account:
+            raise ValueError("Blockchain not connected or account not configured")
+        
+        transaction = {
+            'from': self.account.address,
+            'gas': 2000000,
+            'gasPrice': self.w3.to_wei('20', 'gwei'),
+            'nonce': self.w3.eth.get_transaction_count(self.account.address),
+            **transaction_data
+        }
+        
+        signed_txn = self.w3.eth.account.sign_transaction(transaction, self.private_key)
+        tx_hash = self.w3.eth.send_raw_transaction(signed_txn.raw_transaction)
+        
+        return tx_hash.hex()
+    
+    def wait_for_transaction_receipt(self, tx_hash: str, timeout: int = 120):
+        if not self.connected or not self.w3:
+            raise ValueError("Blockchain not connected")
+        return self.w3.eth.wait_for_transaction_receipt(tx_hash, timeout=timeout)
+    
+    def list_property(self, property_address: str, description: str, price: int, metadata_uri: str) -> str:
+        if not self.connected or not self.contract or not self.account:
+            raise ValueError("Blockchain not connected or contract/account not loaded")
+        
+        function_call = self.contract.functions.listProperty(
+            property_address, description, price, metadata_uri
+        )
+        
+        transaction = function_call.build_transaction({
+            'from': self.account.address,
+            'gas': 500000,
+            'gasPrice': self.w3.to_wei('20', 'gwei'),
+            'nonce': self.w3.eth.get_transaction_count(self.account.address),
+        })
+        
+        return self.send_transaction(transaction)
+    
+    def create_escrow(self, property_id: int, agent_address: str, inspection_days: int, 
+                     closing_date: int, terms: str, earnest_money: float) -> str:
+        if not self.connected or not self.contract or not self.account:
+            raise ValueError("Blockchain not connected or contract/account not loaded")
+        
+        earnest_money_wei = self.w3.to_wei(earnest_money, 'ether')
+        
+        function_call = self.contract.functions.createEscrow(
+            property_id, agent_address, inspection_days, closing_date, terms
+        )
+        
+        transaction = function_call.build_transaction({
+            'from': self.account.address,
+            'value': earnest_money_wei,
+            'gas': 800000,
+            'gasPrice': self.w3.to_wei('20', 'gwei'),
+            'nonce': self.w3.eth.get_transaction_count(self.account.address),
+        })
+        
+        return self.send_transaction(transaction)
+    
+    def get_property(self, property_id: int) -> Dict[str, Any]:
+        if not self.connected or not self.contract:
+            raise ValueError("Blockchain not connected or contract not loaded")
+        
+        result = self.contract.functions.getProperty(property_id).call()
+        return {
+            'id': result[0],
+            'propertyAddress': result[1],
+            'description': result[2],
+            'price': result[3],
+            'seller': result[4],
+            'isActive': result[5],
+            'metadataURI': result[6]
+        }
+    
+    def get_escrow_transaction(self, transaction_id: int) -> Dict[str, Any]:
+        if not self.connected or not self.contract:
+            raise ValueError("Blockchain not connected or contract not loaded")
+        
+        result = self.contract.functions.getEscrowTransaction(transaction_id).call()
+        return {
+            'id': result[0],
+            'propertyId': result[1],
+            'buyer': result[2],
+            'seller': result[3],
+            'agent': result[4],
+            'purchasePrice': result[5],
+            'earnestMoney': result[6],
+            'inspectionPeriodEnd': result[7],
+            'closingDate': result[8],
+            'status': result[9],
+            'buyerApproval': result[10],
+            'sellerApproval': result[11],
+            'agentApproval': result[12],
+            'adminOverride': result[13],
+            'terms': result[14],
+            'createdAt': result[15]
+        }
+    
+    def give_approval(self, transaction_id: int, approval_type: str) -> str:
+        if not self.connected or not self.contract or not self.account:
+            raise ValueError("Blockchain not connected or contract/account not loaded")
+        
+        if approval_type == "buyer":
+            function_call = self.contract.functions.giveBuyerApproval(transaction_id)
+        elif approval_type == "seller":
+            function_call = self.contract.functions.giveSellerApproval(transaction_id)
+        elif approval_type == "agent":
+            function_call = self.contract.functions.giveAgentApproval(transaction_id)
+        else:
+            raise ValueError("Invalid approval type")
+        
+        transaction = function_call.build_transaction({
+            'from': self.account.address,
+            'gas': 300000,
+            'gasPrice': self.w3.to_wei('20', 'gwei'),
+            'nonce': self.w3.eth.get_transaction_count(self.account.address),
+        })
+        
+        return self.send_transaction(transaction)
+    
+    def is_connected(self) -> bool:
+        return self.connected and self.w3 is not None
+
+blockchain_service = BlockchainService()
