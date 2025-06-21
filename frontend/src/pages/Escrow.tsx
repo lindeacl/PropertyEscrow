@@ -14,16 +14,27 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   FileText, 
   Plus, 
-  Clock, 
   CheckCircle, 
   AlertCircle,
   Banknote,
-  Calendar,
-  User,
-  Building
+  Calendar
 } from 'lucide-react';
 
-
+interface TransactionRecord {
+  id: number;
+  user_id: number;
+  transaction_hash: string;
+  contract_transaction_id?: number;
+  property_id?: number;
+  transaction_type: string;
+  status: string;
+  amount?: string;
+  gas_used?: string;
+  gas_price?: string;
+  block_number?: number;
+  created_at: string;
+  updated_at?: string;
+}
 
 const Escrow: React.FC = () => {
   const { user } = useAuth();
@@ -34,6 +45,10 @@ const Escrow: React.FC = () => {
   const [priceDisplays, setPriceDisplays] = useState<{ [key: string]: { primary: string; secondary: string } }>({});
   const [earnestMoneyZar, setEarnestMoneyZar] = useState('');
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
+  const [transactions, setTransactions] = useState<TransactionRecord[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [transactionError, setTransactionError] = useState('');
+  const [escrowTransactions, setEscrowTransactions] = useState<TransactionRecord[]>([]);
   
   const [newEscrow, setNewEscrow] = useState({
     property_id: '',
@@ -45,6 +60,32 @@ const Escrow: React.FC = () => {
   });
 
   const canCreateEscrow = user?.role === 'buyer' || user?.role === 'admin';
+
+  const formatTransactionType = (type: string) => {
+    return type.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'completed':
+      case 'success':
+        return 'bg-green-100 text-green-800';
+      case 'pending':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'failed':
+      case 'error':
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const filterTransactionsByStatus = (status: string) => {
+    if (status === 'all') return escrowTransactions;
+    if (status === 'active') return escrowTransactions.filter((tx: TransactionRecord) => tx.status.toLowerCase() === 'pending');
+    if (status === 'completed') return escrowTransactions.filter((tx: TransactionRecord) => tx.status.toLowerCase() === 'completed');
+    return escrowTransactions;
+  };
 
   useEffect(() => {
     const loadPriceConversions = async () => {
@@ -64,6 +105,26 @@ const Escrow: React.FC = () => {
     };
 
     loadPriceConversions();
+  }, []);
+
+  useEffect(() => {
+    const fetchEscrowTransactions = async () => {
+      try {
+        setLoading(true);
+        const allTransactions = await apiService.getUserTransactions();
+        const escrowTxs = allTransactions.filter(tx => tx.transaction_type === 'CREATE_ESCROW');
+        setTransactions(allTransactions);
+        setEscrowTransactions(escrowTxs);
+        setTransactionError('');
+      } catch (err: any) {
+        setTransactionError('Failed to load escrow transactions');
+        console.error('Escrow transactions error:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEscrowTransactions();
   }, []);
 
   const handleEarnestMoneyChange = async (value: string) => {
@@ -117,6 +178,11 @@ const Escrow: React.FC = () => {
         terms: '',
         earnest_money: ''
       });
+
+      const allTransactions = await apiService.getUserTransactions();
+      const escrowTxs = allTransactions.filter(tx => tx.transaction_type === 'CREATE_ESCROW');
+      setTransactions(allTransactions);
+      setEscrowTransactions(escrowTxs);
     } catch (err: any) {
       const errorMessage = err.response?.data?.detail || 'Failed to create escrow';
       setError(errorMessage);
@@ -302,6 +368,13 @@ const Escrow: React.FC = () => {
         </Alert>
       )}
 
+      {transactionError && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>{transactionError}</AlertDescription>
+        </Alert>
+      )}
+
       <Tabs defaultValue="active" className="space-y-4">
         <TabsList>
           <TabsTrigger value="active">Active Escrows</TabsTrigger>
@@ -310,136 +383,211 @@ const Escrow: React.FC = () => {
         </TabsList>
 
         <TabsContent value="active" className="space-y-4">
-          {/* Sample Active Escrow */}
-          <Card>
-            <CardHeader>
-              <div className="flex justify-between items-start">
-                <div>
-                  <CardTitle className="flex items-center">
-                    <FileText className="w-5 h-5 mr-2" />
-                    Escrow #1001
-                  </CardTitle>
-                  <CardDescription>Property ID: 1 • Created: {new Date().toLocaleDateString()}</CardDescription>
-                </div>
-                <Badge className="bg-yellow-100 text-yellow-800">In Progress</Badge>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="flex items-center space-x-2">
-                  <Banknote className="w-4 h-4 text-green-600" />
-                  <div>
-                    <p className="text-sm font-medium">Purchase Price</p>
-                    <p className="text-sm font-semibold text-green-600">
-                      {priceDisplays['1.5']?.primary || 'Loading...'}
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      {priceDisplays['1.5']?.secondary || '1.5 ETH'}
-                    </p>
+          {loading ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            </div>
+          ) : filterTransactionsByStatus('active').length === 0 ? (
+            <div className="text-center py-8">
+              <FileText className="mx-auto h-12 w-12 text-gray-400" />
+              <h3 className="mt-2 text-sm font-medium text-gray-900">No active escrows</h3>
+              <p className="mt-1 text-sm text-gray-500">
+                {canCreateEscrow 
+                  ? "Create your first escrow transaction to get started."
+                  : "Active escrow transactions will appear here."
+                }
+              </p>
+            </div>
+          ) : (
+            filterTransactionsByStatus('active').map((transaction) => (
+              <Card key={transaction.id}>
+                <CardHeader>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="flex items-center">
+                        <FileText className="w-5 h-5 mr-2" />
+                        Escrow #{transaction.id}
+                      </CardTitle>
+                      <CardDescription>
+                        Property ID: {transaction.property_id} • Created: {new Date(transaction.created_at).toLocaleDateString()}
+                      </CardDescription>
+                    </div>
+                    <Badge className={getStatusColor(transaction.status)}>
+                      {transaction.status}
+                    </Badge>
                   </div>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Banknote className="w-4 h-4 text-blue-600" />
-                  <div>
-                    <p className="text-sm font-medium">Earnest Money</p>
-                    <p className="text-sm font-semibold text-blue-600">
-                      {priceDisplays['0.15']?.primary || 'Loading...'}
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      {priceDisplays['0.15']?.secondary || '0.15 ETH'}
-                    </p>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {transaction.amount && (
+                      <div className="flex items-center space-x-2">
+                        <Banknote className="w-4 h-4 text-green-600" />
+                        <div>
+                          <p className="text-sm font-medium">Earnest Money</p>
+                          <p className="text-sm font-semibold text-green-600">
+                            {priceDisplays[transaction.amount.replace(' ETH', '')]?.primary || 'Loading...'}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            {priceDisplays[transaction.amount.replace(' ETH', '')]?.secondary || transaction.amount}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                    <div className="flex items-center space-x-2">
+                      <Calendar className="w-4 h-4 text-purple-600" />
+                      <div>
+                        <p className="text-sm font-medium">Transaction Hash</p>
+                        <p className="text-xs text-gray-600 font-mono">
+                          {transaction.transaction_hash.slice(0, 10)}...{transaction.transaction_hash.slice(-8)}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Calendar className="w-4 h-4 text-purple-600" />
-                  <div>
-                    <p className="text-sm font-medium">Closing Date</p>
-                    <p className="text-sm text-gray-600">{new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString()}</p>
-                  </div>
-                </div>
-              </div>
 
-              <div className="border-t pt-4">
-                <h4 className="text-sm font-medium mb-3">Approval Status</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="flex items-center justify-between p-3 border rounded-lg">
-                    <div className="flex items-center space-x-2">
-                      <User className="w-4 h-4" />
-                      <span className="text-sm">Buyer</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                      <span className="text-sm text-green-600">Approved</span>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-3 border rounded-lg">
-                    <div className="flex items-center space-x-2">
-                      <Building className="w-4 h-4" />
-                      <span className="text-sm">Seller</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Clock className="w-4 h-4 text-yellow-600" />
-                      <span className="text-sm text-yellow-600">Pending</span>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-3 border rounded-lg">
-                    <div className="flex items-center space-x-2">
-                      <User className="w-4 h-4" />
-                      <span className="text-sm">Agent</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Clock className="w-4 h-4 text-yellow-600" />
-                      <span className="text-sm text-yellow-600">Pending</span>
+                  <div className="border-t pt-4">
+                    <h4 className="text-sm font-medium mb-3">Transaction Details</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <span className="text-gray-500">Status:</span>
+                        <span className="ml-2 font-medium">{formatTransactionType(transaction.status)}</span>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">Type:</span>
+                        <span className="ml-2 font-medium">{formatTransactionType(transaction.transaction_type)}</span>
+                      </div>
+                      {transaction.gas_used && (
+                        <div>
+                          <span className="text-gray-500">Gas Used:</span>
+                          <span className="ml-2 font-medium">{transaction.gas_used}</span>
+                        </div>
+                      )}
+                      {transaction.block_number && (
+                        <div>
+                          <span className="text-gray-500">Block:</span>
+                          <span className="ml-2 font-medium">{transaction.block_number}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
-                </div>
-              </div>
 
-              <div className="border-t pt-4">
-                <h4 className="text-sm font-medium mb-2">Terms &amp; Conditions</h4>
-                <p className="text-sm text-gray-600">
-                  Standard residential purchase agreement with 7-day inspection period. 
-                  Property to be sold as-is after inspection period. Closing to occur within 30 days.
-                </p>
-              </div>
-
-              {user?.role !== 'admin' && (
-                <div className="flex justify-end space-x-2">
-                  <Button variant="outline" size="sm">
-                    View Details
-                  </Button>
-                  <Button size="sm">
-                    Give Approval
-                  </Button>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                  {user?.role !== 'admin' && (
+                    <div className="flex justify-end space-x-2">
+                      <Button variant="outline" size="sm">
+                        View Details
+                      </Button>
+                      <Button size="sm">
+                        Give Approval
+                      </Button>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            ))
+          )}
         </TabsContent>
 
         <TabsContent value="completed" className="space-y-4">
-          <div className="text-center py-8">
-            <CheckCircle className="mx-auto h-12 w-12 text-gray-400" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900">No completed escrows</h3>
-            <p className="mt-1 text-sm text-gray-500">
-              Completed escrow transactions will appear here.
-            </p>
-          </div>
+          {loading ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            </div>
+          ) : filterTransactionsByStatus('completed').length === 0 ? (
+            <div className="text-center py-8">
+              <CheckCircle className="mx-auto h-12 w-12 text-gray-400" />
+              <h3 className="mt-2 text-sm font-medium text-gray-900">No completed escrows</h3>
+              <p className="mt-1 text-sm text-gray-500">
+                Completed escrow transactions will appear here.
+              </p>
+            </div>
+          ) : (
+            filterTransactionsByStatus('completed').map((transaction) => (
+              <Card key={transaction.id}>
+                <CardHeader>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="flex items-center">
+                        <CheckCircle className="w-5 h-5 mr-2 text-green-600" />
+                        Escrow #{transaction.id}
+                      </CardTitle>
+                      <CardDescription>
+                        Property ID: {transaction.property_id} • Completed: {new Date(transaction.created_at).toLocaleDateString()}
+                      </CardDescription>
+                    </div>
+                    <Badge className={getStatusColor(transaction.status)}>
+                      {transaction.status}
+                    </Badge>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-sm text-gray-600">
+                    Transaction Hash: {transaction.transaction_hash}
+                  </div>
+                  {transaction.amount && (
+                    <div className="mt-2 text-sm">
+                      <span className="text-gray-500">Amount:</span>
+                      <span className="ml-2 font-medium">{transaction.amount}</span>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            ))
+          )}
         </TabsContent>
 
         <TabsContent value="all" className="space-y-4">
-          <div className="text-center py-8">
-            <FileText className="mx-auto h-12 w-12 text-gray-400" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900">No escrow transactions</h3>
-            <p className="mt-1 text-sm text-gray-500">
-              {canCreateEscrow 
-                ? "Get started by creating your first escrow transaction."
-                : "Escrow transactions you're involved in will appear here."
-              }
-            </p>
-          </div>
+          {loading ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            </div>
+          ) : filterTransactionsByStatus('all').length === 0 ? (
+            <div className="text-center py-8">
+              <FileText className="mx-auto h-12 w-12 text-gray-400" />
+              <h3 className="mt-2 text-sm font-medium text-gray-900">No escrow transactions</h3>
+              <p className="mt-1 text-sm text-gray-500">
+                {canCreateEscrow 
+                  ? "Get started by creating your first escrow transaction."
+                  : "Escrow transactions you're involved in will appear here."
+                }
+              </p>
+            </div>
+          ) : (
+            filterTransactionsByStatus('all').map((transaction) => (
+              <Card key={transaction.id}>
+                <CardHeader>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="flex items-center">
+                        <FileText className="w-5 h-5 mr-2" />
+                        Escrow #{transaction.id}
+                      </CardTitle>
+                      <CardDescription>
+                        Property ID: {transaction.property_id} • {new Date(transaction.created_at).toLocaleDateString()}
+                      </CardDescription>
+                    </div>
+                    <Badge className={getStatusColor(transaction.status)}>
+                      {transaction.status}
+                    </Badge>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span className="text-gray-500">Transaction Hash:</span>
+                      <div className="font-mono text-xs mt-1">
+                        {transaction.transaction_hash}
+                      </div>
+                    </div>
+                    {transaction.amount && (
+                      <div>
+                        <span className="text-gray-500">Amount:</span>
+                        <div className="font-medium mt-1">{transaction.amount}</div>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          )}
         </TabsContent>
       </Tabs>
     </div>
