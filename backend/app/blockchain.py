@@ -4,6 +4,8 @@ import json
 import os
 import re
 import threading
+import queue
+import time
 from typing import Dict, Any, Optional
 from dotenv import load_dotenv
 
@@ -23,6 +25,8 @@ class BlockchainService:
         self.connected = False
         self._pending_nonce = None
         self._nonce_lock = threading.Lock()
+        self._transaction_queue = queue.Queue()
+        self._queue_worker_running = False
         
         if self.rpc_url:
             try:
@@ -76,40 +80,96 @@ class BlockchainService:
     
     def _get_next_nonce(self) -> int:
         """Get the next available nonce, accounting for pending transactions"""
-        with self._nonce_lock:
-            if not self.connected or not self.w3 or not self.account:
-                raise ValueError("Blockchain not connected or account not configured")
-            
-            network_nonce = self.w3.eth.get_transaction_count(self.account.address, 'pending')
-            
-            if self._pending_nonce is not None and self._pending_nonce >= network_nonce:
-                self._pending_nonce += 1
-            else:
-                self._pending_nonce = network_nonce
-            
-            print(f"DEBUG: Using nonce {self._pending_nonce} (network: {network_nonce})")
-            return self._pending_nonce
-
-    def send_transaction(self, transaction_data: Dict[str, Any]) -> str:
         if not self.connected or not self.w3 or not self.account:
             raise ValueError("Blockchain not connected or account not configured")
         
+        network_nonce = self.w3.eth.get_transaction_count(self.account.address, 'pending')
+        
+        if self._pending_nonce is not None and self._pending_nonce >= network_nonce:
+            self._pending_nonce += 1
+        else:
+            self._pending_nonce = network_nonce
+        
+        print(f"DEBUG: Using nonce {self._pending_nonce} (network: {network_nonce})")
+        return self._pending_nonce
+
+    def _start_queue_worker(self):
+        """Start the transaction queue worker if not already running"""
+        if not self._queue_worker_running:
+            self._queue_worker_running = True
+            worker_thread = threading.Thread(target=self._process_transaction_queue, daemon=True)
+            worker_thread.start()
+            print("DEBUG: Transaction queue worker started")
+    
+    def _process_transaction_queue(self):
+        """Process transactions from the queue sequentially"""
+        while self._queue_worker_running:
+            try:
+                transaction_data, result_callback = self._transaction_queue.get(timeout=1)
+                print(f"DEBUG: Processing queued transaction")
+                try:
+                    tx_hash = self._execute_transaction(transaction_data)
+                    result_callback(tx_hash, None)
+                except Exception as e:
+                    print(f"DEBUG: Transaction failed: {e}")
+                    result_callback(None, e)
+                finally:
+                    self._transaction_queue.task_done()
+            except queue.Empty:
+                continue
+            except Exception as e:
+                print(f"DEBUG: Queue worker error: {e}")
+    
+    def _execute_transaction(self, transaction_data: Dict[str, Any]) -> str:
+        """Execute a single transaction with proper nonce management"""
+        if not self.connected or not self.w3 or not self.account:
+            raise ValueError("Blockchain not connected or account not configured")
+        
+        with self._nonce_lock:
+            nonce = self._get_next_nonce()
+            
         gas_price = self.w3.to_wei('25', 'gwei')
         
         transaction = {
             'from': self.account.address,
-            'gas': 2000000,
+            'gas': transaction_data.get('gas', 2000000),
             'gasPrice': gas_price,
-            **transaction_data
+            'nonce': nonce,
+            **{k: v for k, v in transaction_data.items() if k not in ['gas', 'gasPrice', 'nonce']}
         }
         
         try:
             signed_txn = self.w3.eth.account.sign_transaction(transaction, self.private_key)
             tx_hash = self.w3.eth.send_raw_transaction(signed_txn.raw_transaction)
+            print(f"DEBUG: Transaction sent with nonce {nonce}, hash: {tx_hash.hex()}")
             return tx_hash.hex()
         except Exception as e:
-            self._pending_nonce = None
+            with self._nonce_lock:
+                self._pending_nonce = None
             raise e
+
+    def send_transaction(self, transaction_data: Dict[str, Any]) -> str:
+        """Queue a transaction for execution and wait for result"""
+        if not self._queue_worker_running:
+            self._start_queue_worker()
+        
+        result_event = threading.Event()
+        result_data = {'tx_hash': None, 'error': None}
+        
+        def result_callback(tx_hash, error):
+            result_data['tx_hash'] = tx_hash
+            result_data['error'] = error
+            result_event.set()
+        
+        print(f"DEBUG: Queueing transaction for sequential processing")
+        self._transaction_queue.put((transaction_data, result_callback))
+        
+        if result_event.wait(timeout=120):
+            if result_data['error']:
+                raise result_data['error']
+            return result_data['tx_hash']
+        else:
+            raise TimeoutError("Transaction execution timed out")
     
     def wait_for_transaction_receipt(self, tx_hash: str, timeout: int = 120):
         if not self.connected or not self.w3:
@@ -128,7 +188,6 @@ class BlockchainService:
             'from': self.account.address,
             'gas': 500000,
             'gasPrice': self.w3.to_wei('25', 'gwei'),
-            'nonce': self._get_next_nonce(),
         })
         
         return self.send_transaction(transaction)
@@ -152,7 +211,6 @@ class BlockchainService:
                 'value': earnest_money_wei,
                 'gas': 800000,
                 'gasPrice': self.w3.to_wei('25', 'gwei'),
-                'nonce': self._get_next_nonce(),
             })
             
             return self.send_transaction(transaction)
@@ -216,7 +274,6 @@ class BlockchainService:
             'from': self.account.address,
             'gas': 300000,
             'gasPrice': self.w3.to_wei('25', 'gwei'),
-            'nonce': self._get_next_nonce(),
         })
         
         return self.send_transaction(transaction)
