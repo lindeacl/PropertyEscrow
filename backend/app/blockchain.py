@@ -30,7 +30,12 @@ class BlockchainService:
         
         if self.rpc_url:
             try:
-                self.w3 = Web3(Web3.HTTPProvider(self.rpc_url))
+                from web3.providers import HTTPProvider
+                provider = HTTPProvider(
+                    self.rpc_url,
+                    request_kwargs={'timeout': 60}
+                )
+                self.w3 = Web3(provider)
                 
                 if self.w3.is_connected():
                     self.connected = True
@@ -140,6 +145,16 @@ class BlockchainService:
         
         try:
             print(f"DEBUG: Building transaction: {transaction}")
+            
+            if 'chainId' not in transaction:
+                transaction['chainId'] = 137
+            
+            for key, value in transaction.items():
+                if isinstance(value, str) and value.startswith('0x'):
+                    if len(value) % 2 != 0:
+                        print(f"ERROR: Transaction field {key} has odd-length hex: {value}")
+                        raise ValueError(f"Invalid hex encoding in transaction field {key}: {value}")
+            
             signed_txn = self.w3.eth.account.sign_transaction(transaction, self.private_key)
             raw_tx_hex = signed_txn.raw_transaction.hex()
             print(f"DEBUG: Raw transaction hex: {raw_tx_hex}")

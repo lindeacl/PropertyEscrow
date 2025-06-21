@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer
 from sqlalchemy.orm import Session
@@ -365,9 +365,13 @@ def get_property_legacy(property_id: int):
 def create_escrow(
     escrow_data: EscrowCreate,
     current_user: User = Depends(get_current_active_user),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    request: Request = None
 ):
     try:
+        print(f"DEBUG: Escrow creation request from {request.client.host if request and hasattr(request, 'client') else 'unknown'}")
+        print(f"DEBUG: Request data: {escrow_data.dict()}")
+        
         tx_hash = blockchain_service.create_escrow(
             escrow_data.property_id,
             escrow_data.agent_address,
