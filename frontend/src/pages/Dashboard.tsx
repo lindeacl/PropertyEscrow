@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { apiService } from '../services/api';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -33,6 +34,7 @@ interface TransactionRecord {
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [systemStatus, setSystemStatus] = useState<SystemStatus | null>(null);
   const [transactions, setTransactions] = useState<TransactionRecord[]>([]);
   const [loading, setLoading] = useState(true);
@@ -242,20 +244,31 @@ const Dashboard: React.FC = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {(user?.role === 'seller' || user?.role === 'admin') && (
-              <Button className="h-20 flex flex-col items-center justify-center space-y-2">
+              <Button 
+                className="h-20 flex flex-col items-center justify-center space-y-2"
+                onClick={() => navigate('/properties')}
+              >
                 <Building className="h-6 w-6" />
                 <span>List Property</span>
               </Button>
             )}
             
             {(user?.role === 'buyer' || user?.role === 'admin') && (
-              <Button variant="outline" className="h-20 flex flex-col items-center justify-center space-y-2">
+              <Button 
+                variant="outline" 
+                className="h-20 flex flex-col items-center justify-center space-y-2"
+                onClick={() => navigate('/escrow')}
+              >
                 <FileText className="h-6 w-6" />
                 <span>Create Escrow</span>
               </Button>
             )}
             
-            <Button variant="outline" className="h-20 flex flex-col items-center justify-center space-y-2">
+            <Button 
+              variant="outline" 
+              className="h-20 flex flex-col items-center justify-center space-y-2"
+              onClick={() => navigate('/profile')}
+            >
               <User className="h-6 w-6" />
               <span>Update Profile</span>
             </Button>
