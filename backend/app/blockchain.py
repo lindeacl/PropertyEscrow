@@ -3,6 +3,7 @@ from web3.middleware import ExtraDataToPOAMiddleware
 import json
 import os
 import re
+import threading
 from typing import Dict, Any, Optional
 from dotenv import load_dotenv
 
@@ -21,6 +22,7 @@ class BlockchainService:
         self.contract = None
         self.connected = False
         self._pending_nonce = None
+        self._nonce_lock = threading.Lock()
         
         if self.rpc_url:
             try:
@@ -74,17 +76,19 @@ class BlockchainService:
     
     def _get_next_nonce(self) -> int:
         """Get the next available nonce, accounting for pending transactions"""
-        if not self.connected or not self.w3 or not self.account:
-            raise ValueError("Blockchain not connected or account not configured")
-        
-        network_nonce = self.w3.eth.get_transaction_count(self.account.address, 'pending')
-        
-        if self._pending_nonce is not None and self._pending_nonce >= network_nonce:
-            self._pending_nonce += 1
-        else:
-            self._pending_nonce = network_nonce
-        
-        return self._pending_nonce
+        with self._nonce_lock:
+            if not self.connected or not self.w3 or not self.account:
+                raise ValueError("Blockchain not connected or account not configured")
+            
+            network_nonce = self.w3.eth.get_transaction_count(self.account.address, 'pending')
+            
+            if self._pending_nonce is not None and self._pending_nonce >= network_nonce:
+                self._pending_nonce += 1
+            else:
+                self._pending_nonce = network_nonce
+            
+            print(f"DEBUG: Using nonce {self._pending_nonce} (network: {network_nonce})")
+            return self._pending_nonce
 
     def send_transaction(self, transaction_data: Dict[str, Any]) -> str:
         if not self.connected or not self.w3 or not self.account:
