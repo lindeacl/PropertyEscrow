@@ -37,6 +37,8 @@ const Properties: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [createLoading, setCreateLoading] = useState(false);
+  const [showPropertyDetail, setShowPropertyDetail] = useState(false);
+  const [selectedProperty, setSelectedProperty] = useState<any>(null);
   
   const [newProperty, setNewProperty] = useState({
     property_address: '',
@@ -77,7 +79,15 @@ const Properties: React.FC = () => {
     }
   };
 
+  const handleViewDetails = (property: any) => {
+    setSelectedProperty(property);
+    setShowPropertyDetail(true);
+  };
 
+  const handleCloseDetails = () => {
+    setShowPropertyDetail(false);
+    setSelectedProperty(null);
+  };
 
   const filteredProperties = properties.filter(property =>
     property.property_address.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -183,6 +193,63 @@ const Properties: React.FC = () => {
         )}
       </div>
 
+      {/* Property Detail Modal */}
+      <Dialog open={showPropertyDetail} onOpenChange={setShowPropertyDetail}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>{selectedProperty?.title}</DialogTitle>
+            <DialogDescription className="flex items-center text-sm text-gray-600">
+              <MapPin className="w-4 h-4 mr-1" />
+              {selectedProperty?.address}
+            </DialogDescription>
+          </DialogHeader>
+          
+          {selectedProperty && (
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <Badge variant={selectedProperty.status === 'Active' ? 'outline' : 'secondary'}>
+                  {selectedProperty.status}
+                </Badge>
+                <div className="flex items-center text-xl font-semibold text-green-600">
+                  <Banknote className="w-5 h-5 mr-1" />
+                  {selectedProperty.price}
+                </div>
+              </div>
+              
+              <div>
+                <h4 className="font-medium text-gray-900 mb-2">Description</h4>
+                <p className="text-sm text-gray-600">{selectedProperty.description}</p>
+              </div>
+              
+              <div>
+                <h4 className="font-medium text-gray-900 mb-2">Property Details</h4>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span className="font-medium">Property ID:</span>
+                    <span className="ml-2 text-gray-600">#{selectedProperty.id}</span>
+                  </div>
+                  <div>
+                    <span className="font-medium">Status:</span>
+                    <span className="ml-2 text-gray-600">{selectedProperty.status}</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex justify-end space-x-2 pt-4">
+                <Button variant="outline" onClick={handleCloseDetails}>
+                  Close
+                </Button>
+                {selectedProperty.status === 'Active' && (
+                  <Button>
+                    Contact Seller
+                  </Button>
+                )}
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
       {error && (
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
@@ -234,7 +301,18 @@ const Properties: React.FC = () => {
                 <Banknote className="w-4 h-4 mr-1" />
                 1.5 ETH
               </div>
-              <Button variant="outline" size="sm">
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => handleViewDetails({
+                  id: 1,
+                  title: 'Sample Property #1',
+                  address: '123 Main Street, Anytown, ST 12345',
+                  description: 'Beautiful 3-bedroom, 2-bathroom home with modern amenities and a spacious backyard. Perfect for families looking for a comfortable living space.',
+                  price: '1.5 ETH',
+                  status: 'Active'
+                })}
+              >
                 <Eye className="w-4 h-4 mr-1" />
                 View Details
               </Button>
@@ -263,7 +341,18 @@ const Properties: React.FC = () => {
                 <Banknote className="w-4 h-4 mr-1" />
                 2.8 ETH
               </div>
-              <Button variant="outline" size="sm">
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => handleViewDetails({
+                  id: 2,
+                  title: 'Sample Property #2',
+                  address: '456 Oak Avenue, Somewhere, ST 67890',
+                  description: 'Luxury condo with stunning city views. Features include hardwood floors, granite countertops, and access to building amenities.',
+                  price: '2.8 ETH',
+                  status: 'Active'
+                })}
+              >
                 <Eye className="w-4 h-4 mr-1" />
                 View Details
               </Button>
@@ -292,7 +381,18 @@ const Properties: React.FC = () => {
                 <Banknote className="w-4 h-4 mr-1" />
                 0.9 ETH
               </div>
-              <Button variant="outline" size="sm">
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => handleViewDetails({
+                  id: 3,
+                  title: 'Sample Property #3',
+                  address: '789 Pine Street, Elsewhere, ST 13579',
+                  description: 'Charming starter home with great potential. Recently updated kitchen and bathroom. Close to schools and shopping centers.',
+                  price: '0.9 ETH',
+                  status: 'Pending'
+                })}
+              >
                 <Eye className="w-4 h-4 mr-1" />
                 View Details
               </Button>
