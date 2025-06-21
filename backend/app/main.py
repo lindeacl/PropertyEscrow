@@ -1,9 +1,11 @@
-from fastapi import FastAPI, Depends, HTTPException, status, Request
+from fastapi import FastAPI, Depends, HTTPException, status, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer
 from sqlalchemy.orm import Session
 from typing import List
 import os
+import json
+import time
 from dotenv import load_dotenv
 
 from .database import engine, get_db
@@ -31,6 +33,41 @@ app = FastAPI(
     description="A blockchain-based property escrow system with role-based access control",
     version="1.0.0"
 )
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start_time = time.time()
+    
+    client_host = request.client.host if request.client else "unknown"
+    user_agent = request.headers.get("user-agent", "unknown")
+    content_type = request.headers.get("content-type", "unknown")
+    
+    body = None
+    if request.method == "POST":
+        body = await request.body()
+        async def receive():
+            return {"type": "http.request", "body": body}
+        request._receive = receive
+    
+    print(f"DEBUG: Request {request.method} {request.url.path}")
+    print(f"DEBUG: Client: {client_host}, User-Agent: {user_agent}")
+    print(f"DEBUG: Content-Type: {content_type}")
+    if body:
+        try:
+            body_str = body.decode('utf-8')
+            print(f"DEBUG: Request body: {body_str}")
+            if content_type == "application/json":
+                body_json = json.loads(body_str)
+                print(f"DEBUG: Request data types: {[(k, type(v)) for k, v in body_json.items()]}")
+        except Exception as e:
+            print(f"DEBUG: Could not parse request body: {e}")
+    
+    response = await call_next(request)
+    
+    process_time = time.time() - start_time
+    print(f"DEBUG: Request completed in {process_time:.3f}s with status {response.status_code}")
+    
+    return response
 
 # Disable CORS. Do not remove this for full-stack development.
 app.add_middleware(

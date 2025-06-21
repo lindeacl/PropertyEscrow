@@ -31,21 +31,40 @@ class BlockchainService:
         if self.rpc_url:
             try:
                 from web3.providers import HTTPProvider
+                
                 provider = HTTPProvider(
                     self.rpc_url,
-                    request_kwargs={'timeout': 60}
+                    request_kwargs={
+                        'timeout': 60,
+                        'headers': {
+                            'Content-Type': 'application/json',
+                            'User-Agent': 'PropertyEscrow/1.0'
+                        }
+                    }
                 )
+                
                 self.w3 = Web3(provider)
+                
+                self.w3.middleware_onion.inject(ExtraDataToPOAMiddleware, layer=0)
                 
                 if self.w3.is_connected():
                     self.connected = True
-                    self.w3.middleware_onion.inject(ExtraDataToPOAMiddleware, layer=0)
+                    
+                    self.w3.eth.default_block = 'latest'
                     
                     if self.private_key:
                         self.account = self.w3.eth.account.from_key(self.private_key)
+                        print(f"DEBUG: Account loaded: {self.account.address}")
                     
                     if self.contract_address:
                         self.load_contract()
+                        
+                    chain_id = self.w3.eth.chain_id
+                    if chain_id != 137:
+                        print(f"WARNING: Connected to chain ID {chain_id}, expected 137 (Polygon)")
+                    else:
+                        print(f"DEBUG: Connected to Polygon mainnet (chain ID: {chain_id})")
+                        
                 else:
                     print("Warning: Could not connect to Polygon network")
             except Exception as e:
@@ -145,30 +164,61 @@ class BlockchainService:
         
         try:
             print(f"DEBUG: Building transaction: {transaction}")
-            
-            if 'chainId' not in transaction:
-                transaction['chainId'] = 137
+            print(f"DEBUG: Transaction keys: {list(transaction.keys())}")
             
             for key, value in transaction.items():
                 if isinstance(value, str) and value.startswith('0x'):
+                    print(f"DEBUG: Field {key}: {value} (length: {len(value)}, even: {len(value) % 2 == 0})")
                     if len(value) % 2 != 0:
                         print(f"ERROR: Transaction field {key} has odd-length hex: {value}")
                         raise ValueError(f"Invalid hex encoding in transaction field {key}: {value}")
+                else:
+                    print(f"DEBUG: Field {key}: {value} (type: {type(value)})")
+            
+            if 'chainId' not in transaction:
+                transaction['chainId'] = 137
+                print(f"DEBUG: Added chainId: 137")
+            
+            required_fields = ['from', 'gas', 'gasPrice', 'nonce', 'chainId']
+            for field in required_fields:
+                if field not in transaction:
+                    print(f"ERROR: Missing required field: {field}")
+                    raise ValueError(f"Transaction missing required field: {field}")
+            
+            print(f"DEBUG: About to sign transaction with Web3...")
+            print(f"DEBUG: Account address: {self.account.address}")
             
             signed_txn = self.w3.eth.account.sign_transaction(transaction, self.private_key)
+            
+            print(f"DEBUG: Transaction signed successfully")
+            print(f"DEBUG: Signed transaction type: {type(signed_txn.raw_transaction)}")
+            print(f"DEBUG: Raw transaction bytes length: {len(signed_txn.raw_transaction)}")
+            
             raw_tx_hex = signed_txn.raw_transaction.hex()
             print(f"DEBUG: Raw transaction hex: {raw_tx_hex}")
             print(f"DEBUG: Raw transaction length: {len(raw_tx_hex)} characters")
+            print(f"DEBUG: Raw transaction even length: {len(raw_tx_hex) % 2 == 0}")
+            print(f"DEBUG: Raw transaction first 100 chars: {raw_tx_hex[:100]}")
+            print(f"DEBUG: Raw transaction last 100 chars: {raw_tx_hex[-100:]}")
             
             if len(raw_tx_hex) % 2 != 0:
                 print(f"ERROR: Raw transaction has odd length: {len(raw_tx_hex)}")
+                print(f"ERROR: Last character: '{raw_tx_hex[-1]}'")
+                print(f"ERROR: Hex validation failed - transaction corrupted during signing")
                 raise ValueError(f"Invalid transaction encoding: hex string has odd length ({len(raw_tx_hex)})")
+            
+            print(f"DEBUG: About to send raw transaction to Alchemy...")
+            print(f"DEBUG: Alchemy endpoint: {self.rpc_url}")
+            print(f"DEBUG: Sending hex with 0x prefix: 0x{raw_tx_hex}")
             
             tx_hash = self.w3.eth.send_raw_transaction(signed_txn.raw_transaction)
             print(f"DEBUG: Transaction sent with nonce {nonce}, hash: {tx_hash.hex()}")
             return tx_hash.hex()
         except Exception as e:
             print(f"DEBUG: Transaction execution failed: {e}")
+            print(f"DEBUG: Exception type: {type(e)}")
+            import traceback
+            traceback.print_exc()
             with self._nonce_lock:
                 self._pending_nonce = None
             raise e
