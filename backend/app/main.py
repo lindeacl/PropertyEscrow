@@ -7,11 +7,11 @@ import os
 from dotenv import load_dotenv
 
 from .database import engine, get_db
-from .models import Base, User, UserProfile, TransactionRecord, SystemSettings, UserRole
+from .models import Base, User, UserProfile, Property, TransactionRecord, SystemSettings, UserRole
 from .schemas import (
     UserCreate, User as UserSchema, UserUpdate, UserProfileCreate, 
     UserProfile as UserProfileSchema, UserProfileUpdate, Token, LoginRequest,
-    PropertyCreate, Property, EscrowCreate, EscrowTransaction,
+    PropertyCreate, PropertyUpdate, Property, EscrowCreate, EscrowTransaction,
     TransactionRecordCreate, TransactionRecord as TransactionRecordSchema,
     AdminOverrideRequest, ApprovalRequest, SystemSettingCreate, SystemSetting
 )
@@ -20,6 +20,7 @@ from .auth import (
     get_current_active_user, require_role, require_admin
 )
 from .blockchain import blockchain_service
+from .alchemy_deployer import alchemy_deployer
 
 load_dotenv()
 
@@ -194,12 +195,81 @@ def update_user_profile(
     db.refresh(profile)
     return profile
 
-@app.post("/blockchain/properties", response_model=dict)
-def create_property(
+@app.post("/properties", response_model=Property)
+async def create_property(
     property_data: PropertyCreate,
     current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db)
 ):
+    """Create a new property listing with smart contract deployment"""
+    try:
+        db_property = Property(
+            user_id=current_user.id,
+            property_address=property_data.property_address,
+            description=property_data.description,
+            price=property_data.price,
+            metadata_uri=property_data.metadata_uri,
+            deployment_status="deploying"
+        )
+        db.add(db_property)
+        db.commit()
+        db.refresh(db_property)
+        
+        if alchemy_deployer.is_connected():
+            deployment_result = await alchemy_deployer.deploy_property_contract({
+                "property_address": property_data.property_address,
+                "description": property_data.description,
+                "price": property_data.price,
+                "metadata_uri": property_data.metadata_uri or ""
+            })
+            
+            if deployment_result["success"]:
+                db_property.contract_address = deployment_result["contract_address"]
+                db_property.deployment_tx_hash = deployment_result["transaction_hash"]
+                db_property.deployment_status = "deployed"
+                
+                transaction_record = TransactionRecord(
+                    user_id=current_user.id,
+                    property_id=db_property.id,
+                    transaction_hash=deployment_result["transaction_hash"],
+                    contract_address=deployment_result["contract_address"],
+                    transaction_type="PROPERTY_DEPLOYMENT",
+                    status="completed",
+                    gas_used=str(deployment_result.get("gas_used", 0)),
+                    block_number=deployment_result.get("block_number", 0)
+                )
+                db.add(transaction_record)
+            else:
+                db_property.deployment_status = "failed"
+                
+                transaction_record = TransactionRecord(
+                    user_id=current_user.id,
+                    property_id=db_property.id,
+                    transaction_hash=deployment_result.get("transaction_hash", ""),
+                    transaction_type="PROPERTY_DEPLOYMENT",
+                    status="failed"
+                )
+                db.add(transaction_record)
+        else:
+            db_property.deployment_status = "legacy"
+            db_property.contract_address = os.getenv("CONTRACT_ADDRESS")
+        
+        db.commit()
+        db.refresh(db_property)
+        
+        return db_property
+        
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Failed to create property: {str(e)}")
+
+@app.post("/blockchain/properties", response_model=dict)
+def create_property_legacy(
+    property_data: PropertyCreate,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Legacy endpoint for backward compatibility"""
     try:
         tx_hash = blockchain_service.list_property(
             property_data.property_address,
@@ -222,8 +292,69 @@ def create_property(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.get("/properties", response_model=List[Property])
+async def get_properties(
+    skip: int = 0,
+    limit: int = 100,
+    db: Session = Depends(get_db)
+):
+    """Get all active properties"""
+    properties = db.query(Property).filter(
+        Property.is_active == True
+    ).offset(skip).limit(limit).all()
+    
+    return properties
+
+@app.get("/properties/my", response_model=List[Property])
+async def get_my_properties(
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Get properties owned by the current user"""
+    properties = db.query(Property).filter(
+        Property.user_id == current_user.id
+    ).order_by(Property.created_at.desc()).all()
+    
+    return properties
+
+@app.get("/properties/{property_id}", response_model=Property)
+async def get_property(
+    property_id: int,
+    db: Session = Depends(get_db)
+):
+    """Get a specific property by ID"""
+    property_obj = db.query(Property).filter(Property.id == property_id).first()
+    if not property_obj:
+        raise HTTPException(status_code=404, detail="Property not found")
+    
+    return property_obj
+
+@app.put("/properties/{property_id}", response_model=Property)
+async def update_property(
+    property_id: int,
+    property_update: PropertyUpdate,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Update a property (only by owner or admin)"""
+    property_obj = db.query(Property).filter(Property.id == property_id).first()
+    if not property_obj:
+        raise HTTPException(status_code=404, detail="Property not found")
+    
+    if property_obj.user_id != current_user.id and current_user.role.value != "admin":
+        raise HTTPException(status_code=403, detail="Not authorized to update this property")
+    
+    for field, value in property_update.dict(exclude_unset=True).items():
+        setattr(property_obj, field, value)
+    
+    db.commit()
+    db.refresh(property_obj)
+    
+    return property_obj
+
 @app.get("/blockchain/properties/{property_id}", response_model=Property)
-def get_property(property_id: int):
+def get_property_legacy(property_id: int):
+    """Legacy endpoint for backward compatibility"""
     try:
         property_data = blockchain_service.get_property(property_id)
         return Property(**property_data)

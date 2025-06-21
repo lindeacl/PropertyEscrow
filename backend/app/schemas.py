@@ -75,14 +75,29 @@ class PropertyCreate(BaseModel):
     price: int
     metadata_uri: Optional[str] = ""
 
+class PropertyUpdate(BaseModel):
+    property_address: Optional[str] = None
+    description: Optional[str] = None
+    price: Optional[int] = None
+    metadata_uri: Optional[str] = None
+    is_active: Optional[bool] = None
+
 class Property(BaseModel):
     id: int
+    user_id: int
     property_address: str
     description: str
     price: int
-    seller: str
+    metadata_uri: Optional[str]
+    contract_address: Optional[str]
+    deployment_status: str
+    deployment_tx_hash: Optional[str]
     is_active: bool
-    metadata_uri: str
+    created_at: datetime
+    updated_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
 
 class EscrowCreate(BaseModel):
     property_id: int
@@ -124,9 +139,10 @@ class TransactionRecordCreate(BaseModel):
 class TransactionRecord(BaseModel):
     id: int
     user_id: int
+    property_id: Optional[int] = None
     transaction_hash: str
     contract_transaction_id: Optional[int] = None
-    property_id: Optional[int] = None
+    contract_address: Optional[str] = None
     transaction_type: str
     status: str
     amount: Optional[str] = None
