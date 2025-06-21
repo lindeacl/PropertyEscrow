@@ -447,8 +447,8 @@ def admin_override(
         transaction = function_call.build_transaction({
             'from': blockchain_service.account.address,
             'gas': 500000,
-            'gasPrice': blockchain_service.w3.to_wei('20', 'gwei'),
-            'nonce': blockchain_service.w3.eth.get_transaction_count(blockchain_service.account.address),
+            'gasPrice': blockchain_service.w3.to_wei('25', 'gwei'),
+            'nonce': blockchain_service._get_next_nonce(),
         })
         
         tx_hash = blockchain_service.send_transaction(transaction)

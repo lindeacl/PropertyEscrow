@@ -90,15 +90,12 @@ class BlockchainService:
         if not self.connected or not self.w3 or not self.account:
             raise ValueError("Blockchain not connected or account not configured")
         
-        nonce = self._get_next_nonce()
-        
         gas_price = self.w3.to_wei('25', 'gwei')
         
         transaction = {
             'from': self.account.address,
             'gas': 2000000,
             'gasPrice': gas_price,
-            'nonce': nonce,
             **transaction_data
         }
         

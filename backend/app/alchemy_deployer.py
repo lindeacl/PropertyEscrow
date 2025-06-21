@@ -97,11 +97,13 @@ class AlchemyDeployerService:
             gas_estimate = function_call.estimate_gas({'from': self.account.address})
             gas_limit = int(gas_estimate * 1.2)  # Add 20% buffer
             
+            from .blockchain import blockchain_service
+            
             transaction = function_call.build_transaction({
                 'from': self.account.address,
                 'gas': gas_limit,
-                'gasPrice': self.w3.to_wei('30', 'gwei'),  # Higher gas price for faster confirmation
-                'nonce': self.w3.eth.get_transaction_count(self.account.address),
+                'gasPrice': self.w3.to_wei('30', 'gwei'),
+                'nonce': blockchain_service._get_next_nonce(),
             })
             
             signed_txn = self.w3.eth.account.sign_transaction(transaction, self.private_key)
@@ -199,11 +201,13 @@ class AlchemyDeployerService:
         try:
             function_call = self.factory_contract.functions.grantAgentRole(agent_address)
             
+            from .blockchain import blockchain_service
+            
             transaction = function_call.build_transaction({
                 'from': self.account.address,
                 'gas': 100000,
-                'gasPrice': self.w3.to_wei('20', 'gwei'),
-                'nonce': self.w3.eth.get_transaction_count(self.account.address),
+                'gasPrice': self.w3.to_wei('25', 'gwei'),
+                'nonce': blockchain_service._get_next_nonce(),
             })
             
             signed_txn = self.w3.eth.account.sign_transaction(transaction, self.private_key)
