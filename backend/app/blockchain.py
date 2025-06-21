@@ -19,6 +19,11 @@ class BlockchainService:
         self.private_key = os.getenv("PRIVATE_KEY")
         self.contract_address = os.getenv("CONTRACT_ADDRESS")
         
+        self.is_deployed = os.getenv("FLY_APP_NAME") is not None or os.getenv("RAILWAY_ENVIRONMENT") is not None
+        self.environment = "DEPLOYED" if self.is_deployed else "LOCAL"
+        
+        print(f"DEBUG: Blockchain service initializing in {self.environment} environment")
+        
         self.w3 = None
         self.account = None
         self.contract = None
@@ -31,18 +36,31 @@ class BlockchainService:
         if self.rpc_url:
             try:
                 from web3.providers import HTTPProvider
+                from web3.middleware import ExtraDataToPOAMiddleware
                 
-                provider = HTTPProvider(
-                    self.rpc_url,
-                    request_kwargs={
+                provider_kwargs = {
+                    'request_kwargs': {
                         'timeout': 60,
                         'headers': {
                             'Content-Type': 'application/json',
-                            'User-Agent': 'PropertyEscrow/1.0'
+                            'User-Agent': f'PropertyEscrow/1.0-{self.environment}'
                         }
                     }
-                )
+                }
                 
+                if self.is_deployed:
+                    provider_kwargs['request_kwargs'].update({
+                        'timeout': 120,
+                        'headers': {
+                            'Content-Type': 'application/json',
+                            'User-Agent': f'PropertyEscrow/1.0-{self.environment}',
+                            'Accept': 'application/json',
+                            'Connection': 'keep-alive'
+                        }
+                    })
+                    print(f"DEBUG: Using deployed environment provider configuration")
+                
+                provider = HTTPProvider(self.rpc_url, **provider_kwargs)
                 self.w3 = Web3(provider)
                 
                 self.w3.middleware_onion.inject(ExtraDataToPOAMiddleware, layer=0)
@@ -190,7 +208,7 @@ class BlockchainService:
             
             signed_txn = self.w3.eth.account.sign_transaction(transaction, self.private_key)
             
-            print(f"DEBUG: Transaction signed successfully")
+            print(f"DEBUG: Transaction signed successfully in {self.environment} environment")
             print(f"DEBUG: Signed transaction type: {type(signed_txn.raw_transaction)}")
             print(f"DEBUG: Raw transaction bytes length: {len(signed_txn.raw_transaction)}")
             
@@ -201,15 +219,38 @@ class BlockchainService:
             print(f"DEBUG: Raw transaction first 100 chars: {raw_tx_hex[:100]}")
             print(f"DEBUG: Raw transaction last 100 chars: {raw_tx_hex[-100:]}")
             
+            # Environment-specific hex validation
+            if self.is_deployed:
+                print(f"DEPLOYED-DEBUG: Performing additional hex validation for deployed environment")
+                print(f"DEPLOYED-DEBUG: Raw hex type: {type(raw_tx_hex)}")
+                print(f"DEPLOYED-DEBUG: Raw hex repr: {repr(raw_tx_hex)}")
+                print(f"DEPLOYED-DEBUG: Raw hex encoding: {raw_tx_hex.encode('utf-8') if isinstance(raw_tx_hex, str) else 'Not string'}")
+                
+                if not raw_tx_hex.startswith('f9'):
+                    print(f"DEPLOYED-ERROR: Transaction hex doesn't start with expected RLP prefix 'f9': {raw_tx_hex[:10]}")
+                
+                import re
+                if not re.match(r'^[0-9a-fA-F]+$', raw_tx_hex):
+                    print(f"DEPLOYED-ERROR: Transaction hex contains invalid characters")
+                    invalid_chars = [c for c in raw_tx_hex if c not in '0123456789abcdefABCDEF']
+                    print(f"DEPLOYED-ERROR: Invalid characters found: {invalid_chars}")
+            
             if len(raw_tx_hex) % 2 != 0:
-                print(f"ERROR: Raw transaction has odd length: {len(raw_tx_hex)}")
+                print(f"ERROR: Raw transaction has odd length: {len(raw_tx_hex)} in {self.environment} environment")
                 print(f"ERROR: Last character: '{raw_tx_hex[-1]}'")
                 print(f"ERROR: Hex validation failed - transaction corrupted during signing")
-                raise ValueError(f"Invalid transaction encoding: hex string has odd length ({len(raw_tx_hex)})")
+                raise ValueError(f"Invalid transaction encoding: hex string has odd length ({len(raw_tx_hex)}) in {self.environment}")
             
-            print(f"DEBUG: About to send raw transaction to Alchemy...")
+            print(f"DEBUG: About to send raw transaction to Alchemy from {self.environment} environment...")
             print(f"DEBUG: Alchemy endpoint: {self.rpc_url}")
-            print(f"DEBUG: Sending hex with 0x prefix: 0x{raw_tx_hex}")
+            
+            alchemy_hex = f"0x{raw_tx_hex}"
+            print(f"DEBUG: Sending hex with 0x prefix: {alchemy_hex[:100]}...")
+            
+            if self.is_deployed:
+                print(f"DEPLOYED-DEBUG: Full Alchemy hex being sent: {alchemy_hex}")
+                print(f"DEPLOYED-DEBUG: Alchemy hex length: {len(alchemy_hex)}")
+                print(f"DEPLOYED-DEBUG: Alchemy hex even: {len(alchemy_hex) % 2 == 0}")
             
             print(f"DEBUG: Raw transaction bytes type: {type(signed_txn.raw_transaction)}")
             print(f"DEBUG: Raw transaction bytes repr: {repr(signed_txn.raw_transaction)}")
@@ -219,15 +260,22 @@ class BlockchainService:
             rpc_payload = {
                 "jsonrpc": "2.0",
                 "method": "eth_sendRawTransaction",
-                "params": [f"0x{raw_tx_hex}"],
+                "params": [alchemy_hex],
                 "id": 1
             }
-            print(f"DEBUG: RPC payload being sent: {json.dumps(rpc_payload)}")
-            print(f"DEBUG: RPC payload hex param length: {len(rpc_payload['params'][0])}")
-            print(f"DEBUG: RPC payload hex param even: {len(rpc_payload['params'][0]) % 2 == 0}")
+            
+            if self.is_deployed:
+                print(f"DEPLOYED-DEBUG: RPC payload being sent: {json.dumps(rpc_payload)}")
+                print(f"DEPLOYED-DEBUG: RPC payload hex param: {rpc_payload['params'][0][:100]}...")
+                print(f"DEPLOYED-DEBUG: RPC payload hex param length: {len(rpc_payload['params'][0])}")
+                print(f"DEPLOYED-DEBUG: RPC payload hex param even: {len(rpc_payload['params'][0]) % 2 == 0}")
+            else:
+                print(f"DEBUG: RPC payload being sent: {json.dumps(rpc_payload)}")
+                print(f"DEBUG: RPC payload hex param length: {len(rpc_payload['params'][0])}")
+                print(f"DEBUG: RPC payload hex param even: {len(rpc_payload['params'][0]) % 2 == 0}")
             
             tx_hash = self.w3.eth.send_raw_transaction(signed_txn.raw_transaction)
-            print(f"DEBUG: Transaction sent with nonce {nonce}, hash: {tx_hash.hex()}")
+            print(f"DEBUG: Transaction sent successfully with nonce {nonce}, hash: {tx_hash.hex()} in {self.environment} environment")
             return tx_hash.hex()
         except Exception as e:
             print(f"DEBUG: Transaction execution failed: {e}")

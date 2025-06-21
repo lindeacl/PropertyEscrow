@@ -34,6 +34,11 @@ app = FastAPI(
     version="1.0.0"
 )
 
+IS_DEPLOYED = os.getenv("FLY_APP_NAME") is not None or os.getenv("RAILWAY_ENVIRONMENT") is not None
+ENVIRONMENT = "DEPLOYED" if IS_DEPLOYED else "LOCAL"
+
+print(f"DEBUG: FastAPI starting in {ENVIRONMENT} environment")
+
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
     start_time = time.time()
@@ -42,6 +47,12 @@ async def log_requests(request: Request, call_next):
     user_agent = request.headers.get("user-agent", "unknown")
     content_type = request.headers.get("content-type", "unknown")
     
+    if IS_DEPLOYED and request.url.path.startswith("/blockchain"):
+        print(f"DEPLOYED-DEBUG: Blockchain request {request.method} {request.url.path}")
+        print(f"DEPLOYED-DEBUG: Client: {client_host}, User-Agent: {user_agent}")
+        print(f"DEPLOYED-DEBUG: Content-Type: {content_type}")
+        print(f"DEPLOYED-DEBUG: Headers: {dict(request.headers)}")
+    
     body = None
     if request.method == "POST":
         body = await request.body()
@@ -49,23 +60,38 @@ async def log_requests(request: Request, call_next):
             return {"type": "http.request", "body": body}
         request._receive = receive
     
-    print(f"DEBUG: Request {request.method} {request.url.path}")
-    print(f"DEBUG: Client: {client_host}, User-Agent: {user_agent}")
-    print(f"DEBUG: Content-Type: {content_type}")
-    if body:
+    if IS_DEPLOYED and body and request.url.path.startswith("/blockchain"):
         try:
             body_str = body.decode('utf-8')
-            print(f"DEBUG: Request body: {body_str}")
+            print(f"DEPLOYED-DEBUG: Request body: {body_str}")
             if content_type == "application/json":
                 body_json = json.loads(body_str)
-                print(f"DEBUG: Request data types: {[(k, type(v)) for k, v in body_json.items()]}")
+                print(f"DEPLOYED-DEBUG: Request data types: {[(k, type(v)) for k, v in body_json.items()]}")
+                print(f"DEPLOYED-DEBUG: Request data values: {body_json}")
         except Exception as e:
-            print(f"DEBUG: Could not parse request body: {e}")
+            print(f"DEPLOYED-DEBUG: Could not parse request body: {e}")
+    elif not IS_DEPLOYED:
+        print(f"DEBUG: Request {request.method} {request.url.path}")
+        print(f"DEBUG: Client: {client_host}, User-Agent: {user_agent}")
+        print(f"DEBUG: Content-Type: {content_type}")
+        if body:
+            try:
+                body_str = body.decode('utf-8')
+                print(f"DEBUG: Request body: {body_str}")
+                if content_type == "application/json":
+                    body_json = json.loads(body_str)
+                    print(f"DEBUG: Request data types: {[(k, type(v)) for k, v in body_json.items()]}")
+            except Exception as e:
+                print(f"DEBUG: Could not parse request body: {e}")
     
     response = await call_next(request)
     
     process_time = time.time() - start_time
-    print(f"DEBUG: Request completed in {process_time:.3f}s with status {response.status_code}")
+    
+    if IS_DEPLOYED and request.url.path.startswith("/blockchain"):
+        print(f"DEPLOYED-DEBUG: Request completed in {process_time:.3f}s with status {response.status_code}")
+    elif not IS_DEPLOYED:
+        print(f"DEBUG: Request completed in {process_time:.3f}s with status {response.status_code}")
     
     return response
 
