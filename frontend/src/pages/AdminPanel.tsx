@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { apiService } from '../services/api';
+import { cryptoConverter } from '../services/cryptoConverter';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -54,6 +55,7 @@ const AdminPanel: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [transactions, setTransactions] = useState<TransactionRecord[]>([]);
   const [systemStatus, setSystemStatus] = useState<SystemStatus | null>(null);
+  const [transactionPrices, setTransactionPrices] = useState<{ [key: number]: { primary: string; secondary: string } }>({});
 
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -74,6 +76,21 @@ const AdminPanel: React.FC = () => {
       setUsers(usersData);
       setTransactions(transactionsData);
       setSystemStatus(statusData);
+      
+      // Convert ETH prices to ZAR for transactions
+      const priceConversions: { [key: number]: { primary: string; secondary: string } } = {};
+      for (const transaction of transactionsData) {
+        if (transaction.amount && transaction.amount.includes('ETH')) {
+          try {
+            const ethAmount = transaction.amount.replace(' ETH', '');
+            const conversion = await cryptoConverter.getDisplayPrice(ethAmount);
+            priceConversions[transaction.id] = conversion;
+          } catch (error) {
+            console.error(`Failed to convert price for transaction ${transaction.id}:`, error);
+          }
+        }
+      }
+      setTransactionPrices(priceConversions);
     } catch (err: any) {
       setError('Failed to load admin data');
       console.error('Admin data error:', err);
@@ -370,7 +387,20 @@ const AdminPanel: React.FC = () => {
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        {tx.amount ? `${tx.amount} ETH` : '-'}
+                        {tx.amount ? (
+                          transactionPrices[tx.id] ? (
+                            <div>
+                              <div className="font-medium">
+                                {transactionPrices[tx.id].primary}
+                              </div>
+                              <div className="text-xs text-gray-500">
+                                {transactionPrices[tx.id].secondary}
+                              </div>
+                            </div>
+                          ) : (
+                            `${tx.amount} ETH`
+                          )
+                        ) : '-'}
                       </TableCell>
                       <TableCell>
                         {new Date(tx.created_at).toLocaleDateString()}

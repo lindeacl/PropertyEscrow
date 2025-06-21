@@ -17,3 +17,13 @@ export function formatZAR(amount: number): string {
 export function formatCrypto(amount: number | string, symbol: string = 'ETH'): string {
   return `${amount} ${symbol}`;
 }
+
+export async function formatCryptoWithZar(ethAmount: number | string): Promise<string> {
+  try {
+    const { cryptoConverter } = await import('../services/cryptoConverter');
+    return await cryptoConverter.formatCryptoWithZar(ethAmount);
+  } catch (error) {
+    console.error('Failed to convert crypto to ZAR:', error);
+    return `${ethAmount} ETH`;
+  }
+}

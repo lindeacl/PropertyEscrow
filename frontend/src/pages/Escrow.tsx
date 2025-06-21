@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { apiService } from '../services/api';
+import { cryptoConverter } from '../services/cryptoConverter';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -29,6 +30,8 @@ const Escrow: React.FC = () => {
   const [success, setSuccess] = useState('');
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [createLoading, setCreateLoading] = useState(false);
+  const [priceDisplays, setPriceDisplays] = useState<{ [key: string]: { primary: string; secondary: string } }>({});
+  const [earnestMoneyZar, setEarnestMoneyZar] = useState('');
   
   const [newEscrow, setNewEscrow] = useState({
     property_id: '',
@@ -40,6 +43,41 @@ const Escrow: React.FC = () => {
   });
 
   const canCreateEscrow = user?.role === 'buyer' || user?.role === 'admin';
+
+  useEffect(() => {
+    const loadPriceConversions = async () => {
+      try {
+        const conversions = await Promise.all([
+          cryptoConverter.getDisplayPrice('1.5'),
+          cryptoConverter.getDisplayPrice('0.15')
+        ]);
+        
+        setPriceDisplays({
+          '1.5': conversions[0],
+          '0.15': conversions[1]
+        });
+      } catch (error) {
+        console.error('Failed to load price conversions:', error);
+      }
+    };
+
+    loadPriceConversions();
+  }, []);
+
+  const handleEarnestMoneyChange = async (value: string) => {
+    setNewEscrow(prev => ({ ...prev, earnest_money: value }));
+    
+    if (value && !isNaN(parseFloat(value))) {
+      try {
+        const conversion = await cryptoConverter.getDisplayPrice(value);
+        setEarnestMoneyZar(conversion.primary);
+      } catch (error) {
+        setEarnestMoneyZar('');
+      }
+    } else {
+      setEarnestMoneyZar('');
+    }
+  };
 
   const handleCreateEscrow = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -172,11 +210,14 @@ const Escrow: React.FC = () => {
                       type="number"
                       step="0.001"
                       value={newEscrow.earnest_money}
-                      onChange={(e) => setNewEscrow(prev => ({ ...prev, earnest_money: e.target.value }))}
+                      onChange={(e) => handleEarnestMoneyChange(e.target.value)}
                       placeholder="0.1"
                       required
                       disabled={createLoading}
                     />
+                    {earnestMoneyZar && (
+                      <p className="text-sm text-gray-500 mt-1">≈ {earnestMoneyZar}</p>
+                    )}
                   </div>
                 </div>
                 
@@ -256,14 +297,24 @@ const Escrow: React.FC = () => {
                   <Banknote className="w-4 h-4 text-green-600" />
                   <div>
                     <p className="text-sm font-medium">Purchase Price</p>
-                    <p className="text-sm text-gray-600">1.5 ETH</p>
+                    <p className="text-sm font-semibold text-green-600">
+                      {priceDisplays['1.5']?.primary || 'Loading...'}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {priceDisplays['1.5']?.secondary || '1.5 ETH'}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Banknote className="w-4 h-4 text-blue-600" />
                   <div>
                     <p className="text-sm font-medium">Earnest Money</p>
-                    <p className="text-sm text-gray-600">0.15 ETH</p>
+                    <p className="text-sm font-semibold text-blue-600">
+                      {priceDisplays['0.15']?.primary || 'Loading...'}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {priceDisplays['0.15']?.secondary || '0.15 ETH'}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">

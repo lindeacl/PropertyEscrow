@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { apiService } from '../services/api';
+import { cryptoConverter } from '../services/cryptoConverter';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -39,6 +40,7 @@ const Dashboard: React.FC = () => {
   const [transactions, setTransactions] = useState<TransactionRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [transactionPrices, setTransactionPrices] = useState<{ [key: number]: { primary: string; secondary: string } }>({});
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -49,7 +51,22 @@ const Dashboard: React.FC = () => {
         ]);
         
         setSystemStatus(statusData);
-        setTransactions(transactionData.slice(0, 5)); // Show only recent 5 transactions
+        const recentTransactions = transactionData.slice(0, 5);
+        setTransactions(recentTransactions);
+        
+        const priceConversions: { [key: number]: { primary: string; secondary: string } } = {};
+        for (const transaction of recentTransactions) {
+          if (transaction.amount && transaction.amount.includes('ETH')) {
+            try {
+              const ethAmount = transaction.amount.replace(' ETH', '');
+              const conversion = await cryptoConverter.getDisplayPrice(ethAmount);
+              priceConversions[transaction.id] = conversion;
+            } catch (error) {
+              console.error(`Failed to convert price for transaction ${transaction.id}:`, error);
+            }
+          }
+        }
+        setTransactionPrices(priceConversions);
       } catch (err: any) {
         setError('Failed to load dashboard data');
         console.error('Dashboard error:', err);
@@ -218,9 +235,22 @@ const Dashboard: React.FC = () => {
                   </div>
                   <div className="flex items-center space-x-4">
                     {transaction.amount && (
-                      <span className="text-sm font-medium text-gray-900">
-                        {transaction.amount} ETH
-                      </span>
+                      <div className="text-right">
+                        {transactionPrices[transaction.id] ? (
+                          <>
+                            <div className="text-sm font-medium text-gray-900">
+                              {transactionPrices[transaction.id].primary}
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              {transactionPrices[transaction.id].secondary}
+                            </div>
+                          </>
+                        ) : (
+                          <span className="text-sm font-medium text-gray-900">
+                            {transaction.amount}
+                          </span>
+                        )}
+                      </div>
                     )}
                     <Badge className={getStatusColor(transaction.status)}>
                       {transaction.status}

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { apiService } from '../services/api';
+import { cryptoConverter } from '../services/cryptoConverter';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -39,6 +40,7 @@ const Properties: React.FC = () => {
   const [createLoading, setCreateLoading] = useState(false);
   const [showPropertyDetail, setShowPropertyDetail] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState<any>(null);
+  const [priceDisplays, setPriceDisplays] = useState<{ [key: string]: { primary: string; secondary: string } }>({});
   
   const [newProperty, setNewProperty] = useState({
     property_address: '',
@@ -48,6 +50,28 @@ const Properties: React.FC = () => {
   });
 
   const canCreateProperty = user?.role === 'seller' || user?.role === 'admin';
+
+  useEffect(() => {
+    const loadPriceConversions = async () => {
+      try {
+        const conversions = await Promise.all([
+          cryptoConverter.getDisplayPrice('1.5'),
+          cryptoConverter.getDisplayPrice('2.8'),
+          cryptoConverter.getDisplayPrice('0.9')
+        ]);
+        
+        setPriceDisplays({
+          '1.5': conversions[0],
+          '2.8': conversions[1],
+          '0.9': conversions[2]
+        });
+      } catch (error) {
+        console.error('Failed to load price conversions:', error);
+      }
+    };
+
+    loadPriceConversions();
+  }, []);
 
   const handleCreateProperty = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,9 +103,21 @@ const Properties: React.FC = () => {
     }
   };
 
-  const handleViewDetails = (property: any) => {
-    setSelectedProperty(property);
-    setShowPropertyDetail(true);
+  const handleViewDetails = async (property: any) => {
+    try {
+      const ethAmount = property.price.replace(' ETH', '');
+      const priceDisplay = await cryptoConverter.getDisplayPrice(ethAmount);
+      
+      setSelectedProperty({
+        ...property,
+        zarPrice: priceDisplay.primary
+      });
+      setShowPropertyDetail(true);
+    } catch (error) {
+      console.error('Failed to convert price for modal:', error);
+      setSelectedProperty(property);
+      setShowPropertyDetail(true);
+    }
   };
 
   const handleCloseDetails = () => {
@@ -210,9 +246,14 @@ const Properties: React.FC = () => {
                 <Badge variant={selectedProperty.status === 'Active' ? 'outline' : 'secondary'}>
                   {selectedProperty.status}
                 </Badge>
-                <div className="flex items-center text-xl font-semibold text-green-600">
-                  <Banknote className="w-5 h-5 mr-1" />
-                  {selectedProperty.price}
+                <div className="flex flex-col items-end">
+                  <div className="flex items-center text-xl font-semibold text-green-600">
+                    <Banknote className="w-5 h-5 mr-1" />
+                    {selectedProperty.zarPrice || 'Loading...'}
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    {selectedProperty.price}
+                  </div>
                 </div>
               </div>
               
@@ -297,9 +338,14 @@ const Properties: React.FC = () => {
               Perfect for families looking for a comfortable living space.
             </p>
             <div className="flex justify-between items-center">
-              <div className="flex items-center text-lg font-semibold text-green-600">
-                <Banknote className="w-4 h-4 mr-1" />
-                1.5 ETH
+              <div className="flex flex-col">
+                <div className="flex items-center text-lg font-semibold text-green-600">
+                  <Banknote className="w-4 h-4 mr-1" />
+                  {priceDisplays['1.5']?.primary || 'Loading...'}
+                </div>
+                <div className="text-sm text-gray-500">
+                  {priceDisplays['1.5']?.secondary || '1.5 ETH'}
+                </div>
               </div>
               <Button 
                 variant="outline" 
@@ -337,9 +383,14 @@ const Properties: React.FC = () => {
               granite countertops, and access to building amenities.
             </p>
             <div className="flex justify-between items-center">
-              <div className="flex items-center text-lg font-semibold text-green-600">
-                <Banknote className="w-4 h-4 mr-1" />
-                2.8 ETH
+              <div className="flex flex-col">
+                <div className="flex items-center text-lg font-semibold text-green-600">
+                  <Banknote className="w-4 h-4 mr-1" />
+                  {priceDisplays['2.8']?.primary || 'Loading...'}
+                </div>
+                <div className="text-sm text-gray-500">
+                  {priceDisplays['2.8']?.secondary || '2.8 ETH'}
+                </div>
               </div>
               <Button 
                 variant="outline" 
@@ -377,9 +428,14 @@ const Properties: React.FC = () => {
               bathroom. Close to schools and shopping centers.
             </p>
             <div className="flex justify-between items-center">
-              <div className="flex items-center text-lg font-semibold text-green-600">
-                <Banknote className="w-4 h-4 mr-1" />
-                0.9 ETH
+              <div className="flex flex-col">
+                <div className="flex items-center text-lg font-semibold text-green-600">
+                  <Banknote className="w-4 h-4 mr-1" />
+                  {priceDisplays['0.9']?.primary || 'Loading...'}
+                </div>
+                <div className="text-sm text-gray-500">
+                  {priceDisplays['0.9']?.secondary || '0.9 ETH'}
+                </div>
               </div>
               <Button 
                 variant="outline" 
