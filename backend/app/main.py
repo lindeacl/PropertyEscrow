@@ -448,7 +448,6 @@ def admin_override(
             'from': blockchain_service.account.address,
             'gas': 500000,
             'gasPrice': blockchain_service.w3.to_wei('25', 'gwei'),
-            'nonce': blockchain_service._get_next_nonce(),
         })
         
         tx_hash = blockchain_service.send_transaction(transaction)

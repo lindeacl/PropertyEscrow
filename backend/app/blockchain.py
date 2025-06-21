@@ -139,11 +139,21 @@ class BlockchainService:
         }
         
         try:
+            print(f"DEBUG: Building transaction: {transaction}")
             signed_txn = self.w3.eth.account.sign_transaction(transaction, self.private_key)
+            raw_tx_hex = signed_txn.raw_transaction.hex()
+            print(f"DEBUG: Raw transaction hex: {raw_tx_hex}")
+            print(f"DEBUG: Raw transaction length: {len(raw_tx_hex)} characters")
+            
+            if len(raw_tx_hex) % 2 != 0:
+                print(f"ERROR: Raw transaction has odd length: {len(raw_tx_hex)}")
+                raise ValueError(f"Invalid transaction encoding: hex string has odd length ({len(raw_tx_hex)})")
+            
             tx_hash = self.w3.eth.send_raw_transaction(signed_txn.raw_transaction)
             print(f"DEBUG: Transaction sent with nonce {nonce}, hash: {tx_hash.hex()}")
             return tx_hash.hex()
         except Exception as e:
+            print(f"DEBUG: Transaction execution failed: {e}")
             with self._nonce_lock:
                 self._pending_nonce = None
             raise e
