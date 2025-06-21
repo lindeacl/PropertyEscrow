@@ -389,8 +389,10 @@ def create_escrow(
         db.commit()
         
         return {"transaction_hash": tx_hash, "status": "pending"}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 @app.get("/blockchain/escrow/{transaction_id}", response_model=EscrowTransaction)
 def get_escrow_transaction(transaction_id: int):

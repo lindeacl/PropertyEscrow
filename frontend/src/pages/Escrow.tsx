@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { apiService } from '../services/api';
 import { cryptoConverter } from '../services/cryptoConverter';
+import { isValidEthereumAddress, validateEscrowData } from '../lib/utils';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -32,6 +33,7 @@ const Escrow: React.FC = () => {
   const [createLoading, setCreateLoading] = useState(false);
   const [priceDisplays, setPriceDisplays] = useState<{ [key: string]: { primary: string; secondary: string } }>({});
   const [earnestMoneyZar, setEarnestMoneyZar] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
   
   const [newEscrow, setNewEscrow] = useState({
     property_id: '',
@@ -84,6 +86,7 @@ const Escrow: React.FC = () => {
     setCreateLoading(true);
     setError('');
     setSuccess('');
+    setFieldErrors({});
 
     try {
       const closingTimestamp = Math.floor(new Date(newEscrow.closing_date).getTime() / 1000);
@@ -97,6 +100,12 @@ const Escrow: React.FC = () => {
         earnest_money: parseFloat(newEscrow.earnest_money)
       };
 
+      const validation = validateEscrowData(escrowData);
+      if (!validation.isValid) {
+        setError(validation.errors.join('. '));
+        return;
+      }
+
       const result = await apiService.createEscrow(escrowData);
       setSuccess(`Escrow created successfully! Transaction hash: ${result.transaction_hash}`);
       setShowCreateDialog(false);
@@ -109,9 +118,26 @@ const Escrow: React.FC = () => {
         earnest_money: ''
       });
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Failed to create escrow');
+      const errorMessage = err.response?.data?.detail || 'Failed to create escrow';
+      setError(errorMessage);
     } finally {
       setCreateLoading(false);
+    }
+  };
+
+  const handleAgentAddressChange = (value: string) => {
+    setNewEscrow(prev => ({ ...prev, agent_address: value }));
+    
+    if (value && !isValidEthereumAddress(value)) {
+      setFieldErrors(prev => ({ 
+        ...prev, 
+        agent_address: 'Must be a valid Ethereum address (0x followed by 40 characters)' 
+      }));
+    } else {
+      setFieldErrors(prev => {
+        const { agent_address, ...rest } = prev;
+        return rest;
+      });
     }
   };
 
@@ -179,11 +205,18 @@ const Escrow: React.FC = () => {
                   <Input
                     id="agent_address"
                     value={newEscrow.agent_address}
-                    onChange={(e) => setNewEscrow(prev => ({ ...prev, agent_address: e.target.value }))}
-                    placeholder="0x..."
+                    onChange={(e) => handleAgentAddressChange(e.target.value)}
+                    placeholder="0x1234567890123456789012345678901234567890"
                     required
                     disabled={createLoading}
+                    className={fieldErrors.agent_address ? 'border-red-500' : ''}
                   />
+                  {fieldErrors.agent_address && (
+                    <p className="text-sm text-red-600 mt-1">{fieldErrors.agent_address}</p>
+                  )}
+                  <p className="text-xs text-gray-500 mt-1">
+                    Enter the Ethereum wallet address of the real estate agent
+                  </p>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">

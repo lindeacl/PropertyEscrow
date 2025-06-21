@@ -2,6 +2,7 @@ from web3 import Web3
 from web3.middleware import ExtraDataToPOAMiddleware
 import json
 import os
+import re
 from typing import Dict, Any, Optional
 from dotenv import load_dotenv
 
@@ -114,21 +115,27 @@ class BlockchainService:
         if not self.connected or not self.contract or not self.account:
             raise ValueError("Blockchain not connected or contract/account not loaded")
         
-        earnest_money_wei = self.w3.to_wei(earnest_money, 'ether')
+        self._validate_escrow_inputs(property_id, agent_address, inspection_days, closing_date, terms, earnest_money)
         
-        function_call = self.contract.functions.createEscrow(
-            property_id, agent_address, inspection_days, closing_date, terms
-        )
-        
-        transaction = function_call.build_transaction({
-            'from': self.account.address,
-            'value': earnest_money_wei,
-            'gas': 800000,
-            'gasPrice': self.w3.to_wei('20', 'gwei'),
-            'nonce': self.w3.eth.get_transaction_count(self.account.address),
-        })
-        
-        return self.send_transaction(transaction)
+        try:
+            earnest_money_wei = self.w3.to_wei(earnest_money, 'ether')
+            
+            function_call = self.contract.functions.createEscrow(
+                property_id, agent_address, inspection_days, closing_date, terms
+            )
+            
+            transaction = function_call.build_transaction({
+                'from': self.account.address,
+                'value': earnest_money_wei,
+                'gas': 800000,
+                'gasPrice': self.w3.to_wei('20', 'gwei'),
+                'nonce': self.w3.eth.get_transaction_count(self.account.address),
+            })
+            
+            return self.send_transaction(transaction)
+        except Exception as e:
+            error_message = self._transform_blockchain_error(str(e))
+            raise ValueError(error_message)
     
     def get_property(self, property_id: int) -> Dict[str, Any]:
         if not self.connected or not self.contract:
@@ -193,5 +200,68 @@ class BlockchainService:
     
     def is_connected(self) -> bool:
         return self.connected and self.w3 is not None
+    
+    def _validate_escrow_inputs(self, property_id: int, agent_address: str, inspection_days: int, 
+                               closing_date: int, terms: str, earnest_money: float):
+        """Validate escrow inputs before blockchain interaction"""
+        errors = []
+        
+        if property_id <= 0:
+            errors.append("Property ID must be a positive number")
+        
+        if not agent_address:
+            errors.append("Agent wallet address is required")
+        elif not self._is_valid_ethereum_address(agent_address):
+            errors.append("Agent wallet address must be a valid Ethereum address (0x followed by 40 characters)")
+        
+        if inspection_days <= 0:
+            errors.append("Inspection days must be a positive number")
+        
+        if closing_date <= 0:
+            errors.append("Closing date must be a valid timestamp")
+        
+        if not terms or len(terms.strip()) < 10:
+            errors.append("Terms and conditions must be at least 10 characters long")
+        
+        if earnest_money <= 0:
+            errors.append("Earnest money must be a positive amount")
+        
+        if errors:
+            raise ValueError(". ".join(errors))
+    
+    def _is_valid_ethereum_address(self, address: str) -> bool:
+        """Validate Ethereum address format"""
+        if not address or not isinstance(address, str):
+            return False
+        
+        if not re.match(r'^0x[a-fA-F0-9]{40}$', address):
+            return False
+        
+        try:
+            return self.w3.is_address(address)
+        except:
+            return True  # Fallback to regex validation
+    
+    def _transform_blockchain_error(self, error_message: str) -> str:
+        """Transform technical blockchain errors into user-friendly messages"""
+        error_lower = error_message.lower()
+        
+        if "abi not found" in error_lower or "argument" in error_lower and "not compatible" in error_lower:
+            if "address" in error_lower:
+                return "Invalid wallet address format. Please enter a valid Ethereum address starting with 0x followed by 40 characters."
+        
+        if "insufficient funds" in error_lower:
+            return "Insufficient funds in your wallet to complete this transaction."
+        
+        if "gas" in error_lower and ("limit" in error_lower or "estimate" in error_lower):
+            return "Transaction failed due to gas estimation issues. Please try again or contact support."
+        
+        if "nonce" in error_lower:
+            return "Transaction ordering issue. Please wait a moment and try again."
+        
+        if "revert" in error_lower:
+            return "Transaction was rejected by the smart contract. Please check your inputs and try again."
+        
+        return f"Transaction failed: {error_message}"
 
 blockchain_service = BlockchainService()
