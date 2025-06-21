@@ -20,6 +20,7 @@ class BlockchainService:
         self.account = None
         self.contract = None
         self.connected = False
+        self._pending_nonce = None
         
         if self.rpc_url:
             try:
@@ -71,22 +72,43 @@ class BlockchainService:
         balance_wei = self.w3.eth.get_balance(address)
         return self.w3.from_wei(balance_wei, 'ether')
     
+    def _get_next_nonce(self) -> int:
+        """Get the next available nonce, accounting for pending transactions"""
+        if not self.connected or not self.w3 or not self.account:
+            raise ValueError("Blockchain not connected or account not configured")
+        
+        network_nonce = self.w3.eth.get_transaction_count(self.account.address, 'pending')
+        
+        if self._pending_nonce is not None and self._pending_nonce >= network_nonce:
+            self._pending_nonce += 1
+        else:
+            self._pending_nonce = network_nonce
+        
+        return self._pending_nonce
+
     def send_transaction(self, transaction_data: Dict[str, Any]) -> str:
         if not self.connected or not self.w3 or not self.account:
             raise ValueError("Blockchain not connected or account not configured")
         
+        nonce = self._get_next_nonce()
+        
+        gas_price = self.w3.to_wei('25', 'gwei')
+        
         transaction = {
             'from': self.account.address,
             'gas': 2000000,
-            'gasPrice': self.w3.to_wei('20', 'gwei'),
-            'nonce': self.w3.eth.get_transaction_count(self.account.address),
+            'gasPrice': gas_price,
+            'nonce': nonce,
             **transaction_data
         }
         
-        signed_txn = self.w3.eth.account.sign_transaction(transaction, self.private_key)
-        tx_hash = self.w3.eth.send_raw_transaction(signed_txn.raw_transaction)
-        
-        return tx_hash.hex()
+        try:
+            signed_txn = self.w3.eth.account.sign_transaction(transaction, self.private_key)
+            tx_hash = self.w3.eth.send_raw_transaction(signed_txn.raw_transaction)
+            return tx_hash.hex()
+        except Exception as e:
+            self._pending_nonce = None
+            raise e
     
     def wait_for_transaction_receipt(self, tx_hash: str, timeout: int = 120):
         if not self.connected or not self.w3:
@@ -104,8 +126,8 @@ class BlockchainService:
         transaction = function_call.build_transaction({
             'from': self.account.address,
             'gas': 500000,
-            'gasPrice': self.w3.to_wei('20', 'gwei'),
-            'nonce': self.w3.eth.get_transaction_count(self.account.address),
+            'gasPrice': self.w3.to_wei('25', 'gwei'),
+            'nonce': self._get_next_nonce(),
         })
         
         return self.send_transaction(transaction)
@@ -128,8 +150,8 @@ class BlockchainService:
                 'from': self.account.address,
                 'value': earnest_money_wei,
                 'gas': 800000,
-                'gasPrice': self.w3.to_wei('20', 'gwei'),
-                'nonce': self.w3.eth.get_transaction_count(self.account.address),
+                'gasPrice': self.w3.to_wei('25', 'gwei'),
+                'nonce': self._get_next_nonce(),
             })
             
             return self.send_transaction(transaction)
@@ -192,8 +214,8 @@ class BlockchainService:
         transaction = function_call.build_transaction({
             'from': self.account.address,
             'gas': 300000,
-            'gasPrice': self.w3.to_wei('20', 'gwei'),
-            'nonce': self.w3.eth.get_transaction_count(self.account.address),
+            'gasPrice': self.w3.to_wei('25', 'gwei'),
+            'nonce': self._get_next_nonce(),
         })
         
         return self.send_transaction(transaction)
@@ -256,7 +278,7 @@ class BlockchainService:
         if "gas" in error_lower and ("limit" in error_lower or "estimate" in error_lower):
             return "Transaction failed due to gas estimation issues. Please try again or contact support."
         
-        if "nonce" in error_lower:
+        if "nonce" in error_lower or "could not replace existing tx" in error_lower:
             return "Transaction ordering issue. Please wait a moment and try again."
         
         if "revert" in error_lower:
