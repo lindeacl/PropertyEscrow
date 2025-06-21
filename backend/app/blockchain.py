@@ -211,12 +211,39 @@ class BlockchainService:
             print(f"DEBUG: Alchemy endpoint: {self.rpc_url}")
             print(f"DEBUG: Sending hex with 0x prefix: 0x{raw_tx_hex}")
             
+            print(f"DEBUG: Raw transaction bytes type: {type(signed_txn.raw_transaction)}")
+            print(f"DEBUG: Raw transaction bytes repr: {repr(signed_txn.raw_transaction)}")
+            print(f"DEBUG: Raw transaction hex() method result: {signed_txn.raw_transaction.hex()}")
+            
+            import json
+            rpc_payload = {
+                "jsonrpc": "2.0",
+                "method": "eth_sendRawTransaction",
+                "params": [f"0x{raw_tx_hex}"],
+                "id": 1
+            }
+            print(f"DEBUG: RPC payload being sent: {json.dumps(rpc_payload)}")
+            print(f"DEBUG: RPC payload hex param length: {len(rpc_payload['params'][0])}")
+            print(f"DEBUG: RPC payload hex param even: {len(rpc_payload['params'][0]) % 2 == 0}")
+            
             tx_hash = self.w3.eth.send_raw_transaction(signed_txn.raw_transaction)
             print(f"DEBUG: Transaction sent with nonce {nonce}, hash: {tx_hash.hex()}")
             return tx_hash.hex()
         except Exception as e:
             print(f"DEBUG: Transaction execution failed: {e}")
             print(f"DEBUG: Exception type: {type(e)}")
+            
+            if "could not replace existing tx" in str(e) or "INTERNAL_ERROR" in str(e):
+                print(f"ERROR: Alchemy hex encoding error detected!")
+                print(f"ERROR: Raw transaction that failed: {raw_tx_hex if 'raw_tx_hex' in locals() else 'Not available'}")
+                print(f"ERROR: Transaction data that failed: {transaction}")
+                print(f"ERROR: Signed transaction type: {type(signed_txn.raw_transaction) if 'signed_txn' in locals() else 'Not available'}")
+                
+                if 'raw_tx_hex' in locals():
+                    print(f"ERROR: Hex analysis - Length: {len(raw_tx_hex)}, Even: {len(raw_tx_hex) % 2 == 0}")
+                    print(f"ERROR: Hex first 200 chars: {raw_tx_hex[:200]}")
+                    print(f"ERROR: Hex last 200 chars: {raw_tx_hex[-200:]}")
+            
             import traceback
             traceback.print_exc()
             with self._nonce_lock:
