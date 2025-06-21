@@ -33,3 +33,4 @@ env/
 ENV/
 env.bak/
 venv.bak/
+backend/app/__pycache__/
