@@ -123,12 +123,37 @@ class ApiService {
     return response.data;
   }
 
-  async createProperty(propertyData: PropertyData): Promise<{ transaction_hash: string; status: string }> {
-    const response = await this.api.post('/blockchain/properties', propertyData);
+  async createProperty(propertyData: PropertyData): Promise<any> {
+    const response = await this.api.post('/properties', propertyData);
+    return response.data;
+  }
+
+  async getProperties(): Promise<any[]> {
+    const response = await this.api.get('/properties');
+    return response.data;
+  }
+
+  async getMyProperties(): Promise<any[]> {
+    const response = await this.api.get('/properties/my');
     return response.data;
   }
 
   async getProperty(propertyId: number): Promise<any> {
+    const response = await this.api.get(`/properties/${propertyId}`);
+    return response.data;
+  }
+
+  async updateProperty(propertyId: number, propertyData: any): Promise<any> {
+    const response = await this.api.put(`/properties/${propertyId}`, propertyData);
+    return response.data;
+  }
+
+  async createPropertyLegacy(propertyData: PropertyData): Promise<{ transaction_hash: string; status: string }> {
+    const response = await this.api.post('/blockchain/properties', propertyData);
+    return response.data;
+  }
+
+  async getPropertyLegacy(propertyId: number): Promise<any> {
     const response = await this.api.get(`/blockchain/properties/${propertyId}`);
     return response.data;
   }

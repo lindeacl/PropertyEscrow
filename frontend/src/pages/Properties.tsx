@@ -20,19 +20,12 @@ import {
   CheckCircle
 } from 'lucide-react';
 
-interface Property {
-  id: number;
-  property_address: string;
-  description: string;
-  price: number;
-  seller: string;
-  is_active: boolean;
-  metadata_uri: string;
-}
+
 
 const Properties: React.FC = () => {
   const { user } = useAuth();
-  const [properties] = useState<Property[]>([]);
+  const [properties, setProperties] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -52,26 +45,78 @@ const Properties: React.FC = () => {
   const canCreateProperty = user?.role === 'seller' || user?.role === 'admin';
 
   useEffect(() => {
-    const loadPriceConversions = async () => {
-      try {
-        const conversions = await Promise.all([
-          cryptoConverter.getDisplayPrice('1.5'),
-          cryptoConverter.getDisplayPrice('2.8'),
-          cryptoConverter.getDisplayPrice('0.9')
-        ]);
-        
-        setPriceDisplays({
-          '1.5': conversions[0],
-          '2.8': conversions[1],
-          '0.9': conversions[2]
-        });
-      } catch (error) {
-        console.error('Failed to load price conversions:', error);
-      }
-    };
-
-    loadPriceConversions();
+    loadProperties();
+    loadSamplePriceConversions();
   }, []);
+
+  const loadProperties = async () => {
+    try {
+      setLoading(true);
+      const response = await apiService.getProperties();
+      
+      const propertiesWithPrices = await Promise.all(
+        response.map(async (property: any) => {
+          try {
+            const ethAmount = (property.price / 1e18).toFixed(4);
+            const priceDisplay = await cryptoConverter.getDisplayPrice(ethAmount);
+            
+            return {
+              id: property.id,
+              title: `Property #${property.id}`,
+              address: property.property_address,
+              description: property.description,
+              price: `${ethAmount} ETH`,
+              zarPrice: priceDisplay.primary,
+              status: property.is_active ? "Active" : "Inactive",
+              contract_address: property.contract_address,
+              deployment_status: property.deployment_status,
+              created_at: property.created_at
+            };
+          } catch (error) {
+            console.error('Failed to convert price for property:', property.id, error);
+            return {
+              id: property.id,
+              title: `Property #${property.id}`,
+              address: property.property_address,
+              description: property.description,
+              price: `${(property.price / 1e18).toFixed(4)} ETH`,
+              zarPrice: 'Price unavailable',
+              status: property.is_active ? "Active" : "Inactive",
+              contract_address: property.contract_address,
+              deployment_status: property.deployment_status,
+              created_at: property.created_at
+            };
+          }
+        })
+      );
+      
+      setProperties(propertiesWithPrices);
+    } catch (error) {
+      console.error('Failed to load properties:', error);
+      setError('Failed to load properties from the blockchain');
+      loadSamplePriceConversions();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadSamplePriceConversions = async () => {
+    try {
+      const conversions = await Promise.all([
+        cryptoConverter.getDisplayPrice('1.5'),
+        cryptoConverter.getDisplayPrice('2.8'),
+        cryptoConverter.getDisplayPrice('0.9')
+      ]);
+      
+      setPriceDisplays({
+        '1.5': conversions[0],
+        '2.8': conversions[1],
+        '0.9': conversions[2]
+      });
+    } catch (error) {
+      console.error('Failed to load price conversions:', error);
+    }
+  };
 
   const handleCreateProperty = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,14 +133,23 @@ const Properties: React.FC = () => {
       };
 
       const result = await apiService.createProperty(propertyData);
-      setSuccess(`Property listed successfully! Transaction hash: ${result.transaction_hash}`);
-      setShowCreateDialog(false);
-      setNewProperty({
-        property_address: '',
-        description: '',
-        price: '',
-        metadata_uri: ''
-      });
+      
+      if (result.id) {
+        const deploymentMessage = result.deployment_status === 'deployed' 
+          ? `Smart contract deployed at: ${result.contract_address}` 
+          : 'Using legacy contract system';
+        setSuccess(`Property created successfully! ${deploymentMessage}`);
+        setShowCreateDialog(false);
+        setNewProperty({
+          property_address: '',
+          description: '',
+          price: '',
+          metadata_uri: ''
+        });
+        loadProperties(); // Reload the properties list
+      } else {
+        setSuccess(`Property listed successfully! Transaction hash: ${result.transaction_hash}`);
+      }
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Failed to create property listing');
     } finally {
@@ -319,8 +373,75 @@ const Properties: React.FC = () => {
       </div>
 
       {/* Properties Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Sample Property Cards - In a real app, these would come from the blockchain */}
+      {loading ? (
+        <div className="flex justify-center items-center py-12">
+          <div className="text-lg">Loading properties...</div>
+        </div>
+      ) : properties.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {properties.map((property) => (
+            <Card key={property.id}>
+              <CardHeader>
+                <div className="flex justify-between items-start">
+                  <CardTitle className="text-lg">{property.title}</CardTitle>
+                  <Badge variant={property.status === 'Active' ? 'outline' : 'secondary'}>
+                    {property.status}
+                  </Badge>
+                </div>
+                <CardDescription className="flex items-center text-sm text-gray-600">
+                  <MapPin className="w-4 h-4 mr-1" />
+                  {property.address}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-gray-600 mb-4">
+                  {property.description}
+                </p>
+                <div className="flex justify-between items-center">
+                  <div className="flex flex-col">
+                    <div className="flex items-center text-lg font-semibold text-green-600">
+                      <Banknote className="w-4 h-4 mr-1" />
+                      {property.zarPrice}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      {property.price}
+                    </div>
+                    {property.contract_address && (
+                      <div className="text-xs text-blue-600 mt-1">
+                        Contract: {property.contract_address.slice(0, 10)}...
+                      </div>
+                    )}
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => handleViewDetails(property)}
+                  >
+                    <Eye className="w-4 h-4 mr-1" />
+                    View Details
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-12">
+          <p className="text-gray-500 mb-4">No properties listed yet.</p>
+          {canCreateProperty && (
+            <Button onClick={() => setShowCreateDialog(true)}>
+              List Your First Property
+            </Button>
+          )}
+        </div>
+      )}
+      
+      {/* Sample Property Cards - Fallback when no real data */}
+      {!loading && properties.length === 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          <div className="col-span-full">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">Sample Properties (Demo)</h3>
+          </div>
         <Card>
           <CardHeader>
             <div className="flex justify-between items-start">
@@ -455,7 +576,8 @@ const Properties: React.FC = () => {
             </div>
           </CardContent>
         </Card>
-      </div>
+        </div>
+      )}
 
       {filteredProperties.length === 0 && searchTerm && (
         <div className="text-center py-8">
