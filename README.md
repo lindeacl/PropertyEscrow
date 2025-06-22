@@ -2,6 +2,12 @@
 
 A modern blockchain-based property escrow system built on Polygon with smart contracts, role-based access control, and administrator management.
 
+## Deploy to Railway
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/fastapi?referralCode=devin)
+
+Click the button above to deploy the backend to Railway. After deployment, update the frontend environment variable `VITE_API_URL` to point to your Railway backend URL.
+
 ## Architecture
 
 ### Smart Contracts (Polygon)
