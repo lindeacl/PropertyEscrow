@@ -13,7 +13,7 @@ from .models import Base, User, UserProfile, Property, TransactionRecord, System
 from .schemas import (
     UserCreate, User as UserSchema, UserUpdate, UserProfileCreate, 
     UserProfile as UserProfileSchema, UserProfileUpdate, Token, LoginRequest,
-    PropertyCreate, PropertyUpdate, Property, EscrowCreate, EscrowTransaction,
+    PropertyCreate, PropertyUpdate, Property as PropertySchema, EscrowCreate, EscrowTransaction,
     TransactionRecordCreate, TransactionRecord as TransactionRecordSchema,
     AdminOverrideRequest, ApprovalRequest, SystemSettingCreate, SystemSetting
 )
@@ -258,7 +258,7 @@ def update_user_profile(
     db.refresh(profile)
     return profile
 
-@app.post("/properties", response_model=Property)
+@app.post("/properties", response_model=PropertySchema)
 async def create_property(
     property_data: PropertyCreate,
     current_user: User = Depends(get_current_active_user),
@@ -355,7 +355,7 @@ def create_property_legacy(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/properties", response_model=List[Property])
+@app.get("/properties", response_model=List[PropertySchema])
 async def get_properties(
     skip: int = 0,
     limit: int = 100,
@@ -368,7 +368,7 @@ async def get_properties(
     
     return properties
 
-@app.get("/properties/my", response_model=List[Property])
+@app.get("/properties/my", response_model=List[PropertySchema])
 async def get_my_properties(
     current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db)
@@ -380,7 +380,7 @@ async def get_my_properties(
     
     return properties
 
-@app.get("/properties/{property_id}", response_model=Property)
+@app.get("/properties/{property_id}", response_model=PropertySchema)
 async def get_property(
     property_id: int,
     db: Session = Depends(get_db)
@@ -392,7 +392,7 @@ async def get_property(
     
     return property_obj
 
-@app.put("/properties/{property_id}", response_model=Property)
+@app.put("/properties/{property_id}", response_model=PropertySchema)
 async def update_property(
     property_id: int,
     property_update: PropertyUpdate,
@@ -415,7 +415,7 @@ async def update_property(
     
     return property_obj
 
-@app.get("/blockchain/properties/{property_id}", response_model=Property)
+@app.get("/blockchain/properties/{property_id}", response_model=PropertySchema)
 def get_property_legacy(property_id: int):
     """Legacy endpoint for backward compatibility"""
     try:
