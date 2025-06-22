@@ -10,6 +10,10 @@ DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./property_escrow.db")
 
 if DATABASE_URL.startswith("mysql"):
     engine = create_engine(DATABASE_URL, pool_pre_ping=True)
+elif DATABASE_URL.startswith("postgresql"):
+    if "psycopg2" in DATABASE_URL:
+        DATABASE_URL = DATABASE_URL.replace("psycopg2", "psycopg")
+    engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 else:
     engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 
