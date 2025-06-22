@@ -113,7 +113,6 @@ const Escrow: React.FC = () => {
         setLoading(true);
         const allTransactions = await apiService.getUserTransactions();
         const escrowTxs = allTransactions.filter(tx => tx.transaction_type === 'CREATE_ESCROW');
-        setTransactions(allTransactions);
         setEscrowTransactions(escrowTxs);
         setTransactionError('');
       } catch (err: any) {
@@ -181,7 +180,6 @@ const Escrow: React.FC = () => {
 
       const allTransactions = await apiService.getUserTransactions();
       const escrowTxs = allTransactions.filter(tx => tx.transaction_type === 'CREATE_ESCROW');
-      setTransactions(allTransactions);
       setEscrowTransactions(escrowTxs);
     } catch (err: any) {
       const errorMessage = err.response?.data?.detail || 'Failed to create escrow';
