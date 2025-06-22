@@ -51,7 +51,7 @@ interface SystemStatus {
 }
 
 const AdminPanel: React.FC = () => {
-  const { user } = useAuth();
+  const { user, loading, isAuthenticated } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
   const [transactions, setTransactions] = useState<TransactionRecord[]>([]);
   const [systemStatus, setSystemStatus] = useState<SystemStatus | null>(null);
@@ -64,6 +64,23 @@ const AdminPanel: React.FC = () => {
   useEffect(() => {
     fetchAdminData();
   }, []);
+
+  console.log('AdminPanel - Auth loading:', loading);
+  console.log('AdminPanel - Is authenticated:', isAuthenticated);
+  console.log('AdminPanel - User object:', user);
+  console.log('AdminPanel - User role:', user?.role);
+  console.log('AdminPanel - Role check result:', user?.role?.toLowerCase() !== 'admin');
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   const fetchAdminData = async () => {
     try {
