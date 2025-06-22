@@ -5,10 +5,10 @@ from .database import Base
 import enum
 
 class UserRole(enum.Enum):
-    ADMIN = "admin"
-    AGENT = "agent"
-    BUYER = "buyer"
-    SELLER = "seller"
+    ADMIN = "ADMIN"
+    AGENT = "AGENT"
+    BUYER = "BUYER"
+    SELLER = "SELLER"
 
 class User(Base):
     __tablename__ = "users"
