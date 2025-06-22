@@ -45,7 +45,7 @@ const Escrow: React.FC = () => {
   const [priceDisplays, setPriceDisplays] = useState<{ [key: string]: { primary: string; secondary: string } }>({});
   const [earnestMoneyZar, setEarnestMoneyZar] = useState('');
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
-  const [transactions, setTransactions] = useState<TransactionRecord[]>([]);
+
   const [loading, setLoading] = useState(true);
   const [transactionError, setTransactionError] = useState('');
   const [escrowTransactions, setEscrowTransactions] = useState<TransactionRecord[]>([]);
