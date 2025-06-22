@@ -148,13 +148,17 @@ const AdminPanel: React.FC = () => {
     u.full_name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  if (user?.role !== 'admin') {
+  console.log('AdminPanel - User object:', user);
+  console.log('AdminPanel - User role:', user?.role);
+  console.log('AdminPanel - Role check result:', user?.role?.toLowerCase() !== 'admin');
+  
+  if (user?.role?.toLowerCase() !== 'admin') {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <Shield className="mx-auto h-12 w-12 text-red-500" />
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Access Denied</h2>
-          <p className="text-gray-600">You need administrator privileges to access this panel.</p>
+          <p className="text-gray-600">You don't have permission to access this page.</p>
         </div>
       </div>
     );
