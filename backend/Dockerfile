@@ -10,15 +10,15 @@ RUN apt-get update && apt-get install -y \
 # Install Poetry
 RUN pip install poetry
 
-# Copy poetry files (Railway builds from root, so use relative paths)
-COPY pyproject.toml poetry.lock* ./
+# Copy poetry files from backend directory (Railway builds from repo root)
+COPY backend/pyproject.toml backend/poetry.lock* ./
 
 # Configure poetry and install dependencies
 RUN poetry config virtualenvs.create false \
     && poetry install --only main --no-root --no-interaction --no-ansi
 
-# Copy application code
-COPY . .
+# Copy application code from backend directory
+COPY backend/ .
 
 # Create a non-root user
 RUN useradd --create-home --shell /bin/bash app \
