@@ -28,9 +28,7 @@ USER app
 # Expose port
 EXPOSE 8000
 
-# Health check using python with dynamic PORT for Railway compatibility
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-    CMD python -c "import urllib.request, os; urllib.request.urlopen(f'http://localhost:{os.environ.get(\"PORT\", \"8000\")}/healthz')" || exit 1
+# Remove custom health check - let Railway handle health checking automatically
 
 # Run the application
 CMD ["sh", "-c", "python -m uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
