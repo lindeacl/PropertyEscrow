@@ -59,7 +59,7 @@ const Escrow: React.FC = () => {
     earnest_money: ''
   });
 
-  const canCreateEscrow = user?.role === 'buyer' || user?.role === 'admin';
+  const canCreateEscrow = user?.role?.toLowerCase() === 'buyer' || user?.role?.toLowerCase() === 'admin';
 
   const formatTransactionType = (type: string) => {
     return type.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
@@ -468,7 +468,7 @@ const Escrow: React.FC = () => {
                     </div>
                   </div>
 
-                  {user?.role !== 'admin' && (
+                  {user?.role?.toLowerCase() !== 'admin' && (
                     <div className="flex justify-end space-x-2">
                       <Button variant="outline" size="sm">
                         View Details

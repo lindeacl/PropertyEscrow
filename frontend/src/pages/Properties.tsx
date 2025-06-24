@@ -42,7 +42,7 @@ const Properties: React.FC = () => {
     metadata_uri: ''
   });
 
-  const canCreateProperty = user?.role === 'seller' || user?.role === 'admin';
+  const canCreateProperty = user?.role?.toLowerCase() === 'seller' || user?.role?.toLowerCase() === 'admin';
 
   useEffect(() => {
     loadProperties();

@@ -83,7 +83,7 @@ const Navbar: React.FC = () => {
               <span>Profile</span>
             </Link>
             
-            {user?.role === 'admin' && (
+            {user?.role?.toLowerCase() === 'admin' && (
               <Link 
                 to="/admin" 
                 className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"

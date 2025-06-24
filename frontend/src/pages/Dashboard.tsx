@@ -273,7 +273,7 @@ const Dashboard: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {(user?.role === 'seller' || user?.role === 'admin') && (
+            {(user?.role?.toLowerCase() === 'seller' || user?.role?.toLowerCase() === 'admin') && (
               <Button 
                 className="h-20 flex flex-col items-center justify-center space-y-2"
                 onClick={() => navigate('/properties')}
@@ -283,7 +283,7 @@ const Dashboard: React.FC = () => {
               </Button>
             )}
             
-            {(user?.role === 'buyer' || user?.role === 'admin') && (
+            {(user?.role?.toLowerCase() === 'buyer' || user?.role?.toLowerCase() === 'admin') && (
               <Button 
                 variant="outline" 
                 className="h-20 flex flex-col items-center justify-center space-y-2"
