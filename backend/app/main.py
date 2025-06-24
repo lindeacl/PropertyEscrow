@@ -600,3 +600,38 @@ def create_system_setting(
     db.commit()
     db.refresh(db_setting)
     return db_setting
+
+@app.post("/admin/init-admin")
+def initialize_admin_user(db: Session = Depends(get_db)):
+    """Initialize admin user - only works if no admin exists"""
+    try:
+        existing_admin = db.query(User).filter(User.role == UserRole.ADMIN).first()
+        if existing_admin:
+            return {"message": "Admin user already exists", "admin_email": existing_admin.email}
+        
+        admin_user = User(
+            email="admin1@propescrow.com",
+            username="admin1",
+            hashed_password=get_password_hash("wdbqHF@xt!5zc%8$"),
+            full_name="System Administrator",
+            role=UserRole.ADMIN,
+            is_active=True,
+            is_verified=True
+        )
+        
+        db.add(admin_user)
+        db.commit()
+        db.refresh(admin_user)
+        
+        return {
+            "message": "Admin user created successfully",
+            "admin_email": admin_user.email,
+            "admin_id": admin_user.id
+        }
+        
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to create admin user: {str(e)}"
+        )
