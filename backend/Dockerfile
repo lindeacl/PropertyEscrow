@@ -20,6 +20,9 @@ RUN poetry config virtualenvs.create false \
 # Copy application code from backend directory
 COPY backend/ .
 
+# Copy smart contract artifacts (required for blockchain functionality)
+COPY artifacts/ ./artifacts/
+
 # Create a non-root user
 RUN useradd --create-home --shell /bin/bash app \
     && chown -R app:app /app
@@ -27,8 +30,6 @@ USER app
 
 # Expose port
 EXPOSE 8000
-
-# Remove custom health check - let Railway handle health checking automatically
 
 # Run the application
 CMD ["sh", "-c", "python -m uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
