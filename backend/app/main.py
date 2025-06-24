@@ -635,3 +635,38 @@ def initialize_admin_user(db: Session = Depends(get_db)):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to create admin user: {str(e)}"
         )
+
+@app.post("/admin/recreate-admin")
+def recreate_admin_user(db: Session = Depends(get_db)):
+    """Recreate admin user - deletes existing admin and creates new one"""
+    try:
+        existing_admins = db.query(User).filter(User.role == UserRole.ADMIN).all()
+        for admin in existing_admins:
+            db.delete(admin)
+        
+        admin_user = User(
+            email="admin1@propescrow.com",
+            username="admin1",
+            hashed_password=get_password_hash("wdbqHF@xt!5zc%8$"),
+            full_name="System Administrator",
+            role=UserRole.ADMIN,
+            is_active=True,
+            is_verified=True
+        )
+        
+        db.add(admin_user)
+        db.commit()
+        db.refresh(admin_user)
+        
+        return {
+            "message": "Admin user recreated successfully",
+            "admin_email": admin_user.email,
+            "admin_id": admin_user.id
+        }
+        
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to recreate admin user: {str(e)}"
+        )
