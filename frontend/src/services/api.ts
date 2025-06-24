@@ -13,7 +13,7 @@ interface User {
   username: string;
   full_name: string;
   phone?: string;
-  role: 'admin' | 'agent' | 'buyer' | 'seller';
+  role: 'ADMIN' | 'AGENT' | 'BUYER' | 'SELLER';
   wallet_address?: string;
   is_active: boolean;
   is_verified: boolean;
@@ -26,7 +26,7 @@ interface RegisterData {
   password: string;
   full_name: string;
   phone?: string;
-  role: 'admin' | 'agent' | 'buyer' | 'seller';
+  role: 'ADMIN' | 'AGENT' | 'BUYER' | 'SELLER';
   wallet_address?: string;
 }
 

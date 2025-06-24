@@ -28,7 +28,7 @@ interface User {
   email: string;
   username: string;
   full_name: string;
-  role: 'admin' | 'agent' | 'buyer' | 'seller';
+  role: 'ADMIN' | 'AGENT' | 'BUYER' | 'SELLER';
   is_active: boolean;
   is_verified: boolean;
   created_at: string;
@@ -131,13 +131,13 @@ const AdminPanel: React.FC = () => {
 
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
-      case 'admin':
+      case 'ADMIN':
         return 'bg-red-100 text-red-800';
-      case 'agent':
+      case 'AGENT':
         return 'bg-blue-100 text-blue-800';
-      case 'seller':
+      case 'SELLER':
         return 'bg-green-100 text-green-800';
-      case 'buyer':
+      case 'BUYER':
         return 'bg-purple-100 text-purple-800';
       default:
         return 'bg-gray-100 text-gray-800';

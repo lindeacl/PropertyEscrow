@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  requiredRole?: 'admin' | 'agent' | 'buyer' | 'seller';
+  requiredRole?: 'ADMIN' | 'AGENT' | 'BUYER' | 'SELLER';
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRole }) => {

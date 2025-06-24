@@ -16,7 +16,7 @@ const Register: React.FC = () => {
     confirmPassword: '',
     full_name: '',
     phone: '',
-    role: 'buyer' as 'admin' | 'agent' | 'buyer' | 'seller',
+    role: 'BUYER' as 'ADMIN' | 'AGENT' | 'BUYER' | 'SELLER',
     wallet_address: '',
   });
   const [loading, setLoading] = useState(false);
@@ -181,10 +181,10 @@ const Register: React.FC = () => {
                       <SelectValue placeholder="Select your role" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="buyer">Buyer</SelectItem>
-                      <SelectItem value="seller">Seller</SelectItem>
-                      <SelectItem value="agent">Agent</SelectItem>
-                      <SelectItem value="admin">Administrator</SelectItem>
+                      <SelectItem value="BUYER">Buyer</SelectItem>
+                      <SelectItem value="SELLER">Seller</SelectItem>
+                      <SelectItem value="AGENT">Agent</SelectItem>
+                      <SelectItem value="ADMIN">Administrator</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
