@@ -20,8 +20,9 @@ RUN poetry config virtualenvs.create false \
 # Copy application code from backend directory
 COPY backend/ .
 
-# Copy smart contract artifacts (required for blockchain functionality)
-COPY artifacts/ ./artifacts/
+# Create artifacts directory for blockchain functionality
+# Railway build context may not include artifacts, so create minimal structure
+RUN mkdir -p ./artifacts/contracts
 
 # Create a non-root user
 RUN useradd --create-home --shell /bin/bash app \
