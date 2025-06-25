@@ -6,6 +6,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+if os.getenv("RAILWAY_ENVIRONMENT"):
+    load_dotenv(".env.railway")
+
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./property_escrow.db")
 
 if DATABASE_URL.startswith("mysql"):
