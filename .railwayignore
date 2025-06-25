@@ -1,0 +1,6 @@
+backend/
+hardhat-package.json
+ssl/
+*.log
+node_modules/
+.git/
