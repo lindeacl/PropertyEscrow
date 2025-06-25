@@ -95,13 +95,23 @@ async def log_requests(request: Request, call_next):
     
     return response
 
-# Disable CORS. Do not remove this for full-stack development.
+ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://localhost:5000", 
+    "http://localhost:5173",
+    "https://property-escrow-frontend-production.up.railway.app",
+    "https://property-escrow-app-iemvclri.devinapps.com"
+]
+
+if not IS_DEPLOYED:
+    ALLOWED_ORIGINS.append("*")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
 )
 
 security = HTTPBearer()
