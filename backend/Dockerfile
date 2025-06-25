@@ -10,15 +10,15 @@ RUN apt-get update && apt-get install -y \
 # Install Poetry
 RUN pip install poetry
 
-# Copy poetry files from backend directory (Railway builds from repo root)
-COPY backend/pyproject.toml backend/poetry.lock* ./
+# Copy poetry files (Railway builds from backend directory)
+COPY pyproject.toml poetry.lock* ./
 
 # Configure poetry and install dependencies
 RUN poetry config virtualenvs.create false \
     && poetry install --only main --no-root --no-interaction --no-ansi
 
-# Copy application code from backend directory
-COPY backend/ .
+# Copy application code
+COPY . .
 
 # Create artifacts directory for blockchain functionality
 # Railway build context may not include artifacts, so create minimal structure
