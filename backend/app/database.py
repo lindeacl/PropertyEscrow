@@ -11,6 +11,9 @@ if os.getenv("RAILWAY_ENVIRONMENT"):
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./property_escrow.db")
 
+if DATABASE_URL and DATABASE_URL.startswith("postgresql://postgres:password@postgres"):
+    DATABASE_URL = "sqlite:///./property_escrow.db"
+
 if DATABASE_URL.startswith("mysql"):
     engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 elif DATABASE_URL.startswith("postgresql"):
