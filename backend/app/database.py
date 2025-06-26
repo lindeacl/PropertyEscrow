@@ -9,18 +9,16 @@ load_dotenv()
 if os.getenv("RAILWAY_ENVIRONMENT"):
     load_dotenv(".env.railway")
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-if not DATABASE_URL:
-    PGHOST = os.getenv('PGHOST')
-    PGPORT = os.getenv('PGPORT', '5432')
-    PGUSER = os.getenv('PGUSER', 'postgres')
-    PGPASSWORD = os.getenv('PGPASSWORD')
-    PGDATABASE = os.getenv('PGDATABASE', 'railway')
-    
-    if PGHOST and PGPASSWORD:
-        DATABASE_URL = f"postgresql://{PGUSER}:{PGPASSWORD}@{PGHOST}:{PGPORT}/{PGDATABASE}"
-    else:
-        DATABASE_URL = "sqlite:///./property_escrow.db"
+PGHOST = os.getenv('PGHOST')
+PGPORT = os.getenv('PGPORT', '5432')
+PGUSER = os.getenv('PGUSER', 'postgres')
+PGPASSWORD = os.getenv('PGPASSWORD')
+PGDATABASE = os.getenv('PGDATABASE', 'railway')
+
+if PGHOST and PGPASSWORD:
+    DATABASE_URL = f"postgresql://{PGUSER}:{PGPASSWORD}@{PGHOST}:{PGPORT}/{PGDATABASE}"
+else:
+    DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./property_escrow.db")
 
 if DATABASE_URL.startswith("mysql"):
     engine = create_engine(DATABASE_URL, pool_pre_ping=True)
