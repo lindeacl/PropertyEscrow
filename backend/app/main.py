@@ -128,6 +128,19 @@ def read_root():
 async def healthz():
     return {"status": "ok"}
 
+@app.get("/debug-env")
+async def debug_environment():
+    import os
+    return {
+        "railway_env": os.getenv("RAILWAY_ENVIRONMENT"),
+        "database_url_set": bool(os.getenv("DATABASE_URL")),
+        "pghost_set": bool(os.getenv("PGHOST")),
+        "pgpassword_set": bool(os.getenv("PGPASSWORD")),
+        "pguser": os.getenv("PGUSER", "not_set"),
+        "pgport": os.getenv("PGPORT", "not_set"),
+        "pgdatabase": os.getenv("PGDATABASE", "not_set")
+    }
+
 @app.post("/auth/register", response_model=UserSchema)
 def register_user(user: UserCreate, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.email == user.email).first()
