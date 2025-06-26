@@ -4,15 +4,9 @@ from sqlalchemy.orm import sessionmaker
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
-
 if os.getenv("RAILWAY_ENVIRONMENT"):
     load_dotenv(".env.railway")
-
-DATABASE_URL = os.getenv("DATABASE_URL")
-if DATABASE_URL and not DATABASE_URL.startswith("postgresql://postgres:password@postgres"):
-    pass
-else:
+    
     PGHOST = os.getenv('PGHOST')
     PGPORT = os.getenv('PGPORT', '5432')
     PGUSER = os.getenv('PGUSER', 'postgres')
@@ -22,7 +16,12 @@ else:
     if PGHOST and PGPASSWORD:
         DATABASE_URL = f"postgresql://{PGUSER}:{PGPASSWORD}@{PGHOST}:{PGPORT}/{PGDATABASE}"
     else:
-        DATABASE_URL = "sqlite:///./property_escrow.db"
+        DATABASE_URL = os.getenv("DATABASE_URL")
+        if DATABASE_URL and DATABASE_URL.startswith("postgresql://postgres:password@postgres"):
+            DATABASE_URL = "sqlite:///./property_escrow.db"
+else:
+    load_dotenv()
+    DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./property_escrow.db")
 
 if DATABASE_URL.startswith("mysql"):
     engine = create_engine(DATABASE_URL, pool_pre_ping=True)
