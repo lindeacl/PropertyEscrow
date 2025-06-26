@@ -27,7 +27,7 @@ describe("PropertyEscrow - Enhanced Coverage", function () {
     // Whitelist token and create escrow
     await factory.whitelistToken(await mockToken.getAddress(), true);
     
-    await factory.createEscrow({
+    await factory.createEscrowWithStruct({
       buyer: buyer.address,
       seller: seller.address,
       agent: agent.address,

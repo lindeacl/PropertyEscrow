@@ -66,7 +66,7 @@ describe("EscrowFactory", function () {
       const currentTime = Math.floor(Date.now() / 1000);
       
       try {
-        await factory.createEscrow({
+        await factory.createEscrowWithStruct({
           buyer: buyer.address,
           seller: seller.address,
           agent: agent.address,
@@ -117,7 +117,7 @@ describe("EscrowFactory", function () {
         }
       };
 
-      const tx = await factory.createEscrow(params);
+      const tx = await factory.createEscrowWithStruct(params);
       const receipt = await tx.wait();
       
       // Check that escrow was created
