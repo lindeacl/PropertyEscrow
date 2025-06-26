@@ -1,0 +1,45 @@
+{
+  "name": "property-escrow-platform",
+  "version": "1.0.0",
+  "description": "Blockchain-powered property escrow platform on Polygon network",
+  "main": "hardhat.config.js",
+  "scripts": {
+    "test": "hardhat test",
+    "compile": "hardhat compile",
+    "deploy": "hardhat run scripts/deploy.js",
+    "deploy:localhost": "hardhat run scripts/deploy.js --network localhost",
+    "deploy:mumbai": "hardhat run scripts/deploy.js --network mumbai",
+    "deploy:polygon": "hardhat run scripts/deploy.js --network polygon",
+    "coverage": "hardhat coverage",
+    "size": "hardhat size-contracts",
+    "lint": "solhint 'contracts/**/*.sol'",
+    "node": "hardhat node"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.9",
+    "@nomicfoundation/hardhat-ethers": "^3.0.5",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
+    "@nomicfoundation/hardhat-verify": "^1.1.1",
+    "@openzeppelin/hardhat-upgrades": "^2.4.3",
+    "chai": "^4.3.10",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.8.0",
+    "hardhat": "^2.19.4",
+    "hardhat-gas-reporter": "^1.0.9",
+    "solidity-coverage": "^0.8.5"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.0",
+    "@openzeppelin/contracts-upgradeable": "^4.9.0"
+  },
+  "keywords": [
+    "blockchain",
+    "escrow",
+    "property",
+    "polygon",
+    "smart-contracts",
+    "hardhat"
+  ],
+  "author": "Property Escrow Team",
+  "license": "MIT"
+}

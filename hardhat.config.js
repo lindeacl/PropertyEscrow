@@ -1,6 +1,6 @@
 // Using ethers v6 directly
 require("@nomicfoundation/hardhat-network-helpers");
-require("@nomiclabs/hardhat-etherscan");
+require("@nomicfoundation/hardhat-verify");
 require("@openzeppelin/hardhat-upgrades");
 require("hardhat-gas-reporter");
 require("solidity-coverage");
